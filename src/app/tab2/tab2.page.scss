@@ -1,1 +1,19 @@
+.text-sm {
+  font-size: 12px;
+  margin: 5px 0;
+}
 
+.text-lg {
+  font-size: 20px;
+  margin: 0;
+  color: #000000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.text-xl {
+  font-size: 32px;
+  color: #000000;
+  text-align: center;
+}
