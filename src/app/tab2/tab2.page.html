@@ -8,227 +8,31 @@
 
 <ion-content class="tab-content">
 
-  <ion-list>
+  <ion-list *ngFor="let semester of grades?.semesters">
     <ion-list-header>
-      <h2 class="text-header">Εξάμηνο 1</h2>
+      <h2 class="text-header">Εξάμηνο {{ semester.id }}</h2>
     </ion-list-header>
 
-    <ion-card class="card">
+    <ion-card class="card" *ngFor="let course of semester?.courses">
       <ion-grid>
         <ion-row>
           <ion-col size="10">
             <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
+              <h6 class="text-sm">{{ course.id }}</h6>
             </ion-row>
             <ion-row>
-              <h3 class="text-lg">Δομές Δεδομένων</h3>
+              <h3 class="text-lg">{{ course.name }}</h3>
             </ion-row>
             <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
+              <h6 class="text-sm">{{ course.type }} | {{ course.examPeriod }}</h6>
             </ion-row>
           </ion-col>
           <ion-col size="2">
-            <h2 class="text-xl">8</h2>
+            <h2 class="text-xl">{{ course.grade }}</h2>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Εισαγωγή Στις Τηλεπικοινωνίες</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">3</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Εκπαιδευτική Ψυχολογία</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">10</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Σήματα και Συστήματα</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">7</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Θεωρία Πληροφορίας</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">6</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  </ion-list>
-
-  <ion-list>
-    <ion-list-header>
-      <h2 class="text-header">Εξάμηνο 2</h2>
-    </ion-list-header>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Δομές Δεδομένων</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">8</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Εισαγωγή Στις Τηλεπικοινωνίες</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">3</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Εκπαιδευτική Ψυχολογία</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">10</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Σήματα και Συστήματα</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">7</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-
-    <ion-card class="card">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">ΨΣ-503</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">Θεωρία Πληροφορίας</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">Υποχρεωτικό | ΙΟΥΛ 2016-2017</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">6</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-
   </ion-list>
 
 </ion-content>
