@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GenericHttpService} from '../shared/services/generic-http.service';
-import {Observable} from 'rxjs';
 import {GradeResults} from '../shared/models/grade-results.model';
+import {LoadingController} from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -12,9 +12,21 @@ export class Tab2Page implements OnInit {
 
   public grades: GradeResults;
 
-  constructor(private service: GenericHttpService) {}
+  constructor(
+      private service: GenericHttpService,
+      public loadingController: LoadingController) {}
 
   ngOnInit(): void {
+    this.loadGrades();
+  }
+
+  async loadGrades() {
+
+    const loading = await this.loadingController.create({
+      message: 'Please wait..'
+    });
+
+    await loading.present();
 
     this.service.getGradeResults().subscribe(
         data => {
@@ -22,6 +34,9 @@ export class Tab2Page implements OnInit {
         },
         error => {
           console.log(error);
+        },
+        () => {
+          loading.dismiss();
         }
     );
   }
