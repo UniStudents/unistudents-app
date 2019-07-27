@@ -40,4 +40,18 @@ export class Tab2Page implements OnInit {
         }
     );
   }
+
+  refreshData(event) {
+    this.service.getGradeResults().subscribe(
+        data => {
+          this.grades = data;
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          event.target.complete();
+        }
+    );
+  }
 }

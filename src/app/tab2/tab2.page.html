@@ -8,6 +8,10 @@
 
 <ion-content class="tab-content">
 
+  <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list *ngFor="let semester of grades?.semesters">
     <ion-list-header>
       <h2 class="text-header">Εξάμηνο {{ semester.id }}</h2>
