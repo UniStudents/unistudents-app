@@ -33,7 +33,8 @@ export class Tab2Page implements OnInit {
           this.grades = data;
         },
         error => {
-          console.log(error);
+          loading.dismiss();
+          this.grades = null;
         },
         () => {
           loading.dismiss();
@@ -47,7 +48,8 @@ export class Tab2Page implements OnInit {
           this.grades = data;
         },
         error => {
-          console.log(error);
+          event.target.complete();
+          this.grades = null;
         },
         () => {
           event.target.complete();
