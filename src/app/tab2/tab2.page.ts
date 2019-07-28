@@ -11,6 +11,7 @@ import {LoadingController} from '@ionic/angular';
 export class Tab2Page implements OnInit {
 
   public grades: GradeResults;
+  public error = false;
 
   constructor(
       private service: GenericHttpService,
@@ -31,10 +32,11 @@ export class Tab2Page implements OnInit {
     this.service.getGradeResults().subscribe(
         data => {
           this.grades = data;
+          this.error = false;
         },
         error => {
           loading.dismiss();
-          this.grades = null;
+          this.error = true;
         },
         () => {
           loading.dismiss();
@@ -43,13 +45,15 @@ export class Tab2Page implements OnInit {
   }
 
   refreshData(event) {
+
     this.service.getGradeResults().subscribe(
         data => {
           this.grades = data;
+          this.error = false;
         },
         error => {
           event.target.complete();
-          this.grades = null;
+          this.error = true;
         },
         () => {
           event.target.complete();

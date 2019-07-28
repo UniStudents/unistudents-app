@@ -12,31 +12,44 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list *ngFor="let semester of grades?.semesters">
-    <ion-list-header>
-      <h2 class="text-header">Εξάμηνο {{ semester.id }}</h2>
-    </ion-list-header>
+  <ion-grid *ngIf="error == true; else connected" margin-top="20px">
+    <ion-row>
+      <ion-col text-center="" padding="20px">
+        <img src="/assets/server_error.svg" alt="" />
+        <h5 class="text-error-title">No connection</h5>
+        <h6 class="text-error-subtitle">Please check your internet connection and try again.</h6>
+        <ion-button expand="block" (click)="loadGrades()">Retry</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    <ion-card class="card" *ngFor="let course of semester?.courses">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">{{ course.id }}</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">{{ course.name }}</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">{{ course.type }} | {{ course.examPeriod }}</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-            <h2 class="text-xl">{{ course.grade }}</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  </ion-list>
+  <ng-template #connected>
+    <ion-list *ngFor="let semester of grades?.semesters">
+      <ion-list-header>
+        <h2 class="text-header">Εξάμηνο {{ semester.id }}</h2>
+      </ion-list-header>
+
+      <ion-card class="card" *ngFor="let course of semester?.courses">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10">
+              <ion-row>
+                <h6 class="text-sm">{{ course.id }}</h6>
+              </ion-row>
+              <ion-row>
+                <h3 class="text-lg">{{ course.name }}</h3>
+              </ion-row>
+              <ion-row>
+                <h6 class="text-sm">{{ course.type }} | {{ course.examPeriod }}</h6>
+              </ion-row>
+            </ion-col>
+            <ion-col size="2">
+              <h2 class="text-xl">{{ course.grade }}</h2>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
+  </ng-template>
 
 </ion-content>
