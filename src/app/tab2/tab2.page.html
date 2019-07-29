@@ -12,18 +12,18 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-grid *ngIf="error == true; else connected" margin-top="20px">
+  <ion-grid *ngIf="error == true" margin-top="20px">
     <ion-row>
       <ion-col text-center="" padding="20px">
         <img src="/assets/server_error.svg" alt="" />
         <h5 class="text-error-title">No connection</h5>
         <h6 class="text-error-subtitle">Please check your internet connection and try again.</h6>
-        <ion-button expand="block" (click)="loadGrades()">Retry</ion-button>
+        <ion-button expand="block" (click)="loadOfflineGrades()">Load offline data</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ng-template #connected>
+  <div *ngIf="error == false">
     <ion-list *ngFor="let semester of grades?.semesters">
       <ion-list-header>
         <h2 class="text-header">Εξάμηνο {{ semester.id }}</h2>
@@ -50,6 +50,6 @@
         </ion-grid>
       </ion-card>
     </ion-list>
-  </ng-template>
+  </div>
 
 </ion-content>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GenericHttpService} from '../shared/services/generic-http.service';
 import {GradeResults} from '../shared/models/grade-results.model';
 import {LoadingController} from '@ionic/angular';
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'app-tab2',
@@ -15,6 +16,7 @@ export class Tab2Page implements OnInit {
 
   constructor(
       private service: GenericHttpService,
+      private storage: Storage,
       public loadingController: LoadingController) {}
 
   ngOnInit(): void {
@@ -29,10 +31,12 @@ export class Tab2Page implements OnInit {
 
     await loading.present();
 
-    this.service.getGradeResults().subscribe(
+    this.service.getGradeResults()
+        .subscribe(
         data => {
           this.grades = data;
           this.error = false;
+          this.storage.set('gradesObj', this.grades);
         },
         error => {
           loading.dismiss();
@@ -44,12 +48,26 @@ export class Tab2Page implements OnInit {
     );
   }
 
+  loadOfflineGrades() {
+      this.storage.get('gradesObj')
+          .then(
+          (grades) => {
+              this.grades = grades;
+          }
+      ).finally(
+          () => {
+              this.error = false;
+          }
+      );
+  }
+
   refreshData(event) {
 
     this.service.getGradeResults().subscribe(
         data => {
           this.grades = data;
           this.error = false;
+          this.storage.set('gradesObj', this.grades);
         },
         error => {
           event.target.complete();
