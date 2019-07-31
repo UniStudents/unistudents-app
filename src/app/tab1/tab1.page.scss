@@ -2,3 +2,66 @@
   max-height: 35vh;
   overflow: hidden;
 }
+
+.welcome-grid {
+  height: 150px;
+  background-color: #4c8dff;
+}
+
+.text-sm {
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.text-lg {
+  font-size: 16px;
+  margin: 0;
+  color: #000000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.text-xl {
+  font-size: 28px;
+  color: #657BFF;
+  margin: 0;
+}
+
+.info-grid {
+  margin: 0 16px;
+  padding: 0;
+}
+
+.info-row {
+  margin: 12.5px 0;
+}
+
+.info-col {
+  padding: 0;
+}
+
+.left {
+  padding-right: 7px;
+}
+
+.middle {
+  padding-right: 3.5px;
+  padding-left: 3.5px;
+}
+
+.right {
+  padding-left: 7px;
+}
+
+.info-card {
+  margin: 0;
+  height: 100%;
+}
+
+.lg-info {
+  font-size: 20px;
+  color: #000000;
+  margin-top: 0;
+  margin-bottom: 0;
+}
