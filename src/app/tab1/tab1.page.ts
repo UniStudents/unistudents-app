@@ -1,5 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Chart } from 'chart.js';
+import {GradeResults} from '../shared/models/grade-results.model';
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'app-tab1',
@@ -10,11 +12,35 @@ export class Tab1Page implements OnInit {
   @ViewChild('lineCanvas') lineCanvas: ElementRef;
 
   private lineChart: Chart;
+  public grades: GradeResults;
 
-  constructor() {}
+  constructor(
+      private storage: Storage
+  ) {}
 
   ngOnInit(): void {
-    this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+    this.lineChart = this.getChart();
+    this.loadStudentInfo();
+  }
+
+  loadStudentInfo() {
+    this.storage.get('gradesObj')
+        .then(
+            (grades) => {
+              this.grades = grades;
+            }
+        )
+        .catch(
+            error => console.log(error)
+        )
+        .finally(
+        () => {
+        }
+    );
+  }
+
+  getChart(): Chart {
+    return new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {
         labels: ['2016', '2017', '2018', '2019'],
@@ -62,6 +88,5 @@ export class Tab1Page implements OnInit {
         }
       },
     });
-  }
-
+}
 }

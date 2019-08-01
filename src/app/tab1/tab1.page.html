@@ -16,7 +16,7 @@
                         <ion-row>
                             <ion-col>
                                 <h1 class="text-lg">Συνδεθήκατε ως</h1>
-                                <h1 class="text-xl">Νίκος Σκλαβούνος</h1>
+                                <h1 class="text-xl">{{ grades?.student.firstName }} {{ grades?.student.lastName }}</h1>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -36,7 +36,7 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col>
-                                <p class="lg-info">29</p>
+                                <p class="lg-info">{{ grades?.totalPassedCourses }}</p>
                                 <p class="text-sm">Περασμένα μαθήματα</p>
                             </ion-col>
                         </ion-row>
@@ -48,7 +48,7 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col>
-                                <p class="lg-info">7.56</p>
+                                <p class="lg-info">{{ grades?.totalAverageGrade }}</p>
                                 <p class="text-sm">Μέσος Όρος</p>
                             </ion-col>
                         </ion-row>
@@ -60,7 +60,7 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col>
-                                <p class="lg-info">103</p>
+                                <p class="lg-info">{{ grades?.totalEcts }}</p>
                                 <p class="text-sm">ECTs</p>
                             </ion-col>
                         </ion-row>
