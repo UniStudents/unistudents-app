@@ -19,7 +19,6 @@ export class Tab1Page implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.lineChart = this.getChart();
     this.loadStudentInfo();
   }
 
@@ -28,6 +27,7 @@ export class Tab1Page implements OnInit {
         .then(
             (grades) => {
               this.grades = grades;
+              this.lineChart = this.getChart();
             }
         )
         .catch(
@@ -43,7 +43,7 @@ export class Tab1Page implements OnInit {
     return new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {
-        labels: ['2016', '2017', '2018', '2019'],
+        labels: this.getSemesters(),
         datasets: [
           {
             label: 'GPA',
@@ -64,7 +64,7 @@ export class Tab1Page implements OnInit {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [6.5, 5.9, 8, 7.3],
+            data: this.getGrades(),
             spanGaps: false
           }
         ]
@@ -89,4 +89,24 @@ export class Tab1Page implements OnInit {
       },
     });
 }
+
+  private getGrades() {
+    const grades: Array<number> = [];
+
+    for (let i = 0; i < this.grades.semesters.length; i++) {
+      grades.push(Number(this.grades.semesters[i].gradeAverage));
+    }
+
+    return grades;
+  }
+
+  private getSemesters() {
+    const semesters: Array<number> = [];
+
+    for (let i = 0; i < this.grades.semesters.length; i++) {
+      semesters.push(this.grades.semesters[i].id);
+    }
+
+    return semesters;
+  }
 }
