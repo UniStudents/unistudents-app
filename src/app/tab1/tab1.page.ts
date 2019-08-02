@@ -40,6 +40,17 @@ export class Tab1Page implements OnInit {
   }
 
   getChart(): Chart {
+
+    Chart.defaults.global.animation.onProgress = () => {
+      console.log('On progress!!!');
+    }
+
+    Chart.defaults.global.animation.onComplete = () => {
+      console.log('Completed!!!');
+    }
+
+    Chart.defaults.global.animation.easing = 'easeOutQuart';
+
     return new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {
@@ -65,7 +76,9 @@ export class Tab1Page implements OnInit {
             pointRadius: 1,
             pointHitRadius: 10,
             data: this.getGrades(),
-            spanGaps: false
+            spanGaps: false,
+            duration: 4000,
+            easing: 'easeInQuart'
           }
         ]
       },
