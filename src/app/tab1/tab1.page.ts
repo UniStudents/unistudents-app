@@ -41,20 +41,18 @@ export class Tab1Page implements OnInit {
 
   getChart(): Chart {
 
-    Chart.defaults.global.animation.onProgress = () => {
-      console.log('On progress!!!');
-    }
+    const grades: Array<number> = [];
+    const semesters: Array<number> = [];
 
-    Chart.defaults.global.animation.onComplete = () => {
-      console.log('Completed!!!');
+    for (let i = 0; i < this.grades.semesters.length; i++) {
+      grades.push(Number(this.grades.semesters[i].gradeAverage));
+      semesters.push(this.grades.semesters[i].id);
     }
-
-    Chart.defaults.global.animation.easing = 'easeOutQuart';
 
     return new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {
-        labels: this.getSemesters(),
+        labels: semesters,
         datasets: [
           {
             label: 'GPA',
@@ -75,7 +73,7 @@ export class Tab1Page implements OnInit {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: this.getGrades(),
+            data: grades,
             spanGaps: false,
             duration: 4000,
             easing: 'easeInQuart'
@@ -101,25 +99,5 @@ export class Tab1Page implements OnInit {
         }
       },
     });
-}
-
-  private getGrades() {
-    const grades: Array<number> = [];
-
-    for (let i = 0; i < this.grades.semesters.length; i++) {
-      grades.push(Number(this.grades.semesters[i].gradeAverage));
-    }
-
-    return grades;
-  }
-
-  private getSemesters() {
-    const semesters: Array<number> = [];
-
-    for (let i = 0; i < this.grades.semesters.length; i++) {
-      semesters.push(this.grades.semesters[i].id);
-    }
-
-    return semesters;
   }
 }
