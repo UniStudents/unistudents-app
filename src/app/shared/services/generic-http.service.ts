@@ -14,12 +14,7 @@ export class GenericHttpService {
 
   apiUrl = 'http://192.168.3.116:8080/api/grades';
 
-  loginForm: LoginForm = {
-    username: 'e16130',
-    password: '21aug1998nikos$'
-  };
-
-  getGradeResults(): Observable<GradeResults> {
-    return this.http.post<GradeResults>(this.apiUrl, this.loginForm);
+  getGradeResults(loginForm: LoginForm): Observable<GradeResults> {
+    return this.http.post<GradeResults>(this.apiUrl, loginForm);
   }
 }

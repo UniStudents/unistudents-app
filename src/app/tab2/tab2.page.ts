@@ -3,6 +3,7 @@ import {GenericHttpService} from '../shared/services/generic-http.service';
 import {GradeResults} from '../shared/models/grade-results.model';
 import {LoadingController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
+import {LoginForm} from '../shared/models/login-form.model';
 
 @Component({
   selector: 'app-tab2',
@@ -13,6 +14,11 @@ export class Tab2Page implements OnInit {
 
   public grades: GradeResults;
   public error = false;
+
+  loginForm: LoginForm = {
+      username: 'e16130',
+      password: '21aug1998nikos$'
+  };
 
   constructor(
       private service: GenericHttpService,
@@ -31,7 +37,7 @@ export class Tab2Page implements OnInit {
 
     await loading.present();
 
-    this.service.getGradeResults()
+    this.service.getGradeResults(this.loginForm)
         .subscribe(
         data => {
           this.grades = data;
@@ -63,7 +69,7 @@ export class Tab2Page implements OnInit {
 
   refreshData(event) {
 
-    this.service.getGradeResults().subscribe(
+    this.service.getGradeResults(this.loginForm).subscribe(
         data => {
           this.grades = data;
           this.error = false;
