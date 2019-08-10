@@ -30,32 +30,23 @@ export class Tab2Page implements OnInit {
   }
 
   async loadGrades() {
-
-    const loading = await this.loadingController.create({
-      message: 'Please wait..'
-    });
-
-    await loading.present();
-
-    this.service.getGradeResults(this.loginForm)
-        .subscribe(
-        data => {
-          this.grades = data;
-          this.error = false;
-          this.storage.set('gradesObj', this.grades);
-        },
-        error => {
-          loading.dismiss();
-          this.error = true;
-        },
-        () => {
-          loading.dismiss();
-        }
-    );
+      this.storage.get('userData')
+          .then(
+              (grades) => {
+                  this.grades = grades;
+              }
+          )
+          .catch(
+              error => console.log(error)
+          )
+          .finally(
+              () => {
+              }
+          );
   }
 
   loadOfflineGrades() {
-      this.storage.get('gradesObj')
+      this.storage.get('userData')
           .then(
           (grades) => {
               this.grades = grades;
@@ -73,7 +64,7 @@ export class Tab2Page implements OnInit {
         data => {
           this.grades = data;
           this.error = false;
-          this.storage.set('gradesObj', this.grades);
+          this.storage.set('userData', this.grades);
         },
         error => {
           event.target.complete();

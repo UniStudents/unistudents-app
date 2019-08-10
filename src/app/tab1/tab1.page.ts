@@ -23,7 +23,7 @@ export class Tab1Page implements OnInit {
   }
 
   loadStudentInfo() {
-    this.storage.get('gradesObj')
+    this.storage.get('userData')
         .then(
             (grades) => {
               this.grades = grades;
