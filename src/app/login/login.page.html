@@ -6,7 +6,7 @@
       </ion-col>
 
       <ion-col>
-        <form padding>
+        <form #form="ngForm" (ngSubmit)="login(form)" method="post" padding>
           <ion-row align-items-start>
             <ion-col size="12">
               <h1><strong>Σύνδεση</strong></h1>
@@ -17,15 +17,15 @@
               <div input-field>
                 <ion-item no-padding>
                   <ion-label position="floating">Όνομα Χρήστη</ion-label>
-                  <ion-input type="text" required></ion-input>
+                  <ion-input ngModel type="text" name="username" required></ion-input>
                 </ion-item>
                 <ion-item no-padding>
                   <ion-label position="floating">Κωδικός Πρόσβασης</ion-label>
-                  <ion-input type="password" required></ion-input>
+                  <ion-input ngModel type="password" name="password" required></ion-input>
                 </ion-item>
               </div>
               <ion-col size="12">
-                <ion-button expand="block" style="text-transform: none" routerLink="/app/tabs/tab1">Είσοδος</ion-button>
+                <ion-button type="submit" expand="block" style="text-transform: none">Είσοδος</ion-button>
               </ion-col>
               <div text-center>
                 <ion-row>
