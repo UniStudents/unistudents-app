@@ -1,3 +1,12 @@
 .login-content {
   margin-top: 20% !important;
 }
+
+.item-interactive.ion-invalid{
+  --highlight-background: var(--ion-color-danger)  !important;
+}
+
+.item-interactive.ion-valid{
+  --highlight-background: var(--ion-color-primary) !important;
+}
+
