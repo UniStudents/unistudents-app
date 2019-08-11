@@ -33,9 +33,10 @@ export class LoginPage implements OnInit {
     this.authService.login(form.value.username, form.value.password)
         .subscribe(
             (response) => {
-              this.storage.set('userData', response);
-              this.authService.isLoggedIn = true;
-              this.router.navigate(['/app/tabs/tab1']);
+              this.storage.set('userData', response).then( () => {
+                  this.authService.isLoggedIn = true;
+                  this.router.navigate(['/app/tabs/tab1']);
+              });
             },
             (error) => {
               if (error.status === 401) {
