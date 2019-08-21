@@ -2,11 +2,15 @@
   margin-top: 20% !important;
 }
 
-.item-interactive.ion-invalid{
-  --highlight-background: var(--ion-color-danger)  !important;
+.item-interactive.ion-invalid {
+  --highlight-background: var(--ion-color-danger) !important;
 }
 
-.item-interactive.ion-valid{
+.item-interactive.ion-valid {
   --highlight-background: var(--ion-color-primary) !important;
 }
 
+ion-item.invalid-password {
+  --border-color: var(--ion-color-danger);
+  --highlight-background: var(--ion-color-danger) !important;
+}

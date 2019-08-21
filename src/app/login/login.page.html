@@ -18,9 +18,9 @@
                 <ion-label position="floating">Όνομα Χρήστη</ion-label>
                 <ion-input ngModel type="text" name="username"></ion-input>
               </ion-item>
-              <ion-item no-padding>
-                <ion-label position="floating">Κωδικός Πρόσβασης</ion-label>
-                <ion-input ngModel type="password" name="password"></ion-input>
+              <ion-item id="passwordItem" no-padding>
+                <ion-label #passwordLabel position="floating">Κωδικός Πρόσβασης</ion-label>
+                <ion-input [(ngModel)]="passwordField" type="password" name="password"></ion-input>
               </ion-item>
               <ion-col size="12">
                 <ion-button type="submit" expand="block" style="text-transform: none">Είσοδος</ion-button>

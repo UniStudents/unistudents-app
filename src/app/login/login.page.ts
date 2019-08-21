@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../shared/services/auth.service';
-import {LoadingController} from '@ionic/angular';
+import {IonItem, IonLabel, LoadingController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 
@@ -11,6 +11,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+    @ViewChild('passwordLabel') passwordLabel: IonLabel;
+    passwordField: string;
 
   constructor(
       private router: Router,
@@ -39,21 +41,22 @@ export class LoginPage implements OnInit {
               });
             },
             (error) => {
-              if (error.status === 401) {
-              } else {
-              }
               loading.dismiss();
+              if (error.status === 401) {
+
+                this.passwordField = '';
+
+                const item = document.getElementById('passwordItem');
+                item.classList.add('invalid-password');
+
+                this.passwordLabel.color = 'danger';
+              } else {
+
+              }
             },
             () => {
               loading.dismiss();
             }
         );
   }
-
-  // try to login
-
-  // if authorized store response body
-    // redirect to home page
-
-  // else inform user for wrong credentials
 }
