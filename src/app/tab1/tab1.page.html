@@ -7,7 +7,6 @@
 </ion-header>
 
 <ion-content class="tab-content">
-
     <ion-grid class="info-grid">
         <ion-row class="info-row">
             <ion-col class="info-col">
@@ -16,7 +15,7 @@
                         <ion-row>
                             <ion-col>
                                 <h1 class="text-lg">Συνδεθήκατε ως</h1>
-                                <h1 class="text-xl">{{ grades?.student.firstName }} {{ grades?.student.lastName }}</h1>
+                                <h1 class="text-xl">{{ student?.info.firstName }} {{ student?.info.lastName }}</h1>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -36,7 +35,7 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col>
-                                <p class="lg-info">{{ grades?.totalPassedCourses }}</p>
+                                <p class="lg-info">{{ student?.grades.totalPassedCourses }}</p>
                                 <p class="text-sm">Περασμένα μαθήματα</p>
                             </ion-col>
                         </ion-row>
@@ -48,7 +47,7 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col>
-                                <p class="lg-info">{{ grades?.totalAverageGrade }}</p>
+                                <p class="lg-info">{{ student?.grades.totalAverageGrade }}</p>
                                 <p class="text-sm">Μέσος Όρος</p>
                             </ion-col>
                         </ion-row>
@@ -60,7 +59,7 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col>
-                                <p class="lg-info">{{ grades?.totalEcts }}</p>
+                                <p class="lg-info">{{ student?.grades.totalEcts }}</p>
                                 <p class="text-sm">ECTs</p>
                             </ion-col>
                         </ion-row>

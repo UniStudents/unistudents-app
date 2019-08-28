@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Chart } from 'chart.js';
 import {GradeResults} from '../shared/models/grade-results.model';
 import {Storage} from '@ionic/storage';
+import {Student} from '../shared/models/student.model';
 
 @Component({
   selector: 'app-tab1',
@@ -13,6 +14,7 @@ export class Tab1Page implements OnInit {
 
   private lineChart: Chart;
   public grades: GradeResults;
+  public student: Student;
 
   constructor(
       private storage: Storage
@@ -25,8 +27,8 @@ export class Tab1Page implements OnInit {
   loadStudentInfo() {
     this.storage.get('userData')
         .then(
-            (grades) => {
-              this.grades = grades;
+            (student) => {
+              this.student = student;
               this.lineChart = this.getChart();
             }
         )
@@ -44,9 +46,9 @@ export class Tab1Page implements OnInit {
     const grades: Array<number> = [];
     const semesters: Array<number> = [];
 
-    for (let i = 0; i < this.grades.semesters.length; i++) {
-      grades.push(Number(this.grades.semesters[i].gradeAverage));
-      semesters.push(this.grades.semesters[i].id);
+    for (let i = 0; i < this.student.grades.semesters.length; i++) {
+      grades.push(Number(this.student.grades.semesters[i].gradeAverage));
+      semesters.push(this.student.grades.semesters[i].id);
     }
 
     return new Chart(this.lineCanvas.nativeElement, {
