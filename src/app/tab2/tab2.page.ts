@@ -4,6 +4,7 @@ import {GradeResults} from '../shared/models/grade-results.model';
 import {LoadingController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {LoginForm} from '../shared/models/login-form.model';
+import {Student} from '../shared/models/student.model';
 
 @Component({
   selector: 'app-tab2',
@@ -13,6 +14,7 @@ import {LoginForm} from '../shared/models/login-form.model';
 export class Tab2Page implements OnInit {
 
   public grades: GradeResults;
+  public student: Student;
   public error = false;
 
   loginForm: LoginForm = {
@@ -30,10 +32,9 @@ export class Tab2Page implements OnInit {
   }
 
   async loadGrades() {
-      this.storage.get('userData')
-          .then(
-              (grades) => {
-                  this.grades = grades;
+      this.storage.get('userData').then(
+              (student) => {
+                  this.student = student;
               }
           )
           .catch(
