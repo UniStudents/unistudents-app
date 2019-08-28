@@ -1,8 +1,7 @@
+import {Info} from './info.model';
+import {Grades} from './grades.model';
+
 export class Student {
-    aem: string;
-    firstName: string;
-    lastName: string;
-    departure: string;
-    semester: string;
-    registrationYear: string;
+    info: Info;
+    grades: Grades;
 }
