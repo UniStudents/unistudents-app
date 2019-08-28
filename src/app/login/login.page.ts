@@ -33,28 +33,23 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     this.authService.login(form.value.username, form.value.password)
-        .subscribe(
-            (response) => {
+        .subscribe((response) => {
               this.storage.set('userData', response).then( () => {
                   this.authService.isLoggedIn = true;
                   this.router.navigate(['/app/tabs/tab1']);
               });
-            },
-            (error) => {
+            }, (error) => {
               loading.dismiss();
               if (error.status === 401) {
-
                 this.passwordField = '';
+                this.passwordLabel.color = 'danger';
 
                 const item = document.getElementById('passwordItem');
                 item.classList.add('invalid-password');
-
-                this.passwordLabel.color = 'danger';
               } else {
-
+                // display server error msg
               }
-            },
-            () => {
+            }, () => {
               loading.dismiss();
             }
         );

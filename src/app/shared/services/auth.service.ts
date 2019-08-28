@@ -18,7 +18,7 @@ export class AuthService {
   ) { }
 
   login(username, password) {
-    return this.http.post(this.env.API_URL + '/api/grades', {
+    return this.http.post(this.env.API_URL + '/api/student', {
       username: username,
       password: password
     });
