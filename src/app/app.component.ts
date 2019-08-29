@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import {Router} from '@angular/router';
+import {NetworkService} from './shared/services/network.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import {Router} from '@angular/router';
 export class AppComponent {
   constructor(
     private platform: Platform,
-    private network: Network,
+    private networkService: NetworkService,
     private router: Router,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
@@ -26,16 +27,11 @@ export class AppComponent {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
 
-      if (this.network.type === 'none') {
-        this.router.navigateByUrl('/offline-login');
-      } else {
+      if (this.networkService.isConnected()) {
         this.router.navigateByUrl('/login');
+      } else {
+        this.router.navigateByUrl('/offline-login');
       }
-
-      // if there is an internet connection
-      // navigate to login page
-      // else
-      // show offline page
     });
   }
 }
