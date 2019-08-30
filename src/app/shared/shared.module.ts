@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {GenericHttpService} from './services/generic-http.service';
 import {HttpClientModule} from '@angular/common/http';
 import {NetworkService} from './services/network.service';
+import {StorageService} from './services/storage.service';
 
 @NgModule({
   declarations: [],
@@ -14,7 +15,8 @@ import {NetworkService} from './services/network.service';
   ],
   providers: [
       GenericHttpService,
-      NetworkService
+      NetworkService,
+      StorageService
   ]
 })
 export class SharedModule { }
