@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import {SharedModule} from './shared/shared.module';
 import {IonicStorageModule} from '@ionic/storage';
 import { Network } from '@ionic-native/network/ngx';
+import {AppMinimize} from '@ionic-native/app-minimize/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { Network } from '@ionic-native/network/ngx';
     StatusBar,
     SplashScreen,
     Network,
+    AppMinimize,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

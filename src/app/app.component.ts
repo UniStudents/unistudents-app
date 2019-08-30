@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-import {Platform, ToastController} from '@ionic/angular';
+import {Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Network } from '@ionic-native/network/ngx';
 import {Router} from '@angular/router';
 import {NetworkService} from './shared/services/network.service';
+import {AppMinimize} from '@ionic-native/app-minimize/ngx';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,8 @@ export class AppComponent {
     private networkService: NetworkService,
     private router: Router,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private appMinimize: AppMinimize
   ) {
     this.initializeApp();
   }

@@ -6,6 +6,7 @@ import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 import {StorageService} from '../shared/services/storage.service';
 import {Student} from '../shared/models/student.model';
+import {AppMinimize} from '@ionic-native/app-minimize/ngx';
 
 @Component({
   selector: 'app-login',
@@ -15,15 +16,23 @@ import {Student} from '../shared/models/student.model';
 export class LoginPage implements OnInit {
     @ViewChild('passwordLabel') passwordLabel: IonLabel;
     passwordField: string;
+    entered = false;
 
   constructor(
       private router: Router,
       private storageService: StorageService,
       private authService: AuthService,
-      public loadingController: LoadingController
+      public loadingController: LoadingController,
+      private appMinimize: AppMinimize
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+      if (this.entered) {
+        this.appMinimize.minimize();
+      }
   }
 
   async login(form: NgForm) {
@@ -37,6 +46,7 @@ export class LoginPage implements OnInit {
     this.authService.login(form.value.username, form.value.password)
         .subscribe((student: Student) => {
               this.storageService.saveStudent(student).then(() => {
+                  this.entered = true;
                   this.authService.isLoggedIn = true;
                   this.router.navigate(['/app/tabs/tab1']);
               });
