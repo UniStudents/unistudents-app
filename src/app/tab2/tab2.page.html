@@ -24,7 +24,7 @@
   </ion-grid>
 
   <div *ngIf="error == false">
-    <ion-list *ngFor="let semester of student?.grades.semesters">
+    <ion-list *ngFor="let semester of grades?.semesters">
       <ion-list-header>
         <h2 class="text-header">Εξάμηνο {{ semester.id }}</h2>
       </ion-list-header>

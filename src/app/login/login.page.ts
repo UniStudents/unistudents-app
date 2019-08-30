@@ -4,6 +4,8 @@ import {AuthService} from '../shared/services/auth.service';
 import {IonItem, IonLabel, LoadingController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
+import {StorageService} from '../shared/services/storage.service';
+import {Student} from '../shared/models/student.model';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ export class LoginPage implements OnInit {
 
   constructor(
       private router: Router,
-      private storage: Storage,
+      private storageService: StorageService,
       private authService: AuthService,
       public loadingController: LoadingController
   ) { }
@@ -33,8 +35,8 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     this.authService.login(form.value.username, form.value.password)
-        .subscribe((response) => {
-              this.storage.set('userData', response).then( () => {
+        .subscribe((student: Student) => {
+              this.storageService.saveStudent(student).then(() => {
                   this.authService.isLoggedIn = true;
                   this.router.navigate(['/app/tabs/tab1']);
               });

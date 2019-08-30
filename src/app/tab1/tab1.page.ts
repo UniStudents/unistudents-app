@@ -3,6 +3,7 @@ import { Chart } from 'chart.js';
 import {GradeResults} from '../shared/models/grade-results.model';
 import {Storage} from '@ionic/storage';
 import {Student} from '../shared/models/student.model';
+import {StorageService} from '../shared/services/storage.service';
 
 @Component({
   selector: 'app-tab1',
@@ -17,7 +18,7 @@ export class Tab1Page implements OnInit {
   public student: Student;
 
   constructor(
-      private storage: Storage
+      private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -25,7 +26,7 @@ export class Tab1Page implements OnInit {
   }
 
   loadStudentInfo() {
-    this.storage.get('userData')
+    this.storageService.getStudent()
         .then(
             (student) => {
               this.student = student;

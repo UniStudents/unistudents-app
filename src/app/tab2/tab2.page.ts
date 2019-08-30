@@ -5,6 +5,8 @@ import {LoadingController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {LoginForm} from '../shared/models/login-form.model';
 import {Student} from '../shared/models/student.model';
+import {StorageService} from '../shared/services/storage.service';
+import {Grades} from '../shared/models/grades.model';
 
 @Component({
   selector: 'app-tab2',
@@ -13,8 +15,7 @@ import {Student} from '../shared/models/student.model';
 })
 export class Tab2Page implements OnInit {
 
-  public grades: GradeResults;
-  public student: Student;
+  public grades: Grades;
   public error = false;
 
   loginForm: LoginForm = {
@@ -24,39 +25,27 @@ export class Tab2Page implements OnInit {
 
   constructor(
       private service: GenericHttpService,
-      private storage: Storage,
-      public loadingController: LoadingController) {}
+      private storageService: StorageService,
+      public loadingController: LoadingController
+  ) {}
 
   ngOnInit(): void {
     this.loadGrades();
   }
 
   async loadGrades() {
-      this.storage.get('userData').then(
-              (student) => {
-                  this.student = student;
-              }
-          )
-          .catch(
-              error => console.log(error)
-          )
-          .finally(
-              () => {
-              }
-          );
+      this.storageService.getStudent().then((student) => {
+          this.grades = student.grades;
+      });
   }
 
   loadOfflineGrades() {
-      this.storage.get('userData')
-          .then(
-          (grades) => {
-              this.grades = grades;
-          }
-      ).finally(
-          () => {
-              this.error = false;
-          }
-      );
+      this.storageService.getStudent().then((student) => {
+          this.grades = student.grades;
+      })
+      .finally(() => {
+          this.error = false;
+      });
   }
 
   refreshData(event) {
@@ -65,7 +54,7 @@ export class Tab2Page implements OnInit {
         data => {
           this.grades = data;
           this.error = false;
-          this.storage.set('userData', this.grades);
+          // this.storage.set('userData', this.grades);
         },
         error => {
           event.target.complete();
