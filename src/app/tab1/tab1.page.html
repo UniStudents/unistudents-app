@@ -14,8 +14,32 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col>
-                                <h1 class="text-lg">Συνδεθήκατε ως</h1>
+                                <h2 class="text-lg">Συνδεθήκατε ως</h2>
                                 <h1 class="text-xl">{{ student?.info.firstName }} {{ student?.info.lastName }}</h1>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row class="info-row">
+            <ion-col class="info-col">
+                <ion-card class="card info-card">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-item lines="none" color="white" no-padding>
+                                    <ion-icon class="icon" name="contact"></ion-icon>
+                                    <span class="text">{{ student?.info.aem }}</span>
+                                </ion-item>
+                                <ion-item lines="none" color="white" no-padding>
+                                    <ion-icon class="icon" name="business"></ion-icon>
+                                    <span class="text">{{ student?.info.departure }}</span>
+                                </ion-item>
+                                <ion-item lines="none" color="white" no-padding>
+                                    <ion-icon class="icon" name="calendar"></ion-icon>
+                                    <span class="text">{{ student?.info.registrationYear }}</span>
+                                </ion-item>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
