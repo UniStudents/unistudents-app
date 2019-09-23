@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
   async login(form: NgForm) {
 
     const loading = await this.loadingController.create({
-      message: 'Please wait..'
+      message: 'Παρακαλώ περιμένετε..'
     });
 
     await loading.present();
