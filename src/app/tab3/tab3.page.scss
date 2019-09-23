@@ -1,1 +1,30 @@
+.info-grid {
+  margin: 0 16px;
+  padding: 0;
+}
 
+.info-row {
+  margin: 12.5px 0;
+}
+
+.info-col {
+  padding: 0;
+}
+
+.info-card {
+  margin: 0;
+  height: 100%;
+}
+
+.icon {
+  display: inline-block;
+  font-size: 28px;
+  vertical-align: middle;
+  color: #666666;
+}
+
+.text{
+  display: inline-block;
+  vertical-align: middle;
+  color: #666666;
+}
