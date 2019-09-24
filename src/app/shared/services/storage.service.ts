@@ -9,8 +9,8 @@ import {Info} from '../models/info.model';
 })
 export class StorageService {
 
+  public newGrades = 0;
   private STUDENT_KEY = 'student';
-  private student: Student;
 
   constructor(
       private storage: Storage
@@ -21,14 +21,32 @@ export class StorageService {
   }
 
   saveGrades(grades: Grades) {
-    this.storage.get(this.STUDENT_KEY).then((student) => {
+    this.getStudent().then((student) => {
       student.grades = grades;
       return this.storage.set(this.STUDENT_KEY, student);
     });
   }
 
+  compareGrades(grades: Grades) {
+    this.getStudent().then((student: Student) => {
+      const oldGrades = student.grades;
+      let diffs = 0;
+
+      for (let i = 0; i < oldGrades.semesters.length; i++) {
+        for (let j = 0; j < oldGrades.semesters[i].courses.length; j++) {
+          if (oldGrades.semesters[i].courses[j].examPeriod !== grades.semesters[i].courses[j].examPeriod) {
+            diffs++;
+          }
+        }
+      }
+
+      console.log('Diffs: ' + diffs);
+      this.newGrades = diffs;
+    });
+  }
+
   saveInfo(info: Info) {
-    this.storage.get(this.STUDENT_KEY).then((student) => {
+    this.getStudent().then((student) => {
       student.info = info;
       return this.storage.set(this.STUDENT_KEY, student);
     });
