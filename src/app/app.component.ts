@@ -17,8 +17,7 @@ export class AppComponent {
     private networkService: NetworkService,
     private router: Router,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private appMinimize: AppMinimize
+    private statusBar: StatusBar
   ) {
     this.initializeApp();
   }

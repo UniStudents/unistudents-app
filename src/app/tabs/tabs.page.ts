@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {StorageService} from '../shared/services/storage.service';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage {
+export class TabsPage implements OnInit {
+  private newGrades;
 
-  constructor() {}
+  constructor(
+      private storageService: StorageService
+  ) {}
 
+  ngOnInit(): void {
+    this.newGrades = this.storageService.newGrades;
+  }
 }

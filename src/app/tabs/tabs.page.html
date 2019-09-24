@@ -8,6 +8,7 @@
 
     <ion-tab-button tab="tab2">
       <ion-icon name="school"></ion-icon>
+      <ion-badge *ngIf="newGrades > 0" color="danger">{{ newGrades }}</ion-badge>
       <ion-label>Βαθμολογία</ion-label>
     </ion-tab-button>
 
