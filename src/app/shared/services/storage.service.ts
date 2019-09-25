@@ -27,24 +27,6 @@ export class StorageService {
     });
   }
 
-  compareGrades(grades: Grades) {
-    this.getStudent().then((student: Student) => {
-      const oldGrades = student.grades;
-      let diffs = 0;
-
-      for (let i = 0; i < oldGrades.semesters.length; i++) {
-        for (let j = 0; j < oldGrades.semesters[i].courses.length; j++) {
-          if (oldGrades.semesters[i].courses[j].examPeriod !== grades.semesters[i].courses[j].examPeriod) {
-            diffs++;
-          }
-        }
-      }
-
-      console.log('Diffs: ' + diffs);
-      this.newGrades = diffs;
-    });
-  }
-
   saveInfo(info: Info) {
     this.getStudent().then((student) => {
       student.info = info;
@@ -58,5 +40,17 @@ export class StorageService {
 
   removeStudent() {
     return this.storage.remove(this.STUDENT_KEY);
+  }
+
+  compareGrades(grades: Grades, oldGrades: Grades) {
+    let diffs = 0;
+    for (let i = 0; i < oldGrades.semesters.length; i++) {
+      for (let j = 0; j < oldGrades.semesters[i].courses.length; j++) {
+        if (oldGrades.semesters[i].courses[j].examPeriod !== grades.semesters[i].courses[j].examPeriod) {
+          diffs++;
+        }
+      }
+    }
+    this.newGrades = diffs;
   }
 }
