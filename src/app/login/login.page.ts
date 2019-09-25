@@ -48,7 +48,9 @@ export class LoginPage implements OnInit {
     this.authService.login(form.value.username, form.value.password).subscribe((student: Student) => {
         // compare grades
         this.storageService.getStudent().then((oldStudent) => {
-            this.storageService.compareGrades(student.grades, oldStudent.grades);
+            if (oldStudent) {
+                this.storageService.compareGrades(student.grades, oldStudent.grades);
+            }
         });
 
         // save credentials temporary for refresh data
