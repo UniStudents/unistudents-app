@@ -18,6 +18,7 @@ export class TabsPage implements OnInit {
   }
 
   newGradesExist(): boolean {
-      return this.storageService.newGrades > 0;
+      this.newGrades = this.storageService.newGrades;
+      return this.newGrades > 0;
   }
 }
