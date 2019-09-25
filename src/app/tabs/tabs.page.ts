@@ -16,4 +16,8 @@ export class TabsPage implements OnInit {
   ngOnInit(): void {
     this.newGrades = this.storageService.newGrades;
   }
+
+  newGradesExist(): boolean {
+      return this.storageService.newGrades > 0;
+  }
 }
