@@ -5,7 +5,8 @@
         <img src="/assets/server_error.svg"/>
         <h5 class="text-error-title">Είσαι offline</h5>
         <h6 class="text-error-subtitle">Έλεξγε τη συνδεσή σου και δοκίμασε ξανά.</h6>
-        <ion-button expand="block" style="text-transform: none" (click)="proceedOffline()">Συνέχισε offline ως {{ userAem }}</ion-button>
+        <ion-button *ngIf="userAem !== ''" expand="block" style="text-transform: none" [disabled]="false" (click)="proceedOffline()">Συνέχεια ως {{ userAem }}</ion-button>
+        <ion-button *ngIf="userAem === ''" expand="block" style="text-transform: none" [disabled]="true">Δεν βρέθηκε λογαριασμός</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

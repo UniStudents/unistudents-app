@@ -11,7 +11,7 @@ import {Student} from '../shared/models/student.model';
 })
 export class OfflineLoginPage implements OnInit {
 
-  private userAem: string;
+  private userAem = '';
 
   constructor(
       private router: Router,
