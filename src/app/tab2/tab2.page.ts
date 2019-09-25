@@ -1,12 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {GenericHttpService} from '../shared/services/generic-http.service';
-import {GradeResults} from '../shared/models/grade-results.model';
-import {LoadingController} from '@ionic/angular';
-import {Storage} from '@ionic/storage';
-import {LoginForm} from '../shared/models/login-form.model';
-import {Student} from '../shared/models/student.model';
 import {StorageService} from '../shared/services/storage.service';
 import {Grades} from '../shared/models/grades.model';
+import {ApiService} from '../shared/services/api.service';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -16,53 +12,68 @@ import {Grades} from '../shared/models/grades.model';
 export class Tab2Page implements OnInit {
 
   public grades: Grades;
-  public error = false;
-
-  loginForm: LoginForm = {
-      username: 'e16130',
-      password: '21aug1998nikos$'
-  };
 
   constructor(
-      private service: GenericHttpService,
+      private apiService: ApiService,
       private storageService: StorageService,
-      public loadingController: LoadingController
+      public toastController: ToastController
   ) {}
 
   ngOnInit(): void {
-    this.loadGrades();
+      this.loadGrades();
   }
 
-  async loadGrades() {
+  ionViewWillEnter() {
+      console.log('I am erasing newGrades!');
+      this.storageService.newGrades = 0;
+  }
+
+  loadGrades() {
       this.storageService.getStudent().then((student) => {
-          this.grades = student.grades;
+        this.grades = student.grades;
       });
   }
 
-  loadOfflineGrades() {
-      this.storageService.getStudent().then((student) => {
-          this.grades = student.grades;
-      })
-      .finally(() => {
-          this.error = false;
+  refreshGrades(event) {
+    this.apiService.getGrades().subscribe((grades: Grades) => {
+
+      this.storageService.getStudent().then((oldStudent) => {
+        // compare grades
+        this.storageService.compareGrades(grades, oldStudent.grades);
+
+        // print message about new grades
+        this.printNewGradesMsg();
       });
+
+      // save new grades
+      this.grades = grades;
+      this.storageService.saveGrades(grades);
+    },
+    error => {
+      event.target.complete();
+      this.presentToast('Κάτι πήγε λάθος! Δοκίμασε ξανά αργότερα.');
+    },
+    () => {
+      event.target.complete();
+    });
   }
 
-  refreshData(event) {
+  printNewGradesMsg() {
+      console.log('I am printing newGrades: ' + this.storageService.newGrades);
+      if (this.storageService.newGrades > 1) {
+          this.presentToast('Έχεις ' + this.storageService.newGrades + ' νέους βαθμούς!');
+      } else if (this.storageService.newGrades === 1) {
+          this.presentToast('Έχεις 1 νέο βαθμό!');
+      } else {
+          this.presentToast('Δεν έχεις νέους βαθμούς!');
+      }
+  }
 
-    this.service.getGradeResults(this.loginForm).subscribe(
-        data => {
-          this.grades = data;
-          this.error = false;
-          // this.storage.set('userData', this.grades);
-        },
-        error => {
-          event.target.complete();
-          this.error = true;
-        },
-        () => {
-          event.target.complete();
-        }
-    );
+  async presentToast(msg: string) {
+    const toast = await this.toastController.create({
+        message: msg,
+        duration: 2000
+    });
+    await toast.present();
   }
 }
