@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {StorageService} from '../shared/services/storage.service';
 import {Student} from '../shared/models/student.model';
 import {AppMinimize} from '@ionic-native/app-minimize/ngx';
+import {ApiService} from '../shared/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginPage implements OnInit {
       private storageService: StorageService,
       private authService: AuthService,
       public loadingController: LoadingController,
-      private appMinimize: AppMinimize
+      private appMinimize: AppMinimize,
+      private apiService: ApiService
   ) { }
 
   ngOnInit() {
@@ -44,10 +46,16 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     this.authService.login(form.value.username, form.value.password).subscribe((student: Student) => {
+        // compare grades
+        this.storageService.getStudent().then((oldStudent) => {
+            this.storageService.compareGrades(student.grades, oldStudent.grades);
+        });
 
-        // compare data
-        this.storageService.compareGrades(student.grades);
+        // save credentials temporary for refresh data
+        this.apiService.username = form.value.username;
+        this.apiService.password = form.value.password;
 
+        // save fetched data locally & navigate to home screen
         this.storageService.saveStudent(student).then(() => {
             this.entered = true;
             this.authService.isLoggedIn = true;
