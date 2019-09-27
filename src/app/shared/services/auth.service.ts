@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Storage} from '@ionic/storage';
 import {EnvService} from './env.service';
-import {LoginForm} from '../models/login-form.model';
+import {StorageService} from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private storage: Storage,
+    private storageService: StorageService,
     private env: EnvService
   ) { }
 
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   logout() {
-    this.storage.remove('userData');
+    this.storageService.removeStudent();
     this.isLoggedIn = false;
   }
 }
