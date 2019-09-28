@@ -1,8 +1,8 @@
 import {Semester} from './semester.model';
 
 export class Grades {
-    totalPassedCourses: number;
+    totalPassedCourses: string;
     totalAverageGrade: string;
-    totalEcts: number;
+    totalEcts: string;
     semesters: Semester[];
 }

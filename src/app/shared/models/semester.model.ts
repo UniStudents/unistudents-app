@@ -4,6 +4,6 @@ export class Semester {
     id: number;
     passedCourses: number;
     gradeAverage: string;
-    ects: number;
+    ects: string;
     courses: Course[];
 }
