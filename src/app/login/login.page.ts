@@ -15,9 +15,8 @@ import {ApiService} from '../shared/services/api.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-    @ViewChild('passwordLabel') passwordLabel: IonLabel;
-    passwordField: string;
-    entered = false;
+  @ViewChild('passwordLabel') passwordLabel: IonLabel;
+  passwordField: string;
 
   constructor(
       private router: Router,
@@ -32,7 +31,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter() {
-      if (this.entered) {
+      if (this.authService.isLoggedIn) {
         this.appMinimize.minimize();
       }
   }
@@ -59,7 +58,6 @@ export class LoginPage implements OnInit {
 
         // save fetched data locally & navigate to home screen
         this.storageService.saveStudent(student).then(() => {
-            this.entered = true;
             this.authService.isLoggedIn = true;
             this.router.navigate(['/app/tabs/tab1']);
         });

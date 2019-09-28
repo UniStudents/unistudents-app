@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {Router} from '@angular/router';
 import {NetworkService} from './shared/services/network.service';
-import {AppMinimize} from '@ionic-native/app-minimize/ngx';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +31,10 @@ export class AppComponent {
       } else {
         this.router.navigateByUrl('/offline-login');
       }
+
+      this.platform.resume.subscribe(() => {
+        this.router.navigate(['/app/tabs/tab1']);
+      });
     });
   }
 }
