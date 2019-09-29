@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Chart } from 'chart.js';
 import {GradeResults} from '../shared/models/grade-results.model';
-import {Storage} from '@ionic/storage';
 import {Student} from '../shared/models/student.model';
 import {StorageService} from '../shared/services/storage.service';
 
@@ -12,8 +11,12 @@ import {StorageService} from '../shared/services/storage.service';
 })
 export class Tab1Page implements OnInit {
   @ViewChild('lineCanvas') lineCanvas: ElementRef;
+  @ViewChild('pieCanvas') pieCanvas: ElementRef;
+  @ViewChild('doughnutCanvas') doughnutCanvas: ElementRef;
 
   private lineChart: Chart;
+  private pieChart: Chart;
+  private doughnutChart: Chart;
   public grades: GradeResults;
   public student: Student;
 
@@ -26,29 +29,86 @@ export class Tab1Page implements OnInit {
   }
 
   loadStudentInfo() {
-    this.storageService.getStudent()
-        .then(
-            (student) => {
-              this.student = student;
-              this.lineChart = this.getChart();
-            }
-        )
-        .catch(
-            error => console.log(error)
-        )
-        .finally(
-        () => {
-        }
-    );
+    this.storageService.getStudent().then((student) => {
+      this.student = student;
+      this.lineChart = this.getLineChart();
+      this.pieChart = this.getPieChart();
+      this.doughnutChart = this.getDoughnutChart();
+    });
   }
 
-  getChart(): Chart {
+  getDoughnutChart(): Chart {
+    const dataset: Array<number> = [0, 0, 0];
 
+    for (const semester of this.student.grades.semesters) {
+      for (const course of semester.courses) {
+        if (course.grade === '-') {
+          dataset[2]++;
+        } else if (Number(course.grade) < 5) {
+          dataset[1]++;
+        } else if (Number(course.grade) > 4) {
+          dataset[0]++;
+        }
+      }
+    }
+
+    return new Chart(this.doughnutCanvas.nativeElement, {
+      type: 'doughnut',
+      data: {
+        labels: ['Πέρασες', 'Κόπηκες', 'Δεν έχεις δώσει'],
+        datasets: [{
+          backgroundColor: [
+            '#657BFF',
+            'rgba(101,123,255,0.6)',
+            'rgba(101,123,255,0.3)'
+          ],
+          data: dataset
+        }]
+      }
+    });
+  }
+
+  getPieChart(): Chart {
+    const gradesQuantity: Array<number> = [0, 0, 0];
+
+    for (const semester of this.student.grades.semesters) {
+      for (const course of semester.courses) {
+        if (course.grade !== '-') {
+          if (Number(course.grade) > 8) {
+            gradesQuantity[0]++;
+          } else if (Number(course.grade) > 6) {
+            gradesQuantity[1]++;
+          } else if (Number(course.grade) > 4) {
+            gradesQuantity[2]++;
+          } else {
+            continue;
+          }
+        }
+      }
+    }
+
+    return new Chart(this.pieCanvas.nativeElement, {
+      type: 'pie',
+      data: {
+        labels: ['Άριστα', 'Λίαν Καλώς', 'Καλώς'],
+        datasets: [{
+          backgroundColor: [
+            '#657BFF',
+            'rgba(101,123,255,0.8)',
+            'rgba(101,123,255,0.6)'
+          ],
+          data: gradesQuantity
+        }]
+      }
+    });
+  }
+
+  getLineChart(): Chart {
     const grades: Array<number> = [];
     const semesters: Array<number> = [];
 
     for (let i = 0; i < this.student.grades.semesters.length; i++) {
-      grades.push(Number(this.student.grades.semesters[i].gradeAverage));
+      grades.push(Number(this.student.grades.semesters[i].gradeAverage.replace('-', '')));
       semesters.push(this.student.grades.semesters[i].id);
     }
 
