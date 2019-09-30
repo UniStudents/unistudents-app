@@ -23,11 +23,6 @@ export class Tab2Page implements OnInit {
       this.loadGrades();
   }
 
-  ionViewWillEnter() {
-      console.log('I am erasing newGrades!');
-      this.storageService.newGrades = 0;
-  }
-
   loadGrades() {
       this.storageService.getStudent().then((student) => {
         this.grades = student.grades;
@@ -35,6 +30,13 @@ export class Tab2Page implements OnInit {
   }
 
   refreshGrades(event) {
+
+    if (this.apiService.username === undefined) {
+        this.presentToast('Είσαι offline. Δοκίμασε να συνδεθείς ξανά.');
+        event.target.complete();
+        return;
+    }
+
     this.apiService.getGrades().subscribe((grades: Grades) => {
 
       this.storageService.getStudent().then((oldStudent) => {
@@ -59,7 +61,6 @@ export class Tab2Page implements OnInit {
   }
 
   printNewGradesMsg() {
-      console.log('I am printing newGrades: ' + this.storageService.newGrades);
       if (this.storageService.newGrades > 1) {
           this.presentToast('Έχεις ' + this.storageService.newGrades + ' νέους βαθμούς!');
       } else if (this.storageService.newGrades === 1) {

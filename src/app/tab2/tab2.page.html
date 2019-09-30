@@ -31,7 +31,8 @@
             </ion-row>
           </ion-col>
           <ion-col size="2">
-            <h2 class="text-xl">{{ course.grade }}</h2>
+              <span *ngIf="storageService.newGradesList.includes(course.id)" class="notify-badge">NEW</span>
+              <h2 class="text-xl">{{ course.grade }}</h2>
           </ion-col>
         </ion-row>
       </ion-grid>

@@ -10,6 +10,7 @@ import {Info} from '../models/info.model';
 export class StorageService {
 
   public newGrades = 0;
+  public newGradesList: Array<string> = [];
   private STUDENT_KEY = 'student';
 
   constructor(
@@ -43,11 +44,15 @@ export class StorageService {
   }
 
   compareGrades(grades: Grades, oldGrades: Grades) {
+    this.newGrades = 0;
+    this.newGradesList = [];
+
     let diffs = 0;
     for (let i = 0; i < oldGrades.semesters.length; i++) {
       for (let j = 0; j < oldGrades.semesters[i].courses.length; j++) {
         if (oldGrades.semesters[i].courses[j].examPeriod !== grades.semesters[i].courses[j].examPeriod) {
           diffs++;
+          this.newGradesList.push(grades.semesters[i].courses[j].id);
         }
       }
     }
