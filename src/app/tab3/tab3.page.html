@@ -16,19 +16,19 @@
               <ion-col>
                 <ion-item lines="none" color="white" no-padding>
                   <ion-icon class="icon" name="ribbon"></ion-icon>
-                  <span class="text">{{ student?.info.aem }}</span>
+                  <ion-label>{{ student?.info.aem }}</ion-label>
                 </ion-item>
                 <ion-item lines="none" color="white" no-padding>
                   <ion-icon class="icon" name="contact"></ion-icon>
-                  <span class="text">{{ student?.info.firstName }} {{ student?.info.lastName }}</span>
+                  <ion-label>{{ student?.info.firstName }} {{ student?.info.lastName }}</ion-label>
                 </ion-item>
                 <ion-item lines="none" color="white" no-padding>
                   <ion-icon class="icon" name="business"></ion-icon>
-                  <span class="text">{{ student?.info.departure }}</span>
+                  <ion-label>{{ student?.info.departure }}</ion-label>
                 </ion-item>
                 <ion-item lines="none" color="white" no-padding>
                   <ion-icon class="icon" name="calendar"></ion-icon>
-                  <span class="text">{{ student?.info.registrationYear }}</span>
+                  <ion-label>{{ student?.info.registrationYear }}</ion-label>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -36,28 +36,12 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-row class="info-row">
-      <ion-col class="info-col">
-        <ion-list>
-          <ion-item-divider no-padding>
-            <ion-label>
-              Ρυθμίσεις
-            </ion-label>
-          </ion-item-divider>
-          <ion-item no-padding lines="none" button>
-            <ion-icon class="icon" color="#000" name="information-circle"></ion-icon>
-            <ion-label>About</ion-label>
-          </ion-item>
-          <ion-item no-padding button>
-            <ion-icon class="icon" color="#000" name="help-circle"></ion-icon>
-            <ion-label>FAQ</ion-label>
-          </ion-item>
-          <ion-item no-padding (click)="presentAlert()" button>
-            <ion-icon slot="end" name="log-out" color="danger"></ion-icon>
-            <ion-label>Αποσύνδεση</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
   </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger" (click)="logoutAlert()">
+      <ion-icon name="log-out"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

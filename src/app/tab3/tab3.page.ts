@@ -36,7 +36,7 @@ export class Tab3Page implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  async presentAlert() {
+  async logoutAlert() {
     const alert = await this.alertController.create({
       header: 'Αποσύνδεση',
       message: 'Τα δεδομένα σου θα διαγραφτούν απο τη συσκευή!',
