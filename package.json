@@ -31,7 +31,7 @@
     "@ionic/angular": "^4.1.0",
     "@ionic/storage": "^2.2.0",
     "chart.js": "^2.8.0",
-    "cordova-android": "^8.0.0",
+    "cordova-android": "^8.1.0",
     "cordova-plugin-appminimize": "^1.0.1",
     "cordova-plugin-network-information": "^2.0.2",
     "cordova-sqlite-storage": "^3.2.1",
