@@ -20,7 +20,7 @@
               </ion-item>
               <ion-item id="passwordItem" no-padding>
                 <ion-label #passwordLabel position="floating">Κωδικός Πρόσβασης</ion-label>
-                <ion-input [(ngModel)]="passwordField" type="password" name="password"></ion-input>
+                <ion-input [(ngModel)]="passwordField" type="password" name="password" (keyup.enter)="login(form)"></ion-input>
               </ion-item>
               <ion-col size="12">
                 <ion-button type="submit" expand="block" style="text-transform: none">Είσοδος</ion-button>
