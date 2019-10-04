@@ -2,10 +2,36 @@
 
 # UniStudents
 
-Το UniStudents είναι νέα η εφαρμογή με την οποία οι φοιτητές του [Πανεπιστημίου Πειραιώς](https://www.unipi.gr/unipi/el/) ενημερώνονται για τους βαθμούς τους! Η εφαρμογή είναι και θα παραμείνει ad-free και open-source. Αυτή τη στιγμή είναι διαθέσιμη στο [Play Store](https://play.google.com/store) και σύντομα θα βρίσκεται και στο App Store.
+Το UniStudents είναι νέα η εφαρμογή με την οποία οι φοιτητές του [Πανεπιστημίου Πειραιώς](https://www.unipi.gr/unipi/el/) ενημερώνονται για τους βαθμούς τους! Η εφαρμογή είναι και θα παραμείνει ad-free και open-source. Αυτή τη στιγμή είναι διαθέσιμη στο [Play Store](https://play.google.com/store/apps/details?id=com.unipi.students) και σύντομα θα βρίσκεται και στο App Store.
 
-<a href="https://play.google.com/store"><img src="https://user-images.githubusercontent.com/25327910/66043476-ec276200-e527-11e9-95a4-bf76bbced9ab.png" width="258" height="100"></a>
+<a href="https://play.google.com/store/apps/details?id=com.unipi.students"><img src="https://user-images.githubusercontent.com/25327910/66043476-ec276200-e527-11e9-95a4-bf76bbced9ab.png" width="258" height="100"></a>
 
-# License & Copyright
+## Contribute
+
+Είσαι φοιτητής του Πανεπιστημίου Πειραιώς και θες να βοηθήσεις στην ανάπτυξη του project? Είσαι familiar με Ionic, Angular ή γενικότερα με mobile development? Περιμένω μήνυμά σου στο μαιλ μου nikos.skl98@gmail.com
+
+## Issues
+
+Συνάντησες κάποιο πρόβλημα στην εφαρμογή? Άνοιξε καινούργιο [Issue](https://github.com/NickSklA/unistudents/issues) ή στείλε μου [μαιλ](mailto:nikos.skl98@gmail.com) περιγράφοντας λεπτομερώς τι συναίβει! 
+
+## Τμήματα που υποστηρίζονται
+
+- [x] Τμήμα Ψηφιακών Συστημάτων
+- [x] Τμήμα Βιομηχανικής Διοίκησης & Τεχνολογίας
+- [ ] Τμήμα Πληροφορικής
+- [ ] Τμήμα Στατιστικής & Ασφαλιστικής Επιστήμης
+- [ ] Τμήμα Χρηματοοικονομικής & Τραπεζικής Διοικητικής
+- [ ] Τμήμα Ναυτιλιακών Σπουδών
+- [ ] Τμήμα Οικονομικής Επιστήμης
+- [ ] Τμήμα Οργάνωσης & Διοίκησης Επιχειρήσεων
+- [ ] Τμήμα Διεθνών & Ευρωπαϊκών Σπουδών
+- [ ] Τμήμα Τουριστικών Σπουδών
+
+
+## Disclaimer
+
+Το πρόγραμμα δεν αποτελεί μέρος του Πανεπιστημίου Πειραιώς! Πρόκειται για μια ανεπίσημη υλοποίηση της οποίας στόχος της είναι, να δώσει στο φοιτητή μία καλύτερη εμπειρία στη παρακολούθηση των βαθμών του. Ο χρήστης που επιλέγει την χρήση αυτής της εφαρμογής το κάνει καθαρά με δική του ευθύνη, έχοντας υπόψιν τα παραπάνω. Η εφαρμογή **δεν αποθηκεύει πουθενά τους κωδικούς και τα στοιχεία του χρήστη**, εκτός από τους βαθμούς του στη συσκευή του. Το api που χρησιμοποιείται για την ανάκτηση των στοιχείων του χρήστη είναι open-source και βρίσκεται στο repository: [unipi-students-api](https://github.com/NickSklA/unipi-students-api)
+
+## License & Copyright
 
 @ Nikos Sklavounos. Licensed under the [MIT License](LICENSE).
