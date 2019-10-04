@@ -7,6 +7,7 @@ import {StorageService} from '../shared/services/storage.service';
 import {Student} from '../shared/models/student.model';
 import {AppMinimize} from '@ionic-native/app-minimize/ngx';
 import {ApiService} from '../shared/services/api.service';
+import {Grades} from '../shared/models/grades.model';
 
 @Component({
   selector: 'app-login',
@@ -52,11 +53,7 @@ export class LoginPage implements OnInit {
 
     this.authService.login(form.value.username, form.value.password).subscribe((student: Student) => {
         // compare grades
-        this.storageService.getStudent().then((oldStudent) => {
-            if (oldStudent) {
-                this.storageService.compareGrades(student.grades, oldStudent.grades);
-            }
-        });
+        this.compareGrades(student.grades);
 
         // save credentials temporary for refresh data
         this.apiService.username = form.value.username;
@@ -98,7 +95,7 @@ export class LoginPage implements OnInit {
   }
 
   passwordIsValid(password: string): boolean {
-      if (password === undefined) {
+      if (password === undefined || password === '') {
           this.passwordLabel.color = 'danger';
           const item = document.getElementById('passwordItem');
           item.classList.add('invalid-password');
@@ -109,6 +106,14 @@ export class LoginPage implements OnInit {
           item.classList.remove('invalid-password');
           return true;
       }
+  }
+
+  compareGrades(grades: Grades) {
+      this.storageService.getStudent().then((oldStudent) => {
+          if (oldStudent) {
+              this.storageService.compareGrades(grades, oldStudent.grades);
+          }
+      });
   }
 
   async presentToast(msg: string) {
