@@ -32,7 +32,7 @@ export class Tab1Page implements OnInit {
     this.storageService.getStudent().then((student) => {
       this.student = student;
       this.lineChart = this.getLineChart();
-      this.pieChart = this.getPieChart();
+      // this.pieChart = this.getPieChart();
       this.doughnutChart = this.getDoughnutChart();
     });
   }
@@ -64,44 +64,54 @@ export class Tab1Page implements OnInit {
           ],
           data: dataset
         }]
-      }
-    });
-  }
-
-  getPieChart(): Chart {
-    const gradesQuantity: Array<number> = [0, 0, 0];
-
-    for (const semester of this.student.grades.semesters) {
-      for (const course of semester.courses) {
-        if (course.grade !== '-') {
-          if (Number(course.grade) > 8) {
-            gradesQuantity[0]++;
-          } else if (Number(course.grade) > 6) {
-            gradesQuantity[1]++;
-          } else if (Number(course.grade) > 4) {
-            gradesQuantity[2]++;
-          } else {
-            continue;
-          }
+      },
+      options: {
+        legend: {
+          onClick: null
         }
       }
-    }
-
-    return new Chart(this.pieCanvas.nativeElement, {
-      type: 'pie',
-      data: {
-        labels: ['Άριστα', 'Λίαν Καλώς', 'Καλώς'],
-        datasets: [{
-          backgroundColor: [
-            '#657BFF',
-            'rgba(101,123,255,0.8)',
-            'rgba(101,123,255,0.6)'
-          ],
-          data: gradesQuantity
-        }]
-      }
     });
   }
+
+  // getPieChart(): Chart {
+  //   const gradesQuantity: Array<number> = [0, 0, 0];
+  //
+  //   for (const semester of this.student.grades.semesters) {
+  //     for (const course of semester.courses) {
+  //       if (course.grade !== '-') {
+  //         if (Number(course.grade) > 8) {
+  //           gradesQuantity[0]++;
+  //         } else if (Number(course.grade) > 6) {
+  //           gradesQuantity[1]++;
+  //         } else if (Number(course.grade) > 4) {
+  //           gradesQuantity[2]++;
+  //         } else {
+  //           continue;
+  //         }
+  //       }
+  //     }
+  //   }
+  //
+  //   return new Chart(this.pieCanvas.nativeElement, {
+  //     type: 'pie',
+  //     data: {
+  //       labels: ['Άριστα', 'Λίαν Καλώς', 'Καλώς'],
+  //       datasets: [{
+  //         backgroundColor: [
+  //           '#657BFF',
+  //           'rgba(101,123,255,0.8)',
+  //           'rgba(101,123,255,0.6)'
+  //         ],
+  //         data: gradesQuantity
+  //       }]
+  //     },
+  //     options: {
+  //       legend: {
+  //         onClick: null
+  //       }
+  //     }
+  //   });
+  // }
 
   getLineChart(): Chart {
     const grades: Array<number> = [];
@@ -118,7 +128,7 @@ export class Tab1Page implements OnInit {
         labels: semesters,
         datasets: [
           {
-            label: 'GPA',
+            label: 'Μέσος Όρος',
             fill: true,
             lineTension: 0.4,
             backgroundColor: 'rgba(101,123,255,0.41)',
@@ -144,6 +154,12 @@ export class Tab1Page implements OnInit {
         ]
       },
       options: {
+        legend: {
+          onClick: null,
+          labels: {
+            boxWidth: 0
+          }
+        },
         scales: {
           xAxes: [{
             gridLines: {
