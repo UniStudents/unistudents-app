@@ -16,7 +16,7 @@
             <ion-col size="12">
               <ion-item id="usernameItem" no-padding>
                 <ion-label #usernameLabel position="floating">Όνομα Χρήστη</ion-label>
-                <ion-input ngModel type="text" name="username"></ion-input>
+                <ion-input [(ngModel)]="usernameField" type="text" name="username"></ion-input>
               </ion-item>
               <ion-item id="passwordItem" no-padding>
                 <ion-label #passwordLabel position="floating">Κωδικός Πρόσβασης</ion-label>

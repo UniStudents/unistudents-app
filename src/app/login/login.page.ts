@@ -18,6 +18,7 @@ export class LoginPage implements OnInit {
   @ViewChild('usernameLabel') usernameLabel: IonLabel;
   @ViewChild('passwordLabel') passwordLabel: IonLabel;
   passwordField: string;
+  usernameField: string;
 
   constructor(
       private router: Router,
@@ -30,11 +31,23 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
+      this.storageService.getUsername().then((username) => {
+          this.usernameField = username;
+      });
   }
 
   ionViewWillEnter() {
       if (this.authService.isLoggedIn) {
         this.appMinimize.minimize();
+      } else {
+          this.storageService.getUsername().then((username) => {
+              if (username !== null) {
+                  this.usernameField = username;
+              } else {
+                  this.usernameField = '';
+              }
+          });
+          this.passwordField = '';
       }
   }
 
@@ -58,6 +71,9 @@ export class LoginPage implements OnInit {
         // save credentials temporary for refresh data
         this.apiService.username = form.value.username;
         this.apiService.password = form.value.password;
+
+        // store username for future login
+        this.storageService.saveUsername(form.value.username);
 
         // save fetched data locally & navigate to home screen
         this.storageService.saveStudent(student).then(() => {
