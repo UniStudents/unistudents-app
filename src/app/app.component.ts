@@ -36,6 +36,14 @@ export class AppComponent {
       this.platform.resume.subscribe(() => {
         this.router.navigate(['/app/tabs/tab1']);
       });
+
+      this.platform.backButton.subscribe(async () => {
+        if ((this.router.isActive('/login', true) && this.router.url === '/login') ||
+            ((this.router.isActive('/offline-login', true) && this.router.url === '/offline-login'))) {
+          navigator['app'].exitApp();
+        }
+      });
+
     });
   }
 }
