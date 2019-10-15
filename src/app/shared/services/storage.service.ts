@@ -12,6 +12,7 @@ export class StorageService {
   public newGrades = 0;
   public newGradesList: Array<string> = [];
   private STUDENT_KEY = 'student';
+  private USERNAME_KEY = 'username';
 
   constructor(
       private storage: Storage
@@ -57,5 +58,17 @@ export class StorageService {
       }
     }
     this.newGrades = diffs;
+  }
+
+  saveUsername(username: string) {
+    return this.storage.set(this.USERNAME_KEY, username);
+  }
+
+  getUsername() {
+    return this.storage.get(this.USERNAME_KEY);
+  }
+
+  removeUsername() {
+    return this.storage.remove(this.USERNAME_KEY);
   }
 }

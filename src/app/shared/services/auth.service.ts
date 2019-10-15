@@ -26,6 +26,7 @@ export class AuthService {
 
   logout() {
     this.storageService.removeStudent();
+    this.storageService.removeUsername();
     this.isLoggedIn = false;
   }
 }
