@@ -20,6 +20,9 @@ export class LoginPage implements OnInit {
   passwordField: string;
   usernameField: string;
 
+  passwordType = 'password';
+  passwordIcon = 'eye-off';
+
   constructor(
       private router: Router,
       private storageService: StorageService,
@@ -138,5 +141,10 @@ export class LoginPage implements OnInit {
           duration: 2000
       });
       await toast.present();
+  }
+
+  hideShowPassword() {
+      this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+      this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 }

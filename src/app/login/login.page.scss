@@ -14,3 +14,13 @@ ion-item.invalid-password {
   --border-color: var(--ion-color-danger);
   --highlight-background: var(--ion-color-danger) !important;
 }
+
+.passwordIcon {
+  font-size: 22px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 8px;
+  margin: 0;
+  z-index: 5;
+}
