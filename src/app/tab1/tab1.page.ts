@@ -118,8 +118,9 @@ export class Tab1Page implements OnInit {
     const semesters: Array<number> = [];
 
     for (let i = 0; i < this.student.grades.semesters.length; i++) {
-      grades.push(Number(this.student.grades.semesters[i].gradeAverage.replace('-', '')));
+      if (this.student.grades.semesters[i].gradeAverage === '-') { continue; }
       semesters.push(this.student.grades.semesters[i].id);
+      grades.push(Number(this.student.grades.semesters[i].gradeAverage.replace('-', '')));
     }
 
     return new Chart(this.lineCanvas.nativeElement, {
