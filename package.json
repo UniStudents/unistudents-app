@@ -1,7 +1,7 @@
 {
-  "name": "students-app",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "name": "UniStudents",
+  "version": "1.0.3",
+  "author": "Sklavounos Nikos",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -23,6 +23,7 @@
     "@capacitor/android": "^1.1.1",
     "@capacitor/core": "1.1.1",
     "@ionic-native/app-minimize": "^5.13.0",
+    "@ionic-native/app-version": "^5.19.1",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/keyboard": "^5.12.0",
     "@ionic-native/network": "^5.12.0",
@@ -32,6 +33,7 @@
     "@ionic/storage": "^2.2.0",
     "chart.js": "^2.8.0",
     "cordova-android": "^8.1.0",
+    "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-appminimize": "^1.0.1",
     "cordova-plugin-network-information": "^2.0.2",
     "cordova-sqlite-storage": "^3.2.1",
@@ -87,7 +89,8 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-appminimize": {}
+      "cordova-plugin-appminimize": {},
+      "cordova-plugin-app-version": {}
     },
     "platforms": [
       "android"
