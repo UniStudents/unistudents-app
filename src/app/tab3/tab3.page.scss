@@ -4,11 +4,18 @@
 }
 
 .info-row {
-  margin: 12.5px 0 30px;
+  margin: 12.5px 0 10px;
 }
 
 .info-col {
   padding: 0;
+}
+
+.version {
+  font-style: italic;
+  margin: 0;
+  text-align: right;
+  color: #a2a4ab;
 }
 
 .info-card {
