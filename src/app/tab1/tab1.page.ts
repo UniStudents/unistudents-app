@@ -39,6 +39,7 @@ export class Tab1Page implements OnInit {
 
   getDoughnutChart(): Chart {
     const dataset: Array<number> = [0, 0, 0];
+    dataset[0] = Number(this.student.grades.totalPassedCourses);
 
     for (const semester of this.student.grades.semesters) {
       for (const course of semester.courses) {
@@ -46,8 +47,6 @@ export class Tab1Page implements OnInit {
           dataset[2]++;
         } else if (Number(course.grade) < 5) {
           dataset[1]++;
-        } else if (Number(course.grade) > 4) {
-          dataset[0]++;
         }
       }
     }
