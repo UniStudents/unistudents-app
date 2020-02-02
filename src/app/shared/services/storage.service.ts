@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Storage} from '@ionic/storage';
-import {Student} from '../models/student.model';
-import {Grades} from '../models/grades.model';
-import {Info} from '../models/info.model';
+import { Storage } from '@ionic/storage';
+import { Student } from '../models/student.model';
+import { Grades } from '../models/grades.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +12,9 @@ export class StorageService {
   public newGradesList: Array<string> = [];
   private STUDENT_KEY = 'student';
   private USERNAME_KEY = 'username';
+  private PASSWORD_KEY = 'password';
+  private THEME_MODE_KEY = 'theme_mode';
+  private REMEMBER_ME_KEY = 'remember_me';
 
   constructor(
       private storage: Storage
@@ -25,13 +27,6 @@ export class StorageService {
   saveGrades(grades: Grades) {
     this.getStudent().then((student) => {
       student.grades = grades;
-      return this.storage.set(this.STUDENT_KEY, student);
-    });
-  }
-
-  saveInfo(info: Info) {
-    this.getStudent().then((student) => {
-      student.info = info;
       return this.storage.set(this.STUDENT_KEY, student);
     });
   }
@@ -70,5 +65,37 @@ export class StorageService {
 
   removeUsername() {
     return this.storage.remove(this.USERNAME_KEY);
+  }
+
+  savePassword(password: string) {
+    return this.storage.set(this.PASSWORD_KEY, password);
+  }
+
+  getPassword() {
+    return this.storage.get(this.PASSWORD_KEY);
+  }
+
+  removePassword() {
+    return this.storage.remove(this.PASSWORD_KEY);
+  }
+
+  saveThemeMode(mode: string) {
+    return this.storage.set(this.THEME_MODE_KEY, mode);
+  }
+
+  getThemeMode() {
+    return this.storage.get(this.THEME_MODE_KEY);
+  }
+
+  saveRememberMe(rememberMe: string) {
+    return this.storage.set(this.REMEMBER_ME_KEY, rememberMe);
+  }
+
+  getRememberMe() {
+    return this.storage.get(this.REMEMBER_ME_KEY);
+  }
+
+  removeRememberMe() {
+    return this.storage.remove(this.REMEMBER_ME_KEY);
   }
 }
