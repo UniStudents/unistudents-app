@@ -61,7 +61,8 @@ export class Tab1Page implements OnInit {
             'rgba(101,123,255,0.6)',
             'rgba(101,123,255,0.3)'
           ],
-          data: dataset
+          data: dataset,
+          borderWidth: 0,
         }]
       },
       options: {
