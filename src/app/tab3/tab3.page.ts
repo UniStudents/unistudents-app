@@ -19,6 +19,7 @@ export class Tab3Page implements OnInit {
   version = '1.0.0';
   status = false;
   rememberMe = false;
+  onInit = false;
 
   constructor(
       private storageService: StorageService,
@@ -46,8 +47,12 @@ export class Tab3Page implements OnInit {
     });
 
     this.storageService.getRememberMe().then(rememberMe => {
-      if (rememberMe === 'true') { this.rememberMe = true; }
-      else if (rememberMe === 'false') { this.rememberMe = false; }
+      if (rememberMe === 'true') {
+          this.onInit = true;
+          this.rememberMe = true;
+      } else if (rememberMe === 'false') {
+          this.rememberMe = false;
+      }
     });
   }
 
@@ -65,7 +70,7 @@ export class Tab3Page implements OnInit {
   async logoutAlert() {
     const alert = await this.alertController.create({
       header: 'Αποσύνδεση',
-      message: 'Τα δεδομένα σου θα διαγραφτούν απο τη συσκευή!',
+      message: 'Τα δεδομένα σου θα διαγραφούν απο τη συσκευή!',
       buttons: [
         {
           text: 'ΑΚΥΡΟ',
@@ -90,6 +95,11 @@ export class Tab3Page implements OnInit {
   }
 
   toggleRememberMe() {
+    if (this.rememberMe && this.onInit) {
+        this.onInit = false;
+        return;
+    }
+
     if (this.rememberMe === true) {
       this.storageService.saveRememberMe('true').then(rememberMe => {
         // encrypt, save & store password locally
