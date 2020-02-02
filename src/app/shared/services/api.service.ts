@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Storage} from '@ionic/storage';
-import {EnvService} from './env.service';
+import { HttpClient } from '@angular/common/http';
+import { Storage } from '@ionic/storage';
+import { EnvService } from './env.service';
 
 @Injectable({
   providedIn: 'root'
