@@ -37,6 +37,13 @@
                   </ion-label>
                   <ion-toggle [(ngModel)]="status" id="themeToggle" slot="end" (ionChange)="toggleThemeMode()"></ion-toggle>
                 </ion-item>
+                <ion-item lines="none" color="white" no-padding>
+                  <ion-icon slot="start" name="lock" class="icon"></ion-icon>
+                  <ion-label>
+                    Remember Me
+                  </ion-label>
+                  <ion-toggle [(ngModel)]="rememberMe" id="rememberMeToggle" slot="end" (ionChange)="toggleRememberMe()"></ion-toggle>
+                </ion-item>
               </ion-col>
             </ion-row>
           </ion-grid>
