@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Student} from '../shared/models/student.model';
-import {StorageService} from '../shared/services/storage.service';
-import {AlertController, Platform} from '@ionic/angular';
-import {AuthService} from '../shared/services/auth.service';
-import {Router} from '@angular/router';
-import {AppVersion} from '@ionic-native/app-version/ngx';
+import { Component, OnInit } from '@angular/core';
+import { Student } from '../shared/models/student.model';
+import { StorageService } from '../shared/services/storage.service';
+import { AlertController, ToastController } from '@ionic/angular';
+import { AuthService } from '../shared/services/auth.service';
+import { Router } from '@angular/router';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { ThemeModeService } from '../shared/services/theme-mode.service';
 
 @Component({
   selector: 'app-tab3',
@@ -15,22 +16,29 @@ export class Tab3Page implements OnInit {
 
   public student: Student;
   version = '1.0.0';
+  status = false;
 
   constructor(
       private storageService: StorageService,
       private authService: AuthService,
       private router: Router,
       public alertController: AlertController,
-      private appVersion: AppVersion
+      private appVersion: AppVersion,
+      private themeMode: ThemeModeService
   ) {}
 
   ngOnInit(): void {
     this.loadStudentInfo();
+
     this.appVersion.getVersionNumber().then(res => {
       this.version = res;
-      console.log(this.version);
     }).catch(err => {
       alert(err);
+    });
+
+    this.storageService.getThemeMode().then(mode => {
+      if (mode === 'light') { this.status = false; }
+      else if (mode === 'dark') { this.status = true; }
     });
   }
 
@@ -68,4 +76,7 @@ export class Tab3Page implements OnInit {
     await alert.present();
   }
 
+  toggleThemeMode() {
+    this.themeMode.enableDarkMode(this.status);
+  }
 }
