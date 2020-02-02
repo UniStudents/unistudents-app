@@ -101,7 +101,9 @@ export class Tab3Page implements OnInit {
       });
     } else {
       this.storageService.saveRememberMe('false').then(rememberMe => {
-        this.presentToast('Ο κωδικός σου διαγράφηκε επιτυχώς!');
+        this.storageService.removePassword().then(result => {
+            this.presentToast('Ο κωδικός σου διαγράφηκε επιτυχώς!');
+        });
       });
     }
   }
