@@ -126,9 +126,7 @@ export class LoginPage implements OnInit {
         this.apiService.username = form.value.username;
         this.storageService.saveUsername(form.value.username);
 
-        if (this.rememberMeOption === 'null') {
-            this.rememberMeAlert(form);
-        } else if (this.rememberMeOption === 'true') {
+        if (this.rememberMeOption === 'true') {
             // encrypt, save & store password locally
             this.apiService.password = form.value.password;
             const password = this.cryptoService.encrypt(form.value.password);
@@ -141,7 +139,11 @@ export class LoginPage implements OnInit {
         // save fetched data locally & navigate to home screen
         this.storageService.saveStudent(student).then(() => {
             this.authService.isLoggedIn = true;
-            this.router.navigate(['/app/tabs/tab1']);
+            this.router.navigate(['/app/tabs/tab1']).then(navigate => {
+                if (this.rememberMeOption === 'null') {
+                    this.rememberMeAlert(form);
+                }
+            });
         });
     }, (error) => {
         loading.dismiss();
