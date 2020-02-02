@@ -1,5 +1,4 @@
 .text-header {
-  color: black;
   font-size: 17px;
   font-weight: bold;
   text-transform: none;
@@ -13,7 +12,6 @@
 .text-lg {
   font-size: 17px;
   margin: 0;
-  color: #000000;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -49,4 +47,8 @@
   color: #ffffff;
   padding: 5px;
   font-size: 7px;
+}
+
+ion-list {
+  background: none;
 }
