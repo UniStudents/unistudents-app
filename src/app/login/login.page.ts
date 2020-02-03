@@ -50,6 +50,8 @@ export class LoginPage implements OnInit {
 
           if (this.rememberMeOption === 'true') {
               this.setPasswordField();
+          } else {
+              this.passwordField = '';
           }
       });
   }
@@ -100,6 +102,8 @@ export class LoginPage implements OnInit {
 
               if (this.rememberMeOption === 'true') {
                   this.setPasswordField();
+              } else {
+                  this.passwordField = '';
               }
           });
       }
