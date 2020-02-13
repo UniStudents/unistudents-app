@@ -23,6 +23,13 @@ export class AuthService {
     });
   }
 
+  loginGrades(username, password) {
+    return this.http.post(this.env.API_URL + '/api/grades', {
+      username: username,
+      password: password
+    });
+  }
+
   logout() {
     this.storageService.removeStudent();
     this.storageService.removeUsername();
