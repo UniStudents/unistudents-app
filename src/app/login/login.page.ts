@@ -23,6 +23,7 @@ export class LoginPage implements OnInit {
   passwordType = 'password';
   passwordIcon = 'eye-off';
 
+  loading: any;
   rememberMeOption: any;
 
   constructor(
@@ -33,8 +34,13 @@ export class LoginPage implements OnInit {
       private appMinimize: AppMinimize,
       private apiService: ApiService,
       public toastController: ToastController,
-      public alertController: AlertController
-  ) { }
+      // private fingerAuth: FingerprintAIO,
+      private cryptoService: CryptoService,
+      public alertController: AlertController,
+      private firebase: Firebase
+  ) {
+      this.firebase.setScreenName('LoginScreen');
+  }
 
   ngOnInit() {
       this.setUsernameField();
@@ -111,58 +117,77 @@ export class LoginPage implements OnInit {
 
   async login(form: NgForm) {
 
-    const loading = await this.loadingController.create({
+    this.loading = await this.loadingController.create({
       message: 'Παρακαλώ περιμένετε..'
     });
-    await loading.present();
+    await this.loading.present();
 
     // check if credentials are valid
     if (!this.usernameIsValid(form.value.username) || !this.passwordIsValid(form.value.password)) {
-        loading.dismiss();
+        this.loading.dismiss();
         return;
     }
 
-    this.authService.login(form.value.username, form.value.password).subscribe((student: Student) => {
-        // compare grades
-        this.compareGrades(student.grades);
-
-        // save & store username locally
-        this.apiService.username = form.value.username;
-        this.storageService.saveUsername(form.value.username);
-
-        if (this.rememberMeOption === 'true') {
-            // encrypt, save & store password locally
-            this.apiService.password = form.value.password;
-            const password = this.cryptoService.encrypt(form.value.password);
-            this.storageService.savePassword(password);
-        } else if (this.rememberMeOption === 'false') {
-            // save temporary
-            this.apiService.password = form.value.password;
+    // check for stored data
+    this.storageService.getUsername().then(storedUsername => {
+        if (storedUsername === null) {
+            this.authenticateRequest(form, false);
+        } else if (form.value.username === storedUsername) {
+            this.authenticateRequest(form, true);
         }
-
-        // save fetched data locally & navigate to home screen
-        this.storageService.saveStudent(student).then(() => {
-            this.authService.isLoggedIn = true;
-            this.router.navigate(['/app/tabs/tab1']).then(navigate => {
-                if (this.rememberMeOption === 'null') {
-                    this.rememberMeAlert(form);
-                }
-            });
-        });
-    }, (error) => {
-        loading.dismiss();
-        if (error.status === 401) {
-            this.passwordField = '';
-            this.passwordLabel.color = 'danger';
-
-            const item = document.getElementById('passwordItem');
-            item.classList.add('invalid-password');
-        } else {
-            this.presentToast('Κάτη πήγε λάθος! Δοκίμασε ξανά σε λίγο.');
-        }
-    }, () => {
-        loading.dismiss();
     });
+  }
+
+  authenticateRequest(form: NgForm, userStored: boolean) {
+      const username = form.value.username;
+      const password = form.value.password;
+
+      if (userStored) {
+          this.authService.loginGrades(username, password).subscribe((grades: Grades) => {
+              // compare grades
+              this.compareGrades(grades);
+
+              // save & store username locally
+              this.saveUsernameLocally(username);
+
+              // encrypt & save password locally
+              this.savePasswordLocally(password);
+
+              // save fetched data locally & navigate to home screen
+              this.storageService.saveGrades(grades);
+              this.authService.isLoggedIn = true;
+              this.router.navigate(['/app/tabs/tab1']);
+          }, (error) => {
+              this.handleLoginError(error);
+          }, () => {
+              this.loading.dismiss();
+          });
+      } else {
+          this.authService.login(username, password).subscribe((student: Student) => {
+              // compare grades
+              this.compareGrades(student.grades);
+
+              // save & store username locally
+              this.saveUsernameLocally(username);
+
+              // encrypt & save password locally
+              this.savePasswordLocally(password);
+
+              // save fetched data locally & navigate to home screen
+              this.storageService.saveStudent(student).then(() => {
+                  this.authService.isLoggedIn = true;
+                  this.router.navigate(['/app/tabs/tab1']).then(navigate => {
+                      if (this.rememberMeOption === 'null') {
+                          this.rememberMeAlert(form);
+                      }
+                  });
+              });
+          }, (error) => {
+              this.handleLoginError(error);
+          }, () => {
+              this.loading.dismiss();
+          });
+      }
   }
 
   usernameIsValid(username: string): boolean {
@@ -201,10 +226,42 @@ export class LoginPage implements OnInit {
       });
   }
 
-  async presentToast(msg: string) {
+  saveUsernameLocally(username: string) {
+      this.apiService.username = username;
+      this.storageService.saveUsername(username);
+  }
+
+  savePasswordLocally(password: string) {
+      if (this.rememberMeOption === 'true') {
+          // encrypt, save & store password locally
+          this.apiService.password = password;
+          password = this.cryptoService.encrypt(password);
+          this.storageService.savePassword(password);
+      } else if (this.rememberMeOption === 'false') {
+          // save temporary
+          this.apiService.password = password;
+      }
+  }
+
+  handleLoginError(error) {
+      this.loading.dismiss();
+      if (error.status === 401) {
+          this.passwordField = '';
+          this.passwordLabel.color = 'danger';
+
+          const item = document.getElementById('passwordItem');
+          item.classList.add('invalid-password');
+      } else if (error.status === 500) {
+          this.presentToast('Το students είναι προσωρινά εκτός λειτουργίας!', 5000);
+      } else {
+          this.presentToast('Κάτη πήγε λάθος! Δοκίμασε ξανά σε λίγο.');
+      }
+  }
+
+  async presentToast(msg: string, dur = 2000) {
       const toast = await this.toastController.create({
           message: msg,
-          duration: 2000
+          duration: dur
       });
       await toast.present();
   }
