@@ -49,6 +49,21 @@
   font-size: 7px;
 }
 
+.heart {
+  fill: #EF4141;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 15px;
+  animation: pulse 1.5s ease infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
 ion-list {
   background: none;
 }
