@@ -154,9 +154,13 @@ export class LoginPage implements OnInit {
               this.savePasswordLocally(password);
 
               // save fetched data locally & navigate to home screen
-              this.storageService.saveGrades(grades);
-              this.authService.isLoggedIn = true;
-              this.router.navigate(['/app/tabs/tab1']);
+              this.storageService.getStudent().then((student) => {
+                  student.grades = grades;
+                  this.storageService.saveStudent(student).then(() => {
+                      this.authService.isLoggedIn = true;
+                      this.router.navigate(['/app/tabs/tab1']);
+                  });
+              });
           }, (error) => {
               this.handleLoginError(error);
           }, () => {
@@ -300,18 +304,4 @@ export class LoginPage implements OnInit {
       });
       await alert.present();
   }
-
-  public showFingerprintAuthDlg() {
-        this.fingerprintOptions = {
-            title: 'Biometric Authentication', // (Android Only) | optional | Default: "<APP_NAME> Biometric Sign On"
-            subtitle: 'Coolest Plugin ever', // (Android Only) | optional | Default: null
-            description: 'Please authenticate', // optional | Default: null
-            fallbackButtonTitle: 'Use Backup', // optional | When disableBackup is false defaults to "Use Pin".
-            // When disableBackup is true defaults to "Cancel"
-            disableBackup: false  // optional | default: false
-        };
-        this.fingerAuth.show(this.fingerprintOptions)
-            .then((result1: any) => this.presentToast(result1))
-            .catch((error: any) => this.presentToast(error));
-    }
 }
