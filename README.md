@@ -1,4 +1,4 @@
-![Feature Image](https://user-images.githubusercontent.com/25327910/66042750-04967d00-e526-11e9-818f-c602576b128a.png)
+![Feature Image](https://user-images.githubusercontent.com/25327910/92993140-3cf55800-f4f8-11ea-8074-cbe75bdade00.png)
 
 # UniStudents
 
