@@ -1,70 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { Student } from '../shared/models/student.model';
-import { StorageService } from '../shared/services/storage.service';
-import { AlertController, ToastController } from '@ionic/angular';
-import { AuthService } from '../shared/services/auth.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppVersion } from '@ionic-native/app-version/ngx';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ThemeModeService } from '../shared/services/theme-mode.service';
-import { ApiService } from '../shared/services/api.service';
+import { StoreService } from '../shared/services/store.service';
+import { RoutingService } from '../shared/services/routing.service';
+import { AboutPage } from '../modals/about/about.page';
+import { FaqPage } from '../modals/faq/faq.page';
+import { SettingsPage } from '../modals/settings/settings.page';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
+import { Info } from '../shared/models/info.model';
+import { Observable } from 'rxjs';
+import { Student } from '../shared/models/student.model';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page implements OnInit {
+export class Tab3Page {
 
-  public student: Student;
-  version = '1.0.0';
-  status = false;
-  rememberMe = false;
-  onInit = false;
+  public info: Info = null;
+  private studentObservable: Observable<Student[]>;
+  darkMode = false;
 
   constructor(
-      private storageService: StorageService,
-      private authService: AuthService,
-      private router: Router,
-      public alertController: AlertController,
-      private appVersion: AppVersion,
-      private themeMode: ThemeModeService,
-      private apiService: ApiService,
-      private toastController: ToastController
-  ) {}
+    public alertController: AlertController,
+    private router: Router,
+    private themeMode: ThemeModeService,
+    private storeService: StoreService,
+    private routingService: RoutingService,
+    private modalController: ModalController,
+    private angularFireAnalytics: AngularFireAnalytics
+  ) { }
 
   ngOnInit(): void {
-    this.loadStudentInfo();
-
-    this.appVersion.getVersionNumber().then(res => {
-      this.version = res;
-    }).catch(err => {
-      alert(err);
-    });
-
-    this.storageService.getThemeMode().then(mode => {
-      if (mode === 'light') { this.status = false; }
-      else if (mode === 'dark') { this.status = true; }
-    });
-
-    this.storageService.getRememberMe().then(rememberMe => {
-      if (rememberMe === 'true') {
-          this.onInit = true;
-          this.rememberMe = true;
-      } else if (rememberMe === 'false') {
-          this.rememberMe = false;
+    this.studentObservable = this.storeService.students;
+    this.studentObservable.subscribe(res => {
+      if (res.length !== 0) {
+        this.info = res[0].info;
       }
     });
+    this.darkMode = this.themeMode.darkMode;
   }
 
-  loadStudentInfo() {
-    this.storageService.getStudent().then((student) => {
-      this.student = student;
-    });
+  ionViewWillEnter() {
+    this.routingService.currentPage = '/app/tabs/tab3';
   }
 
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  async logout() {
+    this.angularFireAnalytics.logEvent('logout', {screen: 'tab3'});
+    await this.storeService.logout();
+    this.router.navigate(['/universities']);
   }
 
   async logoutAlert() {
@@ -91,38 +77,40 @@ export class Tab3Page implements OnInit {
   }
 
   toggleThemeMode() {
-    this.themeMode.enableDarkMode(this.status);
+    this.themeMode.enableDarkMode(this.darkMode);
+    this.angularFireAnalytics.setUserProperties({DarkMode: this.darkMode});
   }
 
-  toggleRememberMe() {
-    if (this.rememberMe && this.onInit) {
-        this.onInit = false;
-        return;
-    }
-
-    if (this.rememberMe === true) {
-      this.storageService.saveRememberMe('true').then(rememberMe => {
-        // encrypt, save & store password locally
-        console.log(this.apiService.password);
-        const password = this.cryptoService.encrypt(this.apiService.password);
-        this.storageService.savePassword(password).then(result => {
-          this.presentToast('Ο κωδικός σου αποθηκεύτηκε επιτυχώς!');
-        });
-      });
-    } else {
-      this.storageService.saveRememberMe('false').then(rememberMe => {
-        this.storageService.removePassword().then(result => {
-            this.presentToast('Ο κωδικός σου διαγράφηκε επιτυχώς!');
-        });
-      });
-    }
-  }
-
-  async presentToast(msg: string) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 2000
+  async openFaqModal() {
+    this.routingService.isAnyModalPageOpened = true;
+    const modal = await this.modalController.create({
+      component: FaqPage,
+      cssClass: 'modal',
+      swipeToClose: true
     });
-    await toast.present();
+    modal.onDidDismiss().then(() => this.routingService.isAnyModalPageOpened = false);
+    return await modal.present();
+  }
+
+  async openSettingsModal() {
+    this.routingService.isAnyModalPageOpened = true;
+    const modal = await this.modalController.create({
+      component: SettingsPage,
+      cssClass: 'modal',
+      swipeToClose: true
+    });
+    modal.onDidDismiss().then(() => this.routingService.isAnyModalPageOpened = false);
+    return await modal.present();
+  }
+
+  async openAboutModal() {
+    this.routingService.isAnyModalPageOpened = true;
+    const modal = await this.modalController.create({
+      component: AboutPage,
+      cssClass: 'modal',
+      swipeToClose: true
+    });
+    modal.onDidDismiss().then(() => this.routingService.isAnyModalPageOpened = false);
+    return await modal.present();
   }
 }

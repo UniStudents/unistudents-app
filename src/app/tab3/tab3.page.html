@@ -14,21 +14,21 @@
           <ion-grid>
             <ion-row>
               <ion-col>
-                <ion-item lines="none" color="white" no-padding>
+                <ion-item lines="none" color="white" class="ion-no-padding">
                   <ion-icon class="icon" name="ribbon"></ion-icon>
-                  <ion-label>{{ student?.info.aem }}</ion-label>
+                  <ion-label>{{ info?.aem }}</ion-label>
                 </ion-item>
-                <ion-item lines="none" color="white" no-padding>
-                  <ion-icon class="icon" name="contact"></ion-icon>
-                  <ion-label>{{ student?.info.firstName }} {{ student?.info.lastName }}</ion-label>
+                <ion-item lines="none" color="white" class="ion-no-padding">
+                  <ion-icon class="icon" name="person-circle"></ion-icon>
+                  <ion-label>{{ info?.firstName }} {{ info?.lastName }}</ion-label>
                 </ion-item>
-                <ion-item lines="none" color="white" no-padding>
+                <ion-item lines="none" color="white" class="ion-no-padding">
                   <ion-icon class="icon" name="business"></ion-icon>
-                  <ion-label>{{ student?.info.departure }}</ion-label>
+                  <ion-label>{{ info?.department }}</ion-label>
                 </ion-item>
-                <ion-item lines="none" color="white" no-padding>
+                <ion-item lines="none" color="white" class="ion-no-padding">
                   <ion-icon class="icon" name="calendar"></ion-icon>
-                  <ion-label>{{ student?.info.registrationYear }}</ion-label>
+                  <ion-label>{{ info?.registrationYear }}</ion-label>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -42,19 +42,12 @@
           <ion-grid>
             <ion-row>
               <ion-col>
-                <ion-item lines="none" color="white" no-padding>
+                <ion-item lines="none" color="white" class="ion-no-padding">
                   <ion-icon slot="start" name="moon" class="icon"></ion-icon>
                   <ion-label>
                     Dark Mode
                   </ion-label>
-                  <ion-toggle [(ngModel)]="status" id="themeToggle" slot="end" (ionChange)="toggleThemeMode()"></ion-toggle>
-                </ion-item>
-                <ion-item lines="none" color="white" no-padding>
-                  <ion-icon slot="start" name="lock" class="icon"></ion-icon>
-                  <ion-label>
-                    Remember Me
-                  </ion-label>
-                  <ion-toggle [(ngModel)]="rememberMe" id="rememberMeToggle" slot="end" (ionChange)="toggleRememberMe()"></ion-toggle>
+                  <ion-toggle [(ngModel)]="darkMode" id="themeToggle" slot="end" (ionChange)="toggleThemeMode()"></ion-toggle>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -62,17 +55,42 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <p class="version">ver. {{version}}</p>
+
+    <ion-row class="info-row">
+      <ion-col class="info-col">
+        <ion-card class="card info-card">
+          <ion-grid style="padding-left: 0; padding-right: 0;">
+            <ion-row>
+              <ion-col style="padding-left: 0; padding-right: 0;">
+                <ion-item button lines="none" color="white" class="ion-no-padding" (click)="openSettingsModal()">
+                  <ion-icon slot="start" name="settings-sharp" class="icon margin"></ion-icon>
+                  <ion-label>
+                    Ρυθμίσεις
+                  </ion-label>
+                </ion-item>
+                <ion-item button lines="none" color="white" class="ion-no-padding" (click)="openFaqModal()">
+                  <ion-icon slot="start" name="help-circle-sharp" class="icon margin"></ion-icon>
+                  <ion-label>
+                    FAQ
+                  </ion-label>
+                </ion-item>
+                <ion-item button lines="none" color="white" class="ion-no-padding" (click)="openAboutModal()">
+                  <ion-icon slot="start" name="school-sharp" class="icon margin"></ion-icon>
+                  <ion-label>
+                    Σχετικά
+                  </ion-label>
+                </ion-item>
+                <ion-item button lines="none" color="white" class="ion-no-padding" (click)="logoutAlert()">
+                  <ion-icon slot="start" name="log-out" class="icon margin" color="danger"></ion-icon>
+                  <ion-label color="danger">
+                    Αποσύνδεση
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="danger" (click)="logoutAlert()">
-      <ion-icon name="log-out"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
 </ion-content>
