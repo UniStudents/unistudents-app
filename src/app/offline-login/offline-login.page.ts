@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from '../shared/services/auth.service';
-import {StorageService} from '../shared/services/storage.service';
-import {Student} from '../shared/models/student.model';
+import { Router } from '@angular/router';
+import { StorageService } from '../shared/services/storage.service';
+import { StudentService } from '../shared/services/student.service';
+import { RoutingService } from '../shared/services/routing.service';
 
 @Component({
   selector: 'app-offline-login',
@@ -15,20 +15,28 @@ export class OfflineLoginPage implements OnInit {
 
   constructor(
       private router: Router,
-      private authService: AuthService,
-      private storageService: StorageService
+      private storageService: StorageService,
+      private studentService: StudentService,
+      private routingService: RoutingService
   ) { }
 
-  ngOnInit() {
-    this.storageService.getStudent().then((student: Student) => {
-      if (student != null) {
+  async ngOnInit() {
+    const rememberMe = this.studentService.rememberMe;
+    if (rememberMe === true) {
+      const stud = await this.storageService.getStudent();
+      if (stud.value !== null) {
+        const student = JSON.parse(stud.value);
         this.userAem = student.info.aem;
       }
-    });
+    }
+  }
+
+  ionViewWillEnter() {
+    this.routingService.currentPage = '/offline-login';
   }
 
   proceedOffline() {
-    this.authService.isLoggedIn = true;
+    this.studentService.isLoggedIn = true;
     this.router.navigate(['/app/tabs/tab1']);
   }
 }

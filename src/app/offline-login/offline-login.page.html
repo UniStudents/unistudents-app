@@ -1,10 +1,10 @@
-<ion-content class="tab-content">
-  <ion-grid class="grid">
-    <ion-row>
-      <ion-col text-center="" padding="20px">
+<ion-content class="tab-content" forceOverscroll="false">
+  <ion-grid style="height: 100%;">
+    <ion-row class="ion-align-items-center" style="height: 95%;">
+      <ion-col class="ion-text-center" style="padding: 0 20px 0 20px;">
         <img src="/assets/server_error.svg"/>
         <h5 class="text-error-title">Είσαι offline</h5>
-        <h6 class="text-error-subtitle">Έλεξγε τη συνδεσή σου και δοκίμασε ξανά.</h6>
+        <h6 class="text-error-subtitle">Έλεγξε τη συνδεσή σου και δοκίμασε ξανά.</h6>
         <ion-button *ngIf="userAem !== ''" expand="block" style="text-transform: none" [disabled]="false" (click)="proceedOffline()">Συνέχεια ως {{ userAem }}</ion-button>
         <ion-button *ngIf="userAem === ''" expand="block" style="text-transform: none" [disabled]="true">Δεν βρέθηκε λογαριασμός</ion-button>
       </ion-col>
