@@ -67,3 +67,26 @@
 .pie-canvas {
   margin-bottom: 8px;
 }
+
+.custom-skeleton ion-skeleton-text {
+  margin: 5px 0;
+}
+
+.graph-skeleton {
+  margin: 10px 10px 0 10px;
+}
+
+.info-skeleton {
+  margin: 15px 0;
+}
+
+.chip {
+  padding-inline-start: 8px;
+  padding-inline-end: 8px;
+  box-shadow: 0 0 6px 0 rgba(0,0,0,0.3);
+}
+
+ion-spinner {
+  width: 20px;
+  height: 20px;
+}

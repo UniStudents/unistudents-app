@@ -1,85 +1,104 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>
-            Αρχική
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>
+      Αρχική
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content class="tab-content">
-    <ion-grid class="info-grid">
-        <ion-row class="info-row">
-            <ion-col class="info-col">
-                <ion-card class="card info-card">
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col>
-                                <h2 class="text-lg">Συνδέθηκες ως</h2>
-                                <h1 class="text-xl">{{ student?.info.firstName }} {{ student?.info.lastName }}</h1>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row class="info-row">
-            <ion-col class="info-col">
-                <ion-card class="card info-card">
-                    <canvas #lineCanvas></canvas>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row class="info-row">
-            <ion-col class="info-col left" size="4">
-                <ion-card class="card info-card">
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col>
-                                <p class="lg-info">{{ student?.grades.totalPassedCourses }}</p>
-                                <p class="text-sm">Περασμένα μαθήματα</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card>
-            </ion-col>
-            <ion-col class="info-col middle" size="4">
-                <ion-card class="card info-card">
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col>
-                                <p class="lg-info">{{ student?.grades.totalAverageGrade }}</p>
-                                <p class="text-sm">Μέσος Όρος</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card>
-            </ion-col>
-            <ion-col class="info-col right" size="4">
-                <ion-card class="card info-card">
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col>
-                                <p class="lg-info">{{ student?.grades.totalEcts }}</p>
-                                <p class="text-sm">ECTs</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row class="info-row">
-            <ion-col class="info-col">
-                <ion-card class="card info-card">
-                    <canvas #doughnutCanvas height="250" class="pie-canvas"></canvas>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-<!--        <ion-row class="info-row">-->
-<!--            <ion-col class="info-col">-->
-<!--                <ion-card class="card info-card">-->
-<!--                    <canvas #pieCanvas height="250" class="pie-canvas"></canvas>-->
-<!--                </ion-card>-->
-<!--            </ion-col>-->
-<!--        </ion-row>-->
-    </ion-grid>
+<div *ngIf="storeService.firstSync === true" class="sync-component">
+  <ion-chip class="chip">
+    <ion-label style="padding-right: 5px">Συγχρονισμός</ion-label>
+    <ion-spinner></ion-spinner>
+  </ion-chip>
+</div>
+
+<ion-content class="tab-content" [scrollY]="student !== null">
+  <ion-grid class="info-grid">
+    <ion-row class="info-row">
+      <ion-col class="info-col">
+        <ion-card class="card info-card">
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngIf="student">
+                <h2 class="text-lg">Συνδέθηκες ως</h2>
+                <h1 class="text-xl">{{ student?.info.firstName }} {{ student?.info.lastName }}</h1>
+              </ion-col>
+              <ion-col *ngIf="!student">
+                <ion-skeleton-text animated style="width: 30%; margin: 7.5px 0"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 80%; margin: 7.5px 0"></ion-skeleton-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row class="info-row">
+      <ion-col class="info-col">
+        <ion-card class="card info-card">
+          <ion-skeleton-text *ngIf="!student" animated style="width: 30%" class="graph-skeleton"></ion-skeleton-text>
+          <canvas #lineCanvas></canvas>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row class="info-row">
+      <ion-col class="info-col left" size="4">
+        <ion-card class="card info-card">
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngIf="student">
+                <p class="lg-info">{{ student?.grades.totalPassedCourses }}</p>
+                <p class="text-sm">Περασμένα μαθήματα</p>
+              </ion-col>
+              <ion-col *ngIf="!student">
+                <ion-skeleton-text animated style="width: 25%" class="info-skeleton"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 90%" class="info-skeleton"></ion-skeleton-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+      <ion-col class="info-col middle" size="4">
+        <ion-card class="card info-card">
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngIf="student">
+                <p class="lg-info">{{ student?.grades.totalAverageGrade }}</p>
+                <p class="text-sm">Μέσος Όρος</p>
+              </ion-col>
+              <ion-col *ngIf="!student">
+                <ion-skeleton-text animated style="width: 25%" class="info-skeleton"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 90%" class="info-skeleton"></ion-skeleton-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+      <ion-col class="info-col right" size="4">
+        <ion-card class="card info-card">
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngIf="student">
+                <p *ngIf="student.grades.totalEcts" class="lg-info">{{ student?.grades.totalEcts }}</p>
+                <p *ngIf="!student.grades.totalEcts" class="lg-info">-</p>
+                <p class="text-sm">ECTs</p>
+              </ion-col>
+              <ion-col *ngIf="!student">
+                <ion-skeleton-text animated style="width: 25%" class="info-skeleton"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 90%" class="info-skeleton"></ion-skeleton-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row class="info-row">
+      <ion-col class="info-col">
+        <ion-card class="card info-card">
+          <ion-skeleton-text *ngIf="!student" animated style="width: 30%" class="graph-skeleton"></ion-skeleton-text>
+          <canvas #doughnutCanvas height="250" class="pie-canvas"></canvas>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
