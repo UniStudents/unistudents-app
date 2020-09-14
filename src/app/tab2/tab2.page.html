@@ -6,40 +6,133 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="tab-content">
+<div *ngIf="storeService.firstSync === true" class="sync-component">
+  <ion-chip class="chip">
+    <ion-label style="padding-right: 5px">Συγχρονισμός</ion-label>
+    <ion-spinner></ion-spinner>
+  </ion-chip>
+</div>
 
-  <ion-refresher slot="fixed" (ionRefresh)="refreshGrades($event)">
+<ion-content class="tab-content" [scrollY]="!storeService.refreshGrades">
+
+  <ion-refresher [disabled]="storeService.firstSync" slot="fixed" (ionRefresh)="refreshGrades($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list *ngFor="let semester of grades?.semesters">
-    <ion-list-header>
-      <h2 class="text-header">Εξάμηνο {{ semester.id }}</h2>
-    </ion-list-header>
-    <ion-card class="card" *ngFor="let course of semester?.courses">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="10">
-            <ion-row>
-              <h6 class="text-sm">{{ course.id }}</h6>
-            </ion-row>
-            <ion-row>
-              <h3 class="text-lg">{{ course.name }}</h3>
-            </ion-row>
-            <ion-row>
-              <h6 class="text-sm">{{ course.type }} | {{ course.examPeriod }}</h6>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2">
-<!--            <span *ngIf="storageService.newGradesList.includes(course.id)" class="notify-badge">NEW</span>-->
-            <svg *ngIf="storageService.newGradesList.includes(course.id)" class="heart" viewBox="0 0 32 29.6">
-              <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
-c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-            </svg>
-              <h2 class="text-xl">{{ course.grade }}</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  </ion-list>
+  <div *ngIf="apiService.fetchedData">
+    <ion-list *ngFor="let semester of grades?.semesters">
+      <ion-list-header *ngIf="semester.courses.length > 0">
+        <h2 class="text-header">Εξάμηνο {{ semester.id }}</h2>
+      </ion-list-header>
+      <ion-card class="card" *ngFor="let course of semester?.courses">
+        <ion-grid>
+          <ion-row>
+            <ion-col [size]="getCourseLength(course.grade.length)">
+              <ion-row>
+                <h6 class="text-sm">{{ course.id }}</h6>
+              </ion-row>
+              <ion-row>
+                <h3 class="text-lg">{{ course.name }}</h3>
+              </ion-row>
+              <ion-row>
+                <h6 *ngIf="course.type" class="text-sm">{{ course.type + ' | ' + course.examPeriod }}</h6>
+                <h6 *ngIf="!course.type" class="text-sm">{{ course.examPeriod }}</h6>
+              </ion-row>
+            </ion-col>
+            <ion-col>
+              <span *ngIf="storageService.newGradesList.includes(course.id)" class="notify-badge"></span>
+              <h2 class="text-xl" [style.color]="getGradeColor(course.grade)" [style.text-align]="course.grade.length >= 3 ? 'right' : 'center'">{{ course.grade }}</h2>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <div *ngIf="!apiService.fetchedData">
+    <ion-list>
+      <ion-list-header>
+        <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+      </ion-list-header>
+      <ion-card class="card">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10">
+              <ion-row>
+                  <ion-skeleton-text animated style="width: 15%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+              <ion-row>
+                <ion-skeleton-text animated style="width: 100%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+              <ion-row>
+                <ion-skeleton-text animated style="width: 50%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+            </ion-col>
+            <ion-col size="2">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+
+      <ion-card class="card">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10">
+              <ion-row>
+                <ion-skeleton-text animated style="width: 15%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+              <ion-row>
+                <ion-skeleton-text animated style="width: 60%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+              <ion-row>
+                <ion-skeleton-text animated style="width: 50%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+            </ion-col>
+            <ion-col size="2">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+
+      <ion-card class="card">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10">
+              <ion-row>
+                <ion-skeleton-text animated style="width: 15%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+              <ion-row>
+                <ion-skeleton-text animated style="width: 80%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+              <ion-row>
+                <ion-skeleton-text animated style="width: 50%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+            </ion-col>
+            <ion-col size="2">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+
+      <ion-card class="card">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10">
+              <ion-row>
+                <ion-skeleton-text animated style="width: 15%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+              <ion-row>
+                <ion-skeleton-text animated style="width: 90%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+              <ion-row>
+                <ion-skeleton-text animated style="width: 50%; margin: 5px 0;"></ion-skeleton-text>
+              </ion-row>
+            </ion-col>
+            <ion-col size="2">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
+  </div>
 </ion-content>

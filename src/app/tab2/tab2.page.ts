@@ -1,80 +1,80 @@
-import {Component, OnInit} from '@angular/core';
-import {StorageService} from '../shared/services/storage.service';
-import {Grades} from '../shared/models/grades.model';
-import {ApiService} from '../shared/services/api.service';
-import {ToastController} from '@ionic/angular';
+import { Component } from '@angular/core';
+import { Grades } from '../shared/models/grades.model';
+import { Platform } from '@ionic/angular';
+import { StoreService } from '../shared/services/store.service';
+import { Observable } from 'rxjs';
+import { Student } from '../shared/models/student.model';
+import { RoutingService } from '../shared/services/routing.service';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
+import { StorageService } from '../shared/services/storage.service';
+import { ApiService } from '../shared/services/api.service';
+import { NetworkService } from '../shared/services/network.service';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page {
 
-  public grades: Grades;
+  public grades: Grades = null;
+  private studentObservable: Observable<Student[]>;
 
   constructor(
-      private apiService: ApiService,
-      private storageService: StorageService,
-      public toastController: ToastController
+    private storeService: StoreService,
+    private storageService: StorageService,
+    private apiService: ApiService,
+    private platform: Platform,
+    private routingService: RoutingService,
+    private networkService: NetworkService,
+    private angularFireAnalytics: AngularFireAnalytics
   ) {}
 
   ngOnInit(): void {
-      this.loadGrades();
+    this.studentObservable = this.storeService.students;
+    this.studentObservable.subscribe(res => {
+      if (res.length !== 0) {
+        this.grades = res[0].grades;
+      }
+    });
   }
 
-  loadGrades() {
-      this.storageService.getStudent().then((student) => {
-        this.grades = student.grades;
-      });
+  ionViewWillEnter() {
+    this.routingService.currentPage = '/app/tabs/tab2';
   }
 
   refreshGrades(event) {
+    this.angularFireAnalytics.logEvent('refresh_grades', {screen: 'tab2'});
+    if (this.networkService.networkStatus.connected !== true) {
+      event.target.complete();
+      return;
+    }
+    setTimeout(() => {
+      this.storeService.fetchStudent(event);
+    }, 500);
+  }
 
-    if (this.apiService.username === undefined) {
-        this.presentToast('Είσαι offline. Δοκίμασε να συνδεθείς ξανά.');
-        event.target.complete();
-        return;
+  getGradeColor(gradeString: string) {
+    if (gradeString.includes('-')) {
+      return '#657BFF';
     }
 
-    this.apiService.getGrades().subscribe((grades: Grades) => {
+    const grade = Number(gradeString.replace(',', '.'));
 
-      this.storageService.getStudent().then((oldStudent) => {
-        // compare grades
-        this.storageService.compareGrades(grades, oldStudent.grades);
-
-        // print message about new grades
-        this.printNewGradesMsg();
-      });
-
-      // save new grades
-      this.grades = grades;
-      this.storageService.saveGrades(grades);
-    },
-    error => {
-      event.target.complete();
-      this.presentToast('Κάτι πήγε λάθος! Δοκίμασε ξανά αργότερα.');
-    },
-    () => {
-      event.target.complete();
-    });
+    if (grade >= 5) {
+      return '#657BFF';
+    } else {
+      return '#f25454';
+    }
   }
 
-  printNewGradesMsg() {
-      if (this.storageService.newGrades > 1) {
-          this.presentToast('Έχεις ' + this.storageService.newGrades + ' νέους βαθμούς!');
-      } else if (this.storageService.newGrades === 1) {
-          this.presentToast('Έχεις 1 νέο βαθμό!');
-      } else {
-          this.presentToast('Δεν έχεις νέους βαθμούς!');
-      }
-  }
-
-  async presentToast(msg: string) {
-    const toast = await this.toastController.create({
-        message: msg,
-        duration: 2000
-    });
-    await toast.present();
+  getCourseLength(courseLength) {
+    if (courseLength === 0) {
+      return 11;
+    } else if (courseLength >= 3) {
+      return 9;
+    } else {
+      return 10;
+    }
   }
 }
