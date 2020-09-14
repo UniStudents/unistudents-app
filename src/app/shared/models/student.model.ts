@@ -1,5 +1,5 @@
-import {Info} from './info.model';
-import {Grades} from './grades.model';
+import { Info } from './info.model';
+import { Grades } from './grades.model';
 
 export class Student {
     info: Info;

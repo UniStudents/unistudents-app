@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class EnvService {
 
-  API_URL = 'https://unipi-students-api.herokuapp.com';
+  API_URL = 'https://unistudents.herokuapp.com';
 
   constructor() { }
 }

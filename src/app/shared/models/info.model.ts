@@ -2,7 +2,7 @@ export class Info {
     aem: string;
     firstName: string;
     lastName: string;
-    departure: string;
+    department: string;
     semester: string;
     registrationYear: string;
 }

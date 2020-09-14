@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { Student } from '../models/student.model';
 import { Grades } from '../models/grades.model';
+import { ToastService } from './toast.service';
+import { Plugins } from '@capacitor/core';
+import { NotificationService } from './notification.service';
+import { Course } from '../models/course.model';
+
+const { Storage } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -13,89 +18,182 @@ export class StorageService {
   private STUDENT_KEY = 'student';
   private USERNAME_KEY = 'username';
   private PASSWORD_KEY = 'password';
+  private UNIVERSITY_KEY = 'university';
   private THEME_MODE_KEY = 'theme_mode';
   private REMEMBER_ME_KEY = 'remember_me';
+  private NEW_GRADE_NOTIFICATION = 'new_grade_notification';
+  private UPDATES_NOTIFICATION = 'updates_notification';
+  private APP_VERSION_KEY = 'app_version';
+  private IS_FIRST_TIME = 'is_first_time';
 
   constructor(
-      private storage: Storage
+      private toastService: ToastService,
+      private notificationService: NotificationService
   ) { }
 
   saveStudent(student: Student) {
-    return this.storage.set(this.STUDENT_KEY, student);
+    return Storage.set({ key: this.STUDENT_KEY, value: JSON.stringify({
+        info: student.info,
+        grades: student.grades
+      }) });
   }
 
   saveGrades(grades: Grades) {
     this.getStudent().then((student) => {
-      student.grades = grades;
-      return this.storage.set(this.STUDENT_KEY, student);
+      const stud: Student = JSON.parse(student.value);
+      stud.grades = grades;
+      return Storage.set({ key: this.STUDENT_KEY, value: JSON.stringify({
+          info: stud.info,
+          grades: stud.grades
+        }) });
     });
   }
 
   getStudent() {
-    return this.storage.get(this.STUDENT_KEY);
+    return Storage.get({ key: this.STUDENT_KEY });
   }
 
   removeStudent() {
-    return this.storage.remove(this.STUDENT_KEY);
+    return Storage.remove({ key: this.STUDENT_KEY });
   }
 
-  compareGrades(grades: Grades, oldGrades: Grades) {
+  async compareGrades(newGrades: Grades, oldGrades: Grades, university: string, department: string) {
     this.newGrades = 0;
     this.newGradesList = [];
 
-    let diffs = 0;
-    for (let i = 0; i < oldGrades.semesters.length; i++) {
-      for (let j = 0; j < oldGrades.semesters[i].courses.length; j++) {
-        if (oldGrades.semesters[i].courses[j].examPeriod !== grades.semesters[i].courses[j].examPeriod) {
-          diffs++;
-          this.newGradesList.push(grades.semesters[i].courses[j].id);
+    const oldCourses: Array<Course> = [];
+    oldGrades.semesters.forEach(semester => {
+      semester.courses.forEach(course => {
+        oldCourses.push(course);
+      });
+    });
+
+    for (const semester of newGrades.semesters) {
+      for (const course of semester.courses) {
+        let i = 0;
+        while (oldCourses.length > 0) {
+          if (course.id === oldCourses[i].id) {
+            if (course.examPeriod !== oldCourses[i].examPeriod) {
+              this.newGrades++;
+              this.newGradesList.push(course.id);
+
+              if (course.grade !== '-') {
+                if (Number(course.grade) >= 5) {
+                  await this.notificationService.unsubscribeFromTopic(university + '.' + course.id);
+                }
+              }
+
+              this.notificationService.notifyNewGrade(university, course, semester.id, department);
+            }
+            oldCourses.splice(i, 1);
+            break;
+          } else {
+            i++;
+          }
         }
       }
     }
-    this.newGrades = diffs;
+
+    setTimeout(() => {
+      this.printNewGradesMsg();
+    }, 500);
+  }
+
+  printNewGradesMsg() {
+    if (this.newGrades > 1) {
+      this.toastService.present('Έχεις ' + this.newGrades + ' νέους βαθμούς!');
+    } else if (this.newGrades === 1) {
+      this.toastService.present('Έχεις 1 νέο βαθμό!');
+    } else {
+      this.toastService.present('Δεν έχεις νέους βαθμούς!');
+    }
   }
 
   saveUsername(username: string) {
-    return this.storage.set(this.USERNAME_KEY, username);
+    return Storage.set({ key: this.USERNAME_KEY, value: username });
   }
 
   getUsername() {
-    return this.storage.get(this.USERNAME_KEY);
+    return Storage.get({ key: this.USERNAME_KEY });
   }
 
   removeUsername() {
-    return this.storage.remove(this.USERNAME_KEY);
+    return Storage.remove({ key: this.USERNAME_KEY });
   }
 
   savePassword(password: string) {
-    return this.storage.set(this.PASSWORD_KEY, password);
+    return Storage.set({ key: this.PASSWORD_KEY, value: password });
   }
 
   getPassword() {
-    return this.storage.get(this.PASSWORD_KEY);
+    return Storage.get({ key: this.PASSWORD_KEY });
   }
 
   removePassword() {
-    return this.storage.remove(this.PASSWORD_KEY);
+    return Storage.remove({ key: this.PASSWORD_KEY });
+  }
+
+  saveUniversity(university: string) {
+    return Storage.set({ key: this.UNIVERSITY_KEY, value: university });
+  }
+
+  getUniversity() {
+    return Storage.get({ key: this.UNIVERSITY_KEY });
   }
 
   saveThemeMode(mode: string) {
-    return this.storage.set(this.THEME_MODE_KEY, mode);
+    return Storage.set({ key: this.THEME_MODE_KEY, value: mode });
   }
 
   getThemeMode() {
-    return this.storage.get(this.THEME_MODE_KEY);
+    return Storage.get({ key: this.THEME_MODE_KEY });
   }
 
   saveRememberMe(rememberMe: string) {
-    return this.storage.set(this.REMEMBER_ME_KEY, rememberMe);
+    return Storage.set({ key: this.REMEMBER_ME_KEY, value: rememberMe });
   }
 
   getRememberMe() {
-    return this.storage.get(this.REMEMBER_ME_KEY);
+    return Storage.get({ key: this.REMEMBER_ME_KEY });
   }
 
   removeRememberMe() {
-    return this.storage.remove(this.REMEMBER_ME_KEY);
+    return Storage.remove({ key: this.REMEMBER_ME_KEY });
+  }
+
+  getNewGradeNotification() {
+    return Storage.get({ key: this.NEW_GRADE_NOTIFICATION });
+  }
+
+  saveNewGradeNotification(newGradeNotification: string) {
+    return Storage.set({ key: this.NEW_GRADE_NOTIFICATION, value: newGradeNotification });
+  }
+
+  getUpdatesNotification() {
+    return Storage.get({ key: this.UPDATES_NOTIFICATION });
+  }
+
+  saveUpdatesNotification(updatesNotification: string) {
+    return Storage.set({ key: this.UPDATES_NOTIFICATION, value: updatesNotification });
+  }
+
+  saveAppVersion(appVersion: string) {
+    return Storage.set({ key: this.APP_VERSION_KEY, value: appVersion });
+  }
+
+  getAppVersion() {
+    return Storage.get({ key: this.APP_VERSION_KEY });
+  }
+
+  saveFirstTime(isFirstTime: string) {
+    return Storage.set({ key: this.IS_FIRST_TIME, value: isFirstTime });
+  }
+
+  getFirstTime() {
+    return Storage.get({ key: this.IS_FIRST_TIME });
+  }
+
+  clear() {
+    return Storage.clear();
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Storage } from '@ionic/storage';
 import { EnvService } from './env.service';
 
 @Injectable({
@@ -8,26 +7,17 @@ import { EnvService } from './env.service';
 })
 export class ApiService {
 
-  public username: string;
-  public password: string;
+  fetchedData = false;
 
   constructor(
       private http: HttpClient,
-      private storage: Storage,
-      private env: EnvService
+      private env: EnvService,
   ) { }
 
-  getGrades() {
-    return this.http.post(this.env.API_URL + '/api/grades', {
-      username: this.username,
-      password: this.password
-    });
-  }
-
-  getInfo() {
-    return this.http.post(this.env.API_URL + '/api/info', {
-      username: this.username,
-      password: this.password
+  fetchStudent(university: string, username: string, password: string) {
+    return this.http.post(this.env.API_URL + '/api/student/' + university, {
+      username: username,
+      password: password
     });
   }
 }

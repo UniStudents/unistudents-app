@@ -1,4 +1,4 @@
-import {Course} from './course.model';
+import { Course } from './course.model';
 
 export class Semester {
     id: number;

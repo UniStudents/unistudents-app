@@ -1,4 +1,4 @@
-import {Semester} from './semester.model';
+import { Semester } from './semester.model';
 
 export class Grades {
     totalPassedCourses: string;
