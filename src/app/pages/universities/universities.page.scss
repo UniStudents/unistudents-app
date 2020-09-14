@@ -1,0 +1,20 @@
+ion-card {
+  background: #F1F1FD;
+  box-shadow: none;
+}
+
+.ios ion-card {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.uni-name {
+  font-size: 5.5vw;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+ion-card:active {
+  transform: scale(.95);
+}
