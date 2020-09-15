@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Σχετικά</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()" class="back-btn">Πίσω</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="tab-content">
+
+  <div class="top">
+    <img src="/assets/logo.svg" alt="logo" width="30%"/>
+
+    <h5 style="margin-bottom: 0">UniStudents {{ device }}</h5>
+    <h5 style="margin-top: 0">Έκδοση v{{ appVersion }}</h5>
+
+    <h5 style="margin-top: 25px; margin-bottom: 0">@ 2020 UniStudents Team</h5>
+    <h5 style="margin-top: 0">All rights reserved.</h5>
+  </div>
+
+  <div class="bottom">
+    <h5 style="margin-top: 0">Βρες μας στα Social</h5>
+    <div>
+      <a href="https://www.facebook.com/unistudentsapp/" class="social-link"><ion-icon name="logo-facebook"></ion-icon></a>
+      <a href="https://www.instagram.com/unistudentsapp/" class="social-link"><ion-icon name="logo-instagram"></ion-icon></a>
+      <a href="https://github.com/NickSklA/unistudents" class="social-link"><ion-icon name="logo-github"></ion-icon></a>
+    </div>
+<!--    <div class="disclaimer">-->
+<!--      <a style="margin: 10px">Πολιτική απορρήτου</a>-->
+<!--      <a style="margin: 10px">Όροι Χρήσης</a>-->
+<!--    </div>-->
+  </div>
+
+</ion-content>

@@ -1,0 +1,42 @@
+.back-btn {
+  text-transform: none;
+}
+
+h5 {
+  font-weight: 300;
+}
+
+ion-icon {
+  margin: 10px;
+  height: 25px;
+  width: 25px;
+}
+
+div.top {
+  float: left;
+  width: 100%;
+  height: 65%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div.bottom {
+  float: left;
+  width: 100%;
+  height: 35%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top-style: dashed;
+  border-top-color: #909090;
+  border-top-width: 2px;
+}
+
+div.disclaimer {
+  margin-top: 10px;
+}
