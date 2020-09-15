@@ -83,8 +83,20 @@
     --ion-background-color: #F0F3FD;
   }
 
-  .card {
+  .card, .chip {
     background-color: #ffffff;
+  }
+
+  .settings-item {
+    --ion-item-background: #ffffff;
+  }
+
+  .social-link {
+    color: #000000;
+  }
+
+  .social-link:active {
+    color: #657BFF;
   }
 }
 
@@ -193,8 +205,32 @@ body.dark {
 
   --ion-toolbar-background: #0d0d0d;
 
-  --ion-item-background: #1c1c1c;
+  // --ion-item-background: #1c1c1c;
   --ion-item-background-activated: #313131;
+
+  .text-lg, .lg-info, .text-error-title {
+    color: #ffffff;
+  }
+
+  .tab-content {
+    --ion-background-color: #2a2a2a;
+  }
+
+  .card, .chip {
+    background-color: #121212;
+  }
+
+  .settings-item {
+    --ion-item-background: #121212;
+  }
+
+  .social-link {
+    color: #ffffff;
+  }
+
+  .social-link:active {
+    color: #657BFF;
+  }
 }
 
 
@@ -242,8 +278,19 @@ body.dark {
     --ion-background-color: #2a2a2a;
   }
 
-  .card {
+  .card, .chip {
     background-color: #121212;
   }
-}
 
+  .settings-item {
+    --ion-item-background: #121212;
+  }
+
+  .social-link {
+    color: #ffffff;
+  }
+
+  .social-link:active {
+    color: #657BFF;
+  }
+}
