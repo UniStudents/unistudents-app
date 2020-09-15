@@ -1,60 +1,64 @@
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Router } from '@angular/router';
-import { NetworkService } from './shared/services/network.service';
-import { StorageService } from './shared/services/storage.service';
+import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { ThemeModeService } from './shared/services/theme-mode.service';
+import { NetworkService } from './shared/services/network.service';
+import { UpdateService } from './shared/services/update.service';
+import { RoutingService } from './shared/services/routing.service';
+import { NotificationService } from './shared/services/notification.service';
+import { UniversityService } from './shared/services/university.service';
+import { StudentService } from './shared/services/student.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
   constructor(
     private platform: Platform,
+    private updateService: UpdateService,
+    private routingService: RoutingService,
     private networkService: NetworkService,
-    private router: Router,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private storageService: StorageService,
-    private themeModeService: ThemeModeService
+    private studentService: StudentService,
+    private themeModeService: ThemeModeService,
+    private universityService: UniversityService,
+    private notificationService: NotificationService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
+    const { SplashScreen, StatusBar } = Plugins;
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.statusBar.backgroundColorByHexString('#ffffff');
-      this.splashScreen.hide();
+      SplashScreen.hide();
+      StatusBar.setStyle({ style: StatusBarStyle.Light});
 
-      if (this.networkService.isConnected()) {
-        this.router.navigateByUrl('/login');
-      } else {
-        this.router.navigateByUrl('/offline-login');
-      }
+      // clear received notifications (for iOS)
+      this.notificationService.removeAllDeliveredNotifications();
 
-      this.storageService.getThemeMode().then(mode => {
-        if (mode === null) {
-          this.storageService.saveThemeMode('light');
-        } else if (mode === 'dark') {
-          this.themeModeService.enableDarkMode(true);
-        }
+      // check for new updates
+      this.updateService.checkForUpdates().then(() => {
+
+        // init university values
+        this.universityService.init().then(() => {
+
+          // init student data & preferences
+          this.studentService.init().then(() => {
+
+            // init network service
+            this.networkService.init().then(() => {
+
+              // init routing service
+              this.routingService.init();
+            });
+          });
+        });
       });
 
-      this.platform.resume.subscribe(() => {
-        this.router.navigate(['/app/tabs/tab1']);
-      });
-
-      this.platform.backButton.subscribe(async () => {
-        if ((this.router.isActive('/login', true) && this.router.url === '/login') ||
-            ((this.router.isActive('/offline-login', true) && this.router.url === '/offline-login'))) {
-          navigator['app'].exitApp();
-        }
-      });
+      // set up theme mode
+      this.themeModeService.init();
     });
   }
 }
