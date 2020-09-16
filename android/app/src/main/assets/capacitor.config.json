@@ -1,0 +1,13 @@
+{
+  "appId": "com.unistudents.app.ios",
+  "appName": "UniStudents",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {},
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  }
+}
