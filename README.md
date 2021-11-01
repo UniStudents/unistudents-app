@@ -8,9 +8,7 @@
 
 <a href="https://apps.apple.com/us/app/id1523994357"><img src="https://user-images.githubusercontent.com/25327910/92141891-bb2c6d00-ee1b-11ea-91fa-ed0cd29e2ccc.png" width="250" align="left"></a>
 
-<a href="https://appgallery.huawei.com/#/app/C102925061"><img src="resources/store icons/app gallery logo.png" width="250" align="left"></a>
-<br><br><br>
-
+<a href="https://appgallery.huawei.com/#/app/C102925061"><img src="resources/store icons/app gallery logo.png" width="250"></a>
 
 ### Το UniStudents θα γίνει το αγαπημένο σου φοιτητικό app!
 
