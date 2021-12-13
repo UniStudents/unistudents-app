@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:unistudents_app/home/tabs/tab_grades.dart';
-import 'package:unistudents_app/home/tabs/tab_news.dart';
 import 'package:unistudents_app/splash.dart';
-
 import 'home/home.dart';
-import 'home/tabs/tab_home.dart';
 
 void main() {
   runApp(const MyApp());
