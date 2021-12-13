@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:unistudents_app/home/tabs/tab_grades.dart';
+import 'package:unistudents_app/home/tabs/tab_news.dart';
 import 'package:unistudents_app/splash.dart';
+
+import 'home/home.dart';
+import 'home/tabs/tab_home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +25,8 @@ class MyApp extends StatelessWidget {
 
       // Change activity - Navigator.of(context).pushReplacementNamed(route) (e.x. route = '/splash')
       routes: <String, WidgetBuilder> {
-        '/splash': (BuildContext context) => const Splash()
+        '/splash': (BuildContext context) => const Splash(),
+        '/home': (BuildContext context) => const Home(),
       }
     );
   }

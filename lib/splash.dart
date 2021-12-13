@@ -14,7 +14,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    // TODO - Check user files validity
+    // TODO - Check user files validity and decide if login page or how page
 
     Timer(const Duration(milliseconds: 2000),
             () => Navigator.of(context).pushReplacementNamed('/home'));
