@@ -1,20 +1,47 @@
-import 'package:unistudents_app/models/pa_course_model.dart';
-import 'package:unistudents_app/models/pa_grades_model.dart';
-import 'package:unistudents_app/models/pa_info_model.dart';
 import 'dart:convert';
 
-import 'package:unistudents_app/models/pa_semeseter_model.dart';
+class ProgressCourseModel {
+  late String id;
+  late String name;
+  late String type;
+  late String grade;
+  late String period;
+}
 
-class ProgressAccountModel {
+class ProgressSemesterModel {
+  late String id;
+  late String passedCourses;
+  late String averageGrade;
+  late String ects;
+  late List<ProgressCourseModel> courses;
+}
+
+class ProgressGradesModel {
+  late String passedCourses;
+  late String averageGrade;
+  late String ects;
+  late List<ProgressSemesterModel> semesters;
+}
+
+class ProgressInfoModel {
+  late String aem;
+  late String firstName;
+  late String lastName;
+  late String department;
+  late String semester;
+  late String programYear;
+}
+
+class ProgressModel {
   late String username;
   late String password;
   late String university;
   String? cookies, system;
 
-  late PAInfoModel info;
-  late PAGradesModel grades;
+  late ProgressInfoModel info;
+  late ProgressGradesModel grades;
 
-  String geHerokutUrl() {
+  String geHerokuUrl() {
     String url = "https://unistudents-prod-1.herokuapp.com/api/student/$university";
     if(system != null) url += "/$system";
     return url;
@@ -22,16 +49,16 @@ class ProgressAccountModel {
 
   bool assignFromHeroku(String response) {
     Map<String, dynamic> resJson = json.decode(response);
-    system = resJson["system"].toString();
-    cookies = resJson["cookies"].toString();
+    system = resJson["system"];
+    cookies = resJson["cookies"];
 
     if(resJson['student'] == null) return false;
     if(resJson['student']['info'] == null) return false;
     if(resJson['student']['grades'] == null) return false;
-
+    
     var infoJson = resJson["student"]["info"];
 
-    info = PAInfoModel();
+    info = ProgressInfoModel();
     info.aem = infoJson["aem"].toString();
     info.firstName = infoJson["firstName"].toString();
     info.lastName = infoJson["lastName"].toString();
@@ -41,7 +68,7 @@ class ProgressAccountModel {
 
     var gradesJson = resJson["student"]["grades"];
 
-    grades = PAGradesModel();
+    grades = ProgressGradesModel();
     grades.passedCourses = gradesJson["totalPassedCourses"].toString();
     grades.averageGrade = gradesJson["totalAverageGrade"].toString();
     grades.ects = gradesJson["totalEcts"].toString();
@@ -50,7 +77,7 @@ class ProgressAccountModel {
 
     var semesters = (gradesJson["semesters"] as List);
     grades.semesters = semesters.map((sem) {
-      var semester = PASemesterModel();
+      var semester = ProgressSemesterModel();
       semester.id = sem['id'].toString();
       semester.passedCourses = sem['passedCourses'].toString();
       semester.averageGrade = sem['gradeAverage'].toString();
@@ -59,7 +86,7 @@ class ProgressAccountModel {
       if(sem['courses'] !is List) return semester;
 
       semester.courses = (sem['courses'] as List).map((co) {
-        PACourseModel course = PACourseModel();
+        ProgressCourseModel course = ProgressCourseModel();
         course.id = co['id'].toString();
         course.name = co['name'].toString();
         course.type = co['type'].toString();
