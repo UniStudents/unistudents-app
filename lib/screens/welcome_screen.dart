@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:unistudents_app/widgets/menu.dart';
-import 'package:unistudents_app/widgets/navigation_controls.dart';
-import 'package:unistudents_app/widgets/web_view_stack.dart';
+import 'package:unistudents_app/core/native_android.dart';
+import 'package:unistudents_app/models/progress_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -20,9 +19,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Welcome screen'),
+        child: TextButton(
+          child: Text('click me'),
+          onPressed: () {
+            ProgressModel account = ProgressModel();
+            account.username = "";
+            account.password = "";
+            account.university = "";
+            NativeAndroid.getStudent();
+          },
+        ),
       ),
     );
   }
