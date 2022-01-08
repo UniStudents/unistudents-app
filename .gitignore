@@ -34,3 +34,5 @@ npm-debug.log*
 .idea
 build/
 /.packages
+/.flutter-plugins
+/.flutter-plugins-dependencies
