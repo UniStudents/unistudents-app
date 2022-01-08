@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:unistudents_app/models/progress_account_model.dart';
+import 'package:unistudents_app/models/progress_model.dart';
 
-Future<bool> request(ProgressAccountModel account, bool isAndroid) async {
+Future<bool> request(ProgressModel account, bool isAndroid) async {
   if(isAndroid) {
     return await requestHttp(account);
   } else {
@@ -11,13 +11,13 @@ Future<bool> request(ProgressAccountModel account, bool isAndroid) async {
   }
 }
 
-Future<bool> requestHttp(ProgressAccountModel account) async {
+Future<bool> requestHttp(ProgressModel account) async {
   return false;
 }
 
-Future<bool> requestHeroku(ProgressAccountModel account) async {
+Future<bool> requestHeroku(ProgressModel account) async {
     final response = await http.post(
-        Uri.parse(account.geHerokutUrl()),
+        Uri.parse(account.geHerokuUrl()),
         body: json.encode(account.getAuth()),
         headers: {
           'Content-type' : 'application/json',

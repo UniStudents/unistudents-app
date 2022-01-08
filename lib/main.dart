@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:unistudents_app/core/request.dart';
-import 'package:unistudents_app/models/progress_account_model.dart';
+import 'package:unistudents_app/core/requestPA.dart';
+import 'package:unistudents_app/models/progress_model.dart';
 import 'package:unistudents_app/screens/login_screen.dart';
 import 'package:unistudents_app/screens/registration_screen.dart';
 import 'package:unistudents_app/screens/tabs_screen.dart';
