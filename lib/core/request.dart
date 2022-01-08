@@ -1,37 +1,30 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-request(String username, String password, String university, String? cookies, String? system, bool isAndroid) async {
+import 'package:unistudents_app/models/progress_account_model.dart';
+
+Future<bool> request(ProgressAccountModel account, bool isAndroid) async {
   if(isAndroid) {
-    await requestHttp(username, password, university, cookies, system);
+    return await requestHttp(account);
   } else {
-    await requestHeroku(username, password, university, cookies, system);
+    return  await requestHeroku(account);
   }
 }
 
-requestHttp(String username, String password, String university, String? cookies, String? system) async {
-
+Future<bool> requestHttp(ProgressAccountModel account) async {
+  return false;
 }
 
-requestHeroku(String username, String password, String university, String? cookies, String? system) async {
-    String url = "https://unistudents-prod-1.herokuapp.com/api/student/$university";
-    if(system != null) url += "/$system";
-
-    Map<String, String?> data = {
-      'username': username,
-      'password': password,
-      'cookies': cookies,
-    };
-
+Future<bool> requestHeroku(ProgressAccountModel account) async {
     final response = await http.post(
-        Uri.parse(url),
-        body: json.encode(data),
+        Uri.parse(account.geHerokutUrl()),
+        body: json.encode(account.getAuth()),
         headers: {
           'Content-type' : 'application/json',
           'Accept': 'application/json',
         }
     );
 
-    final resJson = json.decode(response.body);
-    print(resJson);
+    if(response.statusCode != 200) return false;
+    return account.assignFromHeroku(response.body);
 }
