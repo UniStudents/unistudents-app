@@ -1,20 +1,20 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:unistudents_app/home/tabs/tab_grades.dart';
-import 'package:unistudents_app/home/tabs/tab_home.dart';
-import 'package:unistudents_app/home/tabs/tab_news.dart';
-import 'package:unistudents_app/home/tabs/tab_profile.dart';
+import 'package:unistudents_app/screens/tabs/progress_tab.dart';
+import 'package:unistudents_app/screens/tabs/home_tab.dart';
+import 'package:unistudents_app/screens/tabs/news_tab.dart';
+import 'package:unistudents_app/screens/tabs/profile_tab.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class TabsScreen extends StatefulWidget {
+  static const String id = 'tabs_screen';
 
   @override
-  State<Home> createState() => _HomeState();
+  State<TabsScreen> createState() => _TabsScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _TabsScreenState extends State<TabsScreen> {
   int navbarIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[TabHome(), TabGrades(), TabNews(), TabProfile()];
+  static const List<Widget> _widgetOptions = <Widget>[HomeTab(), ProgressTab(), NewsTab(), ProfileTab()];
 
   @override
   Widget build(BuildContext context) {

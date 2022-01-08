@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-class TabNews extends StatefulWidget {
-  const TabNews({Key? key}) : super(key: key);
+class NewsTab extends StatefulWidget {
+  static const String id = 'news_tab';
+
+  const NewsTab({Key? key}) : super(key: key);
 
   @override
-  State<TabNews> createState() => _TabNewsState();
+  State<NewsTab> createState() => _NewsTabState();
 }
 
-class _TabNewsState extends State<TabNews> {
+class _NewsTabState extends State<NewsTab> {
 
   int _counter = 0;
 
