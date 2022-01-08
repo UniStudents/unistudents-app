@@ -20,15 +20,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter WebView'),
-        actions: [
-          NavigationControls(controller: controller),
-          Menu(controller: controller),
-        ],
+    return const Scaffold(
+      body: Center(
+        child: Text('Welcome screen'),
       ),
-      body: WebViewStack(controller: controller),
     );
   }
 }
