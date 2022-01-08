@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import '../components/bug.dart';
-import 'Env.dart';
+import '../models/progress_model.dart';
+import 'env.dart';
 
 class _ArticlesAPI {
   Future<Map<String, dynamic>?> fetchWebsites(String university) async {
@@ -71,5 +72,28 @@ class API {
     }
 
     return _API_URL;
+  }
+
+  static Future<bool> requestProgress(ProgressModel account, bool isAndroid) async {
+    if(isAndroid) {
+      // TODO - Android native
+      return false;
+    }
+
+    // Request from API
+    String? url = await API.getAPIUrl();
+    if(url == null) return false;
+
+    final response = await http.post(
+        Uri.parse(account.geHerokuUrl(url)),
+        body: json.encode(account.getAuth()),
+        headers: {
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        }
+    );
+
+    if(response.statusCode != 200) return false;
+    return account.assignFromHeroku(response.body);
   }
 }
