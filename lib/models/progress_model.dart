@@ -41,8 +41,8 @@ class ProgressModel {
   late ProgressInfoModel info;
   late ProgressGradesModel grades;
 
-  String geHerokuUrl() {
-    String url = "https://unistudents-prod-1.herokuapp.com/api/student/$university";
+  String geHerokuUrl(String base) {
+    String url = "$base/api/student/$university";
     if(system != null) url += "/$system";
     return url;
   }
