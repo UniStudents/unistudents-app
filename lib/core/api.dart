@@ -7,7 +7,7 @@ import '../models/progress_model.dart';
 import '../models/news_websites.dart';
 import 'env.dart';
 
-class _NewsAPI {
+class _HttpNewsAPI {
   Future<List<NewsWebsites>?> getWebsites(String first) async {
     String url = "${Env.GOHAN_URL}/websites?university=$first";
     final response = await http.get(Uri.parse(url));
@@ -32,7 +32,7 @@ class _NewsAPI {
   }
 }
 
-class _BugAPI {
+class _HttpBugAPI {
   Future<bool> reportBug(Bug bug) async {
     String url = bug.getUrl(Env.API_URL);
     final response = await http.post(
@@ -48,10 +48,10 @@ class _BugAPI {
   }
 }
 
-class API {
+class HttpAPI {
   
-  static final _NewsAPI News = _NewsAPI();
-  static final _BugAPI Bugs = _BugAPI();
+  static final _HttpNewsAPI News = _HttpNewsAPI();
+  static final _HttpBugAPI Bugs = _HttpBugAPI();
 
   static String _LOAD_BALANCED_URL = "";
 
@@ -74,11 +74,11 @@ class API {
     }
 
     // Request from API
-    String? url = await API.getLoadBalancedUrl();
+    String? url = await HttpAPI.getLoadBalancedUrl();
     if(url == null) return false;
 
     final response = await http.post(
-        Uri.parse(account.geHerokuUrl(url)),
+        Uri.parse(account.geUrl(url)),
         body: json.encode(account.getAuth()),
         headers: {
           'Content-type' : 'application/json',
@@ -87,6 +87,14 @@ class API {
     );
 
     if(response.statusCode != 200) return false;
-    return account.assignFromHeroku(response.body);
+    return account.parse(response.body);
+  }
+}
+
+
+class StorageAPI {
+  static Future<bool> requestProgress(ProgressModel account, bool isAndroid) async {
+    // TODO - Storage
+    return false;
   }
 }

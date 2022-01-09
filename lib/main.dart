@@ -5,10 +5,15 @@ import 'package:unistudents_app/screens/tabs_screen.dart';
 import 'package:unistudents_app/screens/welcome_screen.dart';
 
 import 'core/api.dart';
+import 'models/progress_model.dart';
 
 void main() {
-  // ProgressModel account = ProgressModel("", "", "uniwa");
-  // request(account, false);
+  ProgressModel account = ProgressModel("", "", "uniwa");
+  HttpAPI.requestProgress(account, false).then((value) {
+    final text = account.toJSON();
+    final tmp = ProgressModel.parseWhole(text);
+    print(tmp);
+  });
 
   // API.News.getArticles(["unipi.gr", "ds.unipi.gr"],
   //   pageSize: 5,
@@ -17,7 +22,9 @@ void main() {
   //   print("here");
   // });
 
-  runApp(const MyApp());
+
+
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

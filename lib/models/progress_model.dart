@@ -6,6 +6,16 @@ class ProgressCourseModel {
   late String type;
   late String grade;
   late String period;
+
+  Map<String, dynamic> toJSON() {
+    return {
+      'id': id,
+      'name': name,
+      'type': type,
+      'grade': grade,
+      'examPeriod': period,
+    };
+  }
 }
 
 class ProgressSemesterModel {
@@ -14,6 +24,21 @@ class ProgressSemesterModel {
   late String averageGrade;
   late String ects;
   late List<ProgressCourseModel> courses;
+
+  Map<String, dynamic> toJSON() {
+    final cours = [];
+    for(ProgressCourseModel s in courses) {
+      cours.add(s.toJSON());
+    }
+
+    return {
+      'id': id,
+      'passedCourses': passedCourses,
+      'gradeAverage': averageGrade,
+      'ects': ects,
+      'courses': cours
+    };
+  }
 }
 
 class ProgressGradesModel {
@@ -21,6 +46,20 @@ class ProgressGradesModel {
   late String averageGrade;
   late String ects;
   late List<ProgressSemesterModel> semesters;
+
+  Map<String, dynamic> toJSON() {
+    final sems = [];
+    for(ProgressSemesterModel s in semesters) {
+      sems.add(s.toJSON());
+    }
+
+    return {
+      'totalPassedCourses': passedCourses,
+      'totalAverageGrade': averageGrade,
+      'totalEcts': ects,
+      'semesters': sems
+    };
+  }
 }
 
 class ProgressInfoModel {
@@ -30,28 +69,50 @@ class ProgressInfoModel {
   late String department;
   late String semester;
   late String programYear;
+
+  Map<String, dynamic> toJSON() {
+    return {
+      'aem': aem,
+      'firstName': firstName,
+      'lastName': lastName,
+      'department': department,
+      'semester': semester,
+      'registrationYear': programYear
+    };
+  }
 }
 
 class ProgressModel {
   String username;
   String password;
   String university;
-  String? cookies, system;
+  String? system;
+  Map<String, dynamic>? cookies;
 
   late ProgressInfoModel info;
   late ProgressGradesModel grades;
 
   ProgressModel(this.username, this.password, this.university);
 
-
-  String geHerokuUrl(String base) {
+  String geUrl(String base) {
     String url = "$base/api/student/$university";
     if(system != null) url += "/$system";
     return url;
   }
 
-  bool assignFromHeroku(String response) {
+  static ProgressModel? parseWhole(String response) {
+    ProgressModel model = ProgressModel("", "", "");
+    bool result = model.parse(response);
+    return result ? model : null;
+  }
+
+  bool parse(String response) {
     Map<String, dynamic> resJson = json.decode(response);
+
+    username = resJson["username"] ?? username;
+    password = resJson["username"] ?? password;
+    university = resJson["username"] ?? university;
+
     system = resJson["system"];
     cookies = resJson["cookies"];
 
@@ -75,6 +136,7 @@ class ProgressModel {
     grades.passedCourses = gradesJson["totalPassedCourses"].toString();
     grades.averageGrade = gradesJson["totalAverageGrade"].toString();
     grades.ects = gradesJson["totalEcts"].toString();
+    grades.semesters = [];
 
     if(gradesJson["semesters"] == null) return false;
 
@@ -85,8 +147,9 @@ class ProgressModel {
       semester.passedCourses = sem['passedCourses'].toString();
       semester.averageGrade = sem['gradeAverage'].toString();
       semester.ects = sem['ects'].toString();
+      semester.courses = [];
 
-      if(sem['courses'] !is List) return semester;
+      if(sem['courses'] == null) return semester;
 
       semester.courses = (sem['courses'] as List).map((co) {
         ProgressCourseModel course = ProgressCourseModel();
@@ -104,11 +167,25 @@ class ProgressModel {
     return true;
   }
 
-  Map<String, String?> getAuth() {
+  Map<String, dynamic> getAuth() {
     return {
       'username': username,
       'password': password,
       'cookies': cookies
     };
+  }
+
+  String toJSON() {
+    return json.encode({
+      'username': username,
+      'password': password,
+      'university': university,
+      'system': system,
+      'cookies': cookies,
+      'student': {
+        'info': info.toJSON(),
+        'grades': grades.toJSON()
+      }
+    });
   }
 }
