@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'dart:math';
-
 enum BugType { LOGIN_BUG, NEWS_BUG }
 
 class Bug {

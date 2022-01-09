@@ -2,46 +2,39 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import '../components/bug.dart';
+import '../models/news_article.dart';
 import '../models/progress_model.dart';
+import '../models/news_websites.dart';
 import 'env.dart';
 
-class _ArticlesAPI {
-  Future<Map<String, dynamic>?> fetchWebsites(String university) async {
-    String url = "${Env.GOHAN_URL}/websites?university=$university";
+class _NewsAPI {
+  Future<List<NewsWebsites>?> getWebsites(String first) async {
+    String url = "${Env.GOHAN_URL}/websites?university=$first";
     final response = await http.get(Uri.parse(url));
 
     if(response.statusCode != 200) return null;
-    return json.decode(response.body);
+    return NewsWebsites.parseMany(response.body);
   }
 
-  Future<Map<String, dynamic>?> fetchArticles(String pageSize, String pageNumber, List<String> subscribedWebsites) async {
-    String url = "${Env.GOHAN_URL}/articles?websites=${subscribedWebsites.join(',')}&pageSize=$pageSize&pageNumber=$pageNumber";
+  Future<List<NewsArticle>?> getArticles(List<String> subscribedWebsites, {int? pageSize, int? pageNumber,
+    List<String>? afterIds, List<String>? beforeIds}) async {
+    
+    String url = "${Env.GOHAN_URL}/articles?websites=${subscribedWebsites.join(',')}"
+        "&pageSize=${pageSize ?? "0"}"
+        "&pageNumber=${pageNumber ?? "0"}"
+        "${afterIds != null ? "&after=${afterIds.join(",")}" : ""}"
+        "${beforeIds != null ? "&before=${beforeIds.join(",")}" : ""}";
+    
     final response = await http.get(Uri.parse(url));
 
     if(response.statusCode != 200) return null;
-    return json.decode(response.body);
-  }
-
-  Future<Map<String, dynamic>?> fetchNewArticles(List<String> latestIds, List<String> subscribedWebsites) async {
-    String url = "${Env.GOHAN_URL}/articles?websites=${subscribedWebsites.join(',')}pageSize=0&pageNumber=0&after=${latestIds.join(",")}";
-    final response = await http.get(Uri.parse(url));
-
-    if(response.statusCode != 200) return null;
-    return json.decode(response.body);
-  }
-
-  Future<Map<String, dynamic>?> fetchOldArticles(List<String> oldestIds, String pageLimit, List<String> subscribedWebsites) async {
-    String url = "${Env.GOHAN_URL}/articles?websites=${subscribedWebsites.join(',')}pageSize=$pageLimit&pageNumber=0&before=${oldestIds.join(",")}";
-    final response = await http.get(Uri.parse(url));
-
-    if(response.statusCode != 200) return null;
-    return json.decode(response.body);
+    return NewsArticle.parseMany(response.body);
   }
 }
 
 class _BugAPI {
   Future<bool> reportBug(Bug bug) async {
-    String url = bug.getUrl(Env.NODEJS_URL);
+    String url = bug.getUrl(Env.API_URL);
     final response = await http.post(
         Uri.parse(url),
         body: bug.getJson(),
@@ -57,21 +50,21 @@ class _BugAPI {
 
 class API {
   
-  static final _ArticlesAPI Articles = _ArticlesAPI();
+  static final _NewsAPI News = _NewsAPI();
   static final _BugAPI Bugs = _BugAPI();
 
-  static String _API_URL = "";
+  static String _LOAD_BALANCED_URL = "";
 
-  static Future<String?> getAPIUrl() async {
-    if(_API_URL == "") {
-      String url = "${Env.NODEJS_URL}/server";
+  static Future<String?> getLoadBalancedUrl() async {
+    if(_LOAD_BALANCED_URL == "") {
+      String url = "${Env.API_URL}/server";
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode != 200) return null;
-      _API_URL = response.body;
+      _LOAD_BALANCED_URL = response.body;
     }
 
-    return _API_URL;
+    return _LOAD_BALANCED_URL;
   }
 
   static Future<bool> requestProgress(ProgressModel account, bool isAndroid) async {
@@ -81,7 +74,7 @@ class API {
     }
 
     // Request from API
-    String? url = await API.getAPIUrl();
+    String? url = await API.getLoadBalancedUrl();
     if(url == null) return false;
 
     final response = await http.post(

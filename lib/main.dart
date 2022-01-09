@@ -4,15 +4,17 @@ import 'package:unistudents_app/screens/registration_screen.dart';
 import 'package:unistudents_app/screens/tabs_screen.dart';
 import 'package:unistudents_app/screens/welcome_screen.dart';
 
-import 'core/env.dart';
+import 'core/api.dart';
 
 void main() {
-  // ProgressAccountModel account = ProgressAccountModel();
-  // account.username = "";
-  // account.password = "";
-  // account.university = "uniwa";
-  // request(account, false).then((value) {
-  //   print(account);
+  // ProgressModel account = ProgressModel("", "", "uniwa");
+  // request(account, false);
+
+  // API.News.getArticles(["unipi.gr", "ds.unipi.gr"],
+  //   pageSize: 5,
+  //     beforeIds: ["61728d126f21a80af16f5191", "none"]
+  // ).then((value) {
+  //   print("here");
   // });
 
   runApp(const MyApp());

@@ -33,13 +33,16 @@ class ProgressInfoModel {
 }
 
 class ProgressModel {
-  late String username;
-  late String password;
-  late String university;
+  String username;
+  String password;
+  String university;
   String? cookies, system;
 
   late ProgressInfoModel info;
   late ProgressGradesModel grades;
+
+  ProgressModel(this.username, this.password, this.university);
+
 
   String geHerokuUrl(String base) {
     String url = "$base/api/student/$university";

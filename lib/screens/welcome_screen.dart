@@ -24,10 +24,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         child: TextButton(
           child: Text('click me'),
           onPressed: () {
-            ProgressModel account = ProgressModel();
-            account.username = "";
-            account.password = "";
-            account.university = "";
+            ProgressModel account = ProgressModel("", "", "");
             NativeAndroid.getStudent();
           },
         ),
