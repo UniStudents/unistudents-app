@@ -8,19 +8,19 @@ import 'core/api.dart';
 import 'models/progress_model.dart';
 
 void main() {
-  ProgressModel account = ProgressModel("", "", "uniwa");
-  HttpAPI.requestProgress(account, false).then((value) {
-    final text = account.toJSON();
-    final tmp = ProgressModel.parseWhole(text);
-    print(tmp);
-  });
-
-  // API.News.getArticles(["unipi.gr", "ds.unipi.gr"],
-  //   pageSize: 5,
-  //     beforeIds: ["61728d126f21a80af16f5191", "none"]
-  // ).then((value) {
-  //   print("here");
+  // ProgressModel account = ProgressModel("", "", "uniwa");
+  // HttpAPI.requestProgress(account, false).then((value) {
+  //   final text = account.toJSON();
+  //   final tmp = ProgressModel.parseWhole(text);
+  //   print(tmp);
   // });
+
+  HttpAPI.News.getArticles(["unipi.gr", "ds.unipi.gr"],
+    pageSize: 5,
+      beforeIds: ["61728d126f21a80af16f5191", "none"]
+  ).then((value) {
+    print("here");
+  });
 
 
 

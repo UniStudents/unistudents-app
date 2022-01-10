@@ -35,20 +35,14 @@ class NewsArticle {
   }
 
   static NewsArticle? parseOne(Map<String, dynamic> res) {
-    List<dynamic> attach = res["attachments"] ?? [];
+    List<dynamic> attachments = res["attachments"] ?? [];
+    List<dynamic> categories = res["categories"] ?? [];
 
-    List<NewsArticleAttachment> attachments = [];
-    for(int i = 0; i < attach.length; i++) {
-      Map<String, dynamic> one = attach[i];
-      attachments.add(NewsArticleAttachment(one["text"], one["value"], one["attribute"]));
-    }
-
-    List<String> cats = ((res["categories"] ?? []) as List<dynamic>).map((e) => e.toString()).toList();
     return NewsArticle(
       res["_id"],
       res["link"],
-      attachments,
-      cats,
+      attachments.map((e) => NewsArticleAttachment(e["text"], e['value'], e['attribute'])).toList(),
+      categories.map((e) => e.toString()).toList(),
       res["content"] ?? "",
       res["extras"] ?? {},
       res["pubDate"],

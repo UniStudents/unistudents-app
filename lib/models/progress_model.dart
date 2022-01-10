@@ -26,17 +26,12 @@ class ProgressSemesterModel {
   late List<ProgressCourseModel> courses;
 
   Map<String, dynamic> toJSON() {
-    final cours = [];
-    for(ProgressCourseModel s in courses) {
-      cours.add(s.toJSON());
-    }
-
     return {
       'id': id,
       'passedCourses': passedCourses,
       'gradeAverage': averageGrade,
       'ects': ects,
-      'courses': cours
+      'courses': courses.map((e) => e.toJSON()).toList()
     };
   }
 }
@@ -48,16 +43,11 @@ class ProgressGradesModel {
   late List<ProgressSemesterModel> semesters;
 
   Map<String, dynamic> toJSON() {
-    final sems = [];
-    for(ProgressSemesterModel s in semesters) {
-      sems.add(s.toJSON());
-    }
-
     return {
       'totalPassedCourses': passedCourses,
       'totalAverageGrade': averageGrade,
       'totalEcts': ects,
-      'semesters': sems
+      'semesters': semesters.map((e) => e.toJSON()).toList()
     };
   }
 }
