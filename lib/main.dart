@@ -8,23 +8,43 @@ import 'core/api.dart';
 import 'models/progress_model.dart';
 
 void main() {
-  // ProgressModel account = ProgressModel("", "", "uniwa");
+  runApp(const MyApp());
+
+  ProgressModel account = ProgressModel("Test", "test", "uniwa");
+  StorageAPI.saveProgress(account).then((value) {
+    if(!value) {
+      print("Failed to save");
+      return;
+    }
+
+    StorageAPI.readProgress().then((value) {
+      if(value == null) {
+        print("Failed to read");
+        return;
+      }
+
+      print('test');
+    });
+
+  });
+
+
+
   // HttpAPI.requestProgress(account, false).then((value) {
   //   final text = account.toJSON();
   //   final tmp = ProgressModel.parseWhole(text);
   //   print(tmp);
   // });
 
-  HttpAPI.News.getArticles(["unipi.gr", "ds.unipi.gr"],
-    pageSize: 5,
-      beforeIds: ["61728d126f21a80af16f5191", "none"]
-  ).then((value) {
-    print("here");
-  });
+  // HttpAPI.News.getArticles(["unipi.gr", "ds.unipi.gr"],
+  //   pageSize: 5,
+  //     beforeIds: ["61728d126f21a80af16f5191", "none"]
+  // ).then((value) {
+  //   print("here");
+  // });
 
 
 
-  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
