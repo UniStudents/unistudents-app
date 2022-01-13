@@ -4,20 +4,20 @@ import 'package:unistudents_app/screens/registration_screen.dart';
 import 'package:unistudents_app/screens/tabs_screen.dart';
 import 'package:unistudents_app/screens/welcome_screen.dart';
 
-import 'core/api.dart';
+import 'core/storage.dart';
 import 'models/progress_model.dart';
 
 void main() {
   runApp(const MyApp());
 
   ProgressModel account = ProgressModel("Test", "test", "uniwa");
-  StorageAPI.saveProgress(account).then((value) {
+  Storage.saveProgress(account).then((value) {
     if(!value) {
       print("Failed to save");
       return;
     }
 
-    StorageAPI.readProgress().then((value) {
+    Storage.readProgress().then((value) {
       if(value == null) {
         print("Failed to read");
         return;
