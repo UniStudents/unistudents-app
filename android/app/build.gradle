@@ -38,6 +38,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -47,6 +48,22 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+}
+
+dependencies {
+    implementation 'org.jsoup:jsoup:1.13.1'
+    implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation 'commons-codec:commons-codec:1.10'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.11.0'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
+    implementation "com.datadoghq:dd-sdk-android:1.9.0-rc1"
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+    implementation "androidx.work:work-runtime:2.7.1"
+    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-analytics:20.0.2'
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'com.google.guava:guava:27.0.1-android'
 }
 
 flutter {
