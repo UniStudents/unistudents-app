@@ -100,8 +100,8 @@ class ProgressModel {
     Map<String, dynamic> resJson = json.decode(response);
 
     username = resJson["username"] ?? username;
-    password = resJson["username"] ?? password;
-    university = resJson["username"] ?? university;
+    password = resJson["password"] ?? password;
+    university = resJson["university"] ?? university;
 
     system = resJson["system"];
     cookies = resJson["cookies"];
