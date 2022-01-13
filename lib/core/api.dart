@@ -8,32 +8,16 @@ import '../models/news_websites.dart';
 import 'env.dart';
 
 class API {
-  
-  static String _LOAD_BALANCED_URL = "";
 
-  static Future<String?> getLoadBalancedUrl() async {
-    if(_LOAD_BALANCED_URL == "") {
-      String url = "${Env.API_URL}/server";
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode != 200) return null;
-      _LOAD_BALANCED_URL = response.body;
-    }
-
-    return _LOAD_BALANCED_URL;
+  static Future<String> getProgressAPIUrl() async {
+    final response = await http.get(Uri.parse(Env.GATEWAY_URL + "/server"));
+    if (response.statusCode != 200) return Env.PROGRESS_FALLBACK_API_URL;
+    return response.body;
   }
 
-  static Future<bool> requestProgress(ProgressModel account, bool isAndroid) async {
-    if(isAndroid) {
-      // TODO - Android native
-      return false;
-    }
-
-    // Request from API
-    String? url = await API.getLoadBalancedUrl();
-    if(url == null) return false;
-
-    final response = await http.post(
+  static Future<http.Response> getProgress(ProgressModel account) async {
+    String url = await API.getProgressAPIUrl();
+    return await http.post(
         Uri.parse(account.geUrl(url)),
         body: json.encode(account.getAuth()),
         headers: {
@@ -41,13 +25,10 @@ class API {
           'Accept': 'application/json',
         }
     );
-
-    if(response.statusCode != 200) return false;
-    return account.parse(response.body);
   }
 
   Future<bool> reportBug(Bug bug) async {
-    String url = bug.getUrl(Env.API_URL);
+    String url = bug.getUrl(Env.PROGRESS_FALLBACK_API_URL);
     final response = await http.post(
         Uri.parse(url),
         body: bug.getJson(),
