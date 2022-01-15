@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:unistudents_app/core/native_android.dart';
-import 'package:unistudents_app/models/progress_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -23,10 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Center(
         child: TextButton(
           child: Text('click me'),
-          onPressed: () {
-            ProgressModel account = ProgressModel("", "", "");
-            NativeAndroid.getStudent();
-          },
+          onPressed: () {},
         ),
       ),
     );

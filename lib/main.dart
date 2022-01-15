@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unistudents_app/providers/news.dart';
 import 'package:unistudents_app/screens/login_screen.dart';
 import 'package:unistudents_app/screens/registration_screen.dart';
 import 'package:unistudents_app/screens/tabs_screen.dart';
@@ -52,19 +54,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'UniStudents',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+            value: News()
+        )
+      ],
+      child: MaterialApp(
+        title: 'UniStudents',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: const Color(0xffF4F4F4),
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: TabsScreen.id,
+        routes: {
+          WelcomeScreen.id: (context) => const WelcomeScreen(),
+          LoginScreen.id: (context) => LoginScreen(),
+          RegistrationScreen.id: (context) => RegistrationScreen(),
+          TabsScreen.id: (context) => TabsScreen(),
+        }
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: WelcomeScreen.id,
-      routes: {
-        WelcomeScreen.id: (context) => const WelcomeScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        RegistrationScreen.id: (context) => RegistrationScreen(),
-        TabsScreen.id: (context) => TabsScreen(),
-      }
     );
   }
 }

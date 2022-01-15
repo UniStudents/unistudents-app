@@ -13,7 +13,7 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  int navbarIndex = 0;
+  int navbarIndex = 2;
   static const List<Widget> _widgetOptions = <Widget>[HomeTab(), ProgressTab(), NewsTab(), ProfileTab()];
 
   @override

@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../components/bug.dart';
-import '../models/news_article.dart';
 import '../models/progress_model.dart';
-import '../models/news_websites.dart';
+import '../models/website.dart';
 import 'env.dart';
 
 class API {
@@ -27,7 +26,7 @@ class API {
     );
   }
 
-  Future<bool> reportBug(Bug bug) async {
+  static Future<bool> reportBug(Bug bug) async {
     String url = bug.getUrl(Env.PROGRESS_FALLBACK_API_URL);
     final response = await http.post(
         Uri.parse(url),
@@ -41,15 +40,12 @@ class API {
     return response.statusCode == 200;
   }
 
-  Future<List<NewsWebsites>?> getWebsites(String first) async {
-    String url = "${Env.GOHAN_URL}/websites?university=$first";
-    final response = await http.get(Uri.parse(url));
-
-    if(response.statusCode != 200) return null;
-    return NewsWebsites.parseMany(response.body);
+  static Future<http.Response> getAvailableWebsites(String university) async {
+    String url = "${Env.GOHAN_URL}/websites?university=$university";
+    return await http.get(Uri.parse(url));
   }
 
-  Future<List<NewsArticle>?> getArticles(List<String> subscribedWebsites, {int? pageSize, int? pageNumber,
+  static Future<http.Response> getArticles(List<String> subscribedWebsites, {int? pageSize, int? pageNumber,
     List<String>? afterIds, List<String>? beforeIds}) async {
 
     String url = "${Env.GOHAN_URL}/articles?websites=${subscribedWebsites.join(',')}"
@@ -58,10 +54,7 @@ class API {
         "${afterIds != null ? "&after=${afterIds.join(",")}" : ""}"
         "${beforeIds != null ? "&before=${beforeIds.join(",")}" : ""}";
 
-    final response = await http.get(Uri.parse(url));
-
-    if(response.statusCode != 200) return null;
-    return NewsArticle.parseMany(response.body);
+    return await http.get(Uri.parse(url));
   }
 }
 
