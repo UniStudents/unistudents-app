@@ -10,7 +10,10 @@ class News with ChangeNotifier {
   int _pageNumber = 0;
   int _pageLimit = 10;
 
-  List<Article> _articles = [Article('', 'link', [], ["Category 1", "Category 2"], "content", {}, "pubDate", "title", "source")];
+  List<Article> _articles = [
+    Article('', 'link', [Attachment("Image", 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'img')],
+        ["Ανακοινώσεις", "Νέα"], "content", {}, "2022-01-16 22:12:00", "Πρόγραμμα σπουδών", "unipi.gr")
+  ];
 
   List<Article> _backupArticles = [];
   List<String> _latestIds = [];

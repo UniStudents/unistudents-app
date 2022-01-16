@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import '../core/local/locals.dart';
+
 class Article {
   late String id;
   late String link;
@@ -18,11 +20,63 @@ class Article {
 
   String? frontalImage;
   String? getFrontalImage() {
-    return frontalImage ??= 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg';
+    if(frontalImage == null) {
+      for (var element in attachments) {
+        if(element.attribute == 'img') {
+          frontalImage = element.value;
+          break;
+        }
+      }
+    }
+
+    return frontalImage;
   }
 
-  String getElapsedTime() {
-    return "1min";
+  String getElapsedTime(context) {
+    final articleDate = DateTime.parse(pubDate);
+    final nowDate = DateTime.now();
+
+    final diff = nowDate.difference(articleDate);
+
+    if(diff.inDays > 365 + 365) {
+      return "${diff.inDays ~/ 365} ${Locals.of(context)!.datetimeYears}";
+    }
+    else if(diff.inDays >= 365) {
+      return "1 ${Locals.of(context)!.datetimeYear}";
+    }
+    else if(diff.inDays > 30 + 30) {
+      return "${(diff.inDays ~/ 30)} ${Locals.of(context)!.datetimeMonths}";
+    }
+    else if(diff.inDays >= 30) {
+      return "1 ${Locals.of(context)!.datetimeMonth}";
+    }
+    else if(diff.inDays > 7 + 7) {
+      return "${(diff.inDays ~/ 7)} ${Locals.of(context)!.datetimeWeeks}";
+    }
+    else if(diff.inDays >= 7) {
+      return "1 ${Locals.of(context)!.datetimeWeek}";
+    }
+    else if(diff.inDays == 1) {
+      return "${diff.inDays} ${Locals.of(context)!.datetimeDay}";
+    }
+    else if(diff.inDays > 1) {
+      return "${diff.inDays} ${Locals.of(context)!.datetimeDays}";
+    }
+    else if(diff.inHours == 1) {
+      return "${diff.inHours} ${Locals.of(context)!.datetimeHour}";
+    }
+    else if(diff.inHours > 1) {
+      return "${diff.inHours} ${Locals.of(context)!.datetimeHours}";
+    }
+    else if(diff.inMinutes == 1) {
+      return "${diff.inMinutes} ${Locals.of(context)!.datetimeMinute}";
+    }
+    else if(diff.inMinutes > 1) {
+      return "${diff.inMinutes} ${Locals.of(context)!.datetimeMinutes}";
+    }
+    else {
+      return Locals.of(context)!.datetimeNow;
+    }
   }
 
   static List<Article> parseFromRequest(String res) {

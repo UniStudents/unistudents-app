@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:unistudents_app/models/article.dart';
-import 'package:unistudents_app/providers/local_provider.dart';
 
 import '../core/local/locals.dart';
 import 'bottomsheet_item.dart';
@@ -9,10 +7,6 @@ import 'bottomsheet_modal.dart';
 
 class ArticleWidget extends StatelessWidget {
   final Article article;
-
-  // Timer.periodic(new Duration(seconds: 1), (timer) {
-  //    debugPrint(timer.tick.toString());
-  // });
 
   const ArticleWidget({Key? key, required this.article}) : super(key: key);
 
@@ -32,7 +26,7 @@ class ArticleWidget extends StatelessWidget {
               children: [
                 Flexible(
                     fit: FlexFit.tight,
-                    child: Text('${article.source} | ${article.getElapsedTime()}',
+                    child: Text('${article.source} | ${article.getElapsedTime(context)}',
                         style: const TextStyle(fontSize: 12)
                     )),
                 IconButton(
@@ -155,7 +149,7 @@ class ArticleWidget extends StatelessWidget {
                   itemBuilder: (context, j) {
                     return Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Text(article.categories[j]));
+                        child: Text('#' + article.categories[j]));
                   }),
             )
           ],

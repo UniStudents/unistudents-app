@@ -13,4 +13,17 @@ class LocalGr extends Locals {
 
   @override String get articleWidgetAttachments => "Συννημένα";
 
+  @override String get datetimeNow => 'τώρα';
+  @override String get datetimeMinute => 'λεπτό';
+  @override String get datetimeMinutes => 'λεπτά';
+  @override String get datetimeHour => 'ώρα';
+  @override String get datetimeHours => 'ώρες';
+  @override String get datetimeDay => 'μέρα';
+  @override String get datetimeDays => 'μέρες';
+  @override String get datetimeWeek => 'εβδομάδα';
+  @override String get datetimeWeeks => 'εβδομάδες';
+  @override String get datetimeMonth => 'μήνα';
+  @override String get datetimeMonths => 'μήνες';
+  @override String get datetimeYear => 'χρόνο';
+  @override String get datetimeYears => 'χρόνια';
 }

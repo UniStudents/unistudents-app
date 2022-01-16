@@ -33,5 +33,17 @@ abstract class Locals {
 
   String get articleWidgetAttachments;
 
-
+  String get datetimeNow;
+  String get datetimeMinute;
+  String get datetimeMinutes;
+  String get datetimeHour;
+  String get datetimeHours;
+  String get datetimeDay;
+  String get datetimeDays;
+  String get datetimeWeek;
+  String get datetimeWeeks;
+  String get datetimeMonth;
+  String get datetimeMonths;
+  String get datetimeYear;
+  String get datetimeYears;
 }
