@@ -21,6 +21,10 @@ class Article {
     return frontalImage ??= 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg';
   }
 
+  String getElapsedTime() {
+    return "1min";
+  }
+
   static List<Article> parseFromRequest(String res) {
     List<dynamic> result = json.decode(res);
 

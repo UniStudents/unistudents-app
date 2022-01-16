@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unistudents_app/core/local/locals.dart';
 import 'package:unistudents_app/screens/tabs/progress_tab.dart';
 import 'package:unistudents_app/screens/tabs/home_tab.dart';
 import 'package:unistudents_app/screens/tabs/news_tab.dart';
@@ -31,12 +32,11 @@ class _TabsScreenState extends State<TabsScreen> {
         index: navbarIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Αρχική'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart), label: 'Πρόοδος'),
-          BottomNavigationBarItem(icon: Icon(Icons.web), label: 'Νέα'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Προφίλ')
+        items: [
+          BottomNavigationBarItem(icon: const Icon(Icons.home), label: Locals.of(context)!.bnvHome),
+          BottomNavigationBarItem(icon: const Icon(Icons.bar_chart), label: Locals.of(context)!.bnvProgress),
+          BottomNavigationBarItem(icon: const Icon(Icons.web), label: Locals.of(context)!.bnvNews),
+          BottomNavigationBarItem(icon: const Icon(Icons.person), label: Locals.of(context)!.bnvProfile)
         ],
         currentIndex: navbarIndex,
         selectedItemColor: Colors.blue[400],

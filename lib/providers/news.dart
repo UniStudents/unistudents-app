@@ -10,15 +10,14 @@ class News with ChangeNotifier {
   int _pageNumber = 0;
   int _pageLimit = 10;
 
-  //Article('', 'link', [], ["Category 1", "Category 2"], "content", {}, "pubDate", "title", "source")
-  List<Article> _articles = [];
+  List<Article> _articles = [Article('', 'link', [], ["Category 1", "Category 2"], "content", {}, "pubDate", "title", "source")];
 
   List<Article> _backupArticles = [];
   List<String> _latestIds = [];
   List<String> _oldestIds = [];
 
   List<NewsWebsite> _availableWebsites = [];
-  List<String> _subscribedWebsites = ["ds.unipi.gr"];
+  List<String> _followedWebsites = ["ds.unipi.gr"];
   List<String> _filteredWebsites = [];
 
   List<Article> get articles => [..._articles];
@@ -31,7 +30,7 @@ class News with ChangeNotifier {
 
   List<NewsWebsite> get availableWebsites => [..._availableWebsites];
 
-  List<String> get subscribedWebsites => [..._subscribedWebsites];
+  List<String> get subscribedWebsites => [..._followedWebsites];
 
   List<String> get filteredWebsites => [..._filteredWebsites];
 
@@ -39,15 +38,15 @@ class News with ChangeNotifier {
     Response response;
     switch (state) {
       case ArticlesState.fetch:
-        response = await API.getArticles(_subscribedWebsites,
+        response = await API.getArticles(_followedWebsites,
             pageSize: _pageLimit, pageNumber: _pageNumber);
         break;
       case ArticlesState.refresh:
         response =
-            await API.getArticles(_subscribedWebsites, afterIds: _latestIds);
+            await API.getArticles(_followedWebsites, afterIds: _latestIds);
         break;
       case ArticlesState.old:
-        response = await API.getArticles(_subscribedWebsites,
+        response = await API.getArticles(_followedWebsites,
             pageSize: _pageLimit, beforeIds: _oldestIds);
         break;
     }
@@ -67,15 +66,15 @@ class News with ChangeNotifier {
     notifyListeners();
   }
 
-  void subscribeWebsite(String website) {
-    if (!_subscribedWebsites.contains(website)) {
-      _subscribedWebsites.add(website);
+  void followWebsite(String website) {
+    if (!_followedWebsites.contains(website)) {
+      _followedWebsites.add(website);
     }
   }
 
-  void unsubscribeWebsite(String website) {
-    if (_subscribedWebsites.contains(website)) {
-      _subscribedWebsites.remove(website);
+  void unfollowWebsite(String website) {
+    if (_followedWebsites.contains(website)) {
+      _followedWebsites.remove(website);
     }
   }
 }
