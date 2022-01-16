@@ -10,9 +10,8 @@ class News with ChangeNotifier {
   int _pageNumber = 0;
   int _pageLimit = 10;
 
-  List<Article> _articles = [Article('', 'link', [], ["Category 1", "Category 2"], "content", {}, "pubDate",
-      "title title title title title",
-      "source")];
+  //Article('', 'link', [], ["Category 1", "Category 2"], "content", {}, "pubDate", "title", "source")
+  List<Article> _articles = [];
 
   List<Article> _backupArticles = [];
   List<String> _latestIds = [];

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unistudents_app/providers/news.dart';
-import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:unistudents_app/widgets/bottomsheet_item.dart';
+import 'package:unistudents_app/widgets/bottomsheet_modal.dart';
 
 class ArticlesList extends StatefulWidget {
   static const String id = 'news_tab';
@@ -65,7 +66,35 @@ class _ArticlesListState extends State<ArticlesList> {
                             )),
                             IconButton(
                               icon: const Icon(Icons.more_horiz),
-                              onPressed: () {},
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0)
+                                    ),
+                                    builder: (builder) => BottomSheetModal(
+                                        title: 'Ενέργειες',
+                                        children: [
+                                          BottomSheetItem(
+                                              image: const Icon(Icons.favorite_border),
+                                              title: "Αποθήκευση",
+                                              onTap: () {}
+                                          ),
+                                          BottomSheetItem(
+                                              image: const Icon(Icons.share),
+                                              title: "Κοινοποίηση",
+                                              onTap: () {}
+                                          ),
+                                          BottomSheetItem(
+                                              image: const Icon(Icons.info),
+                                              title: "Αναφορά",
+                                              onTap: () {}
+                                          )
+                                        ]
+                                    )
+                                );
+                              },
                             )
                           ],
                         ),
@@ -93,19 +122,37 @@ class _ArticlesListState extends State<ArticlesList> {
                                   const Padding(padding: EdgeInsets.all(5.0)),
 
                                   // Attachments
-                                  TextButton.icon(
-                                    onPressed: () {},
+                                  articles[i].attachments.isNotEmpty
+                                      ? TextButton.icon(
                                     icon: const Icon(Icons.attachment),
                                     label: const Text('Συνημμένα'),
                                     style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.cyan),
-                                      foregroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.white),
+                                      backgroundColor: MaterialStateProperty.all(Colors.cyan),
+                                      foregroundColor: MaterialStateProperty.all(Colors.white),
                                     ),
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20.0)
+                                          ),
+                                          builder: (builder) => BottomSheetModal(
+                                              title: 'Συννημένα',
+                                              children: articles[i].attachments.map((e) =>
+                                                  BottomSheetItem(
+                                                      image: Icon(e.icon),
+                                                      title: e.text,
+                                                      onTap: () {
+                                                        // TODO - open attachment
+                                                      }
+                                                  )
+                                              ).toList()
+                                          )
+                                      );
+                                    },
                                   )
+                                      : Container()
                                 ],
                               ),
                             ),
