@@ -79,8 +79,8 @@ class ProgressModel {
   String? system;
   Map<String, dynamic>? cookies;
 
-  late ProgressInfoModel info;
-  late ProgressGradesModel grades;
+  ProgressInfoModel? info;
+  ProgressGradesModel? grades;
 
   ProgressModel(this.username, this.password, this.university);
 
@@ -90,13 +90,13 @@ class ProgressModel {
     return url;
   }
 
-  static ProgressModel? parseWhole(String response) {
+  static ProgressModel? fromFile(String contents) {
     ProgressModel model = ProgressModel("", "", "");
-    bool result = model.parse(response);
+    bool result = model.assignFromRequest(contents);
     return result ? model : null;
   }
 
-  bool parse(String response) {
+  bool assignFromRequest(String response) {
     Map<String, dynamic> resJson = json.decode(response);
 
     username = resJson["username"] ?? username;
@@ -113,25 +113,25 @@ class ProgressModel {
     var infoJson = resJson["student"]["info"];
 
     info = ProgressInfoModel();
-    info.aem = infoJson["aem"].toString();
-    info.firstName = infoJson["firstName"].toString();
-    info.lastName = infoJson["lastName"].toString();
-    info.department = infoJson["department"].toString();
-    info.semester = infoJson['semester'].toString();
-    info.programYear = infoJson['registrationYear'].toString();
+    info!.aem = infoJson["aem"].toString();
+    info!.firstName = infoJson["firstName"].toString();
+    info!.lastName = infoJson["lastName"].toString();
+    info!.department = infoJson["department"].toString();
+    info!.semester = infoJson['semester'].toString();
+    info!.programYear = infoJson['registrationYear'].toString();
 
     var gradesJson = resJson["student"]["grades"];
 
     grades = ProgressGradesModel();
-    grades.passedCourses = gradesJson["totalPassedCourses"].toString();
-    grades.averageGrade = gradesJson["totalAverageGrade"].toString();
-    grades.ects = gradesJson["totalEcts"].toString();
-    grades.semesters = [];
+    grades!.passedCourses = gradesJson["totalPassedCourses"].toString();
+    grades!.averageGrade = gradesJson["totalAverageGrade"].toString();
+    grades!.ects = gradesJson["totalEcts"].toString();
+    grades!.semesters = [];
 
     if(gradesJson["semesters"] == null) return false;
 
     var semesters = (gradesJson["semesters"] as List);
-    grades.semesters = semesters.map((sem) {
+    grades!.semesters = semesters.map((sem) {
       var semester = ProgressSemesterModel();
       semester.id = sem['id'].toString();
       semester.passedCourses = sem['passedCourses'].toString();
@@ -173,8 +173,8 @@ class ProgressModel {
       'system': system,
       'cookies': cookies,
       'student': {
-        'info': info.toJSON(),
-        'grades': grades.toJSON()
+        'info': info?.toJSON() ?? {},
+        'grades': grades?.toJSON() ?? {}
       }
     });
   }

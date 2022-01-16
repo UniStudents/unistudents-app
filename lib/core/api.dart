@@ -3,39 +3,33 @@ import 'package:http/http.dart' as http;
 
 import '../components/bug.dart';
 import '../models/progress_model.dart';
-import '../models/website.dart';
+import '../models/news_website.dart';
 import 'env.dart';
 
 class API {
-
   static Future<String> getProgressAPIUrl() async {
     final response = await http.get(Uri.parse(Env.GATEWAY_URL + "/server"));
-    if (response.statusCode != 200) return Env.PROGRESS_FALLBACK_API_URL;
+    if (response.statusCode != 200) return Env.PROGRESS_FALLBACK_URL;
     return response.body;
   }
 
   static Future<http.Response> getProgress(ProgressModel account) async {
     String url = await API.getProgressAPIUrl();
-    return await http.post(
-        Uri.parse(account.geUrl(url)),
+    return await http.post(Uri.parse(account.geUrl(url)),
         body: json.encode(account.getAuth()),
         headers: {
-          'Content-type' : 'application/json',
+          'Content-type': 'application/json',
           'Accept': 'application/json',
-        }
-    );
+        });
   }
 
   static Future<bool> reportBug(Bug bug) async {
-    String url = bug.getUrl(Env.PROGRESS_FALLBACK_API_URL);
-    final response = await http.post(
-        Uri.parse(url),
-        body: bug.getJson(),
-        headers: {
-          'Content-type' : 'application/json',
-          'Accept': 'application/json',
-        }
-    );
+    String url = bug.getUrl(Env.PROGRESS_FALLBACK_URL);
+    final response =
+        await http.post(Uri.parse(url), body: bug.getJson(), headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    });
 
     return response.statusCode == 200;
   }
@@ -45,10 +39,13 @@ class API {
     return await http.get(Uri.parse(url));
   }
 
-  static Future<http.Response> getArticles(List<String> subscribedWebsites, {int? pageSize, int? pageNumber,
-    List<String>? afterIds, List<String>? beforeIds}) async {
-
-    String url = "${Env.GOHAN_URL}/articles?websites=${subscribedWebsites.join(',')}"
+  static Future<http.Response> getArticles(List<String> subscribedWebsites,
+      {int? pageSize,
+      int? pageNumber,
+      List<String>? afterIds,
+      List<String>? beforeIds}) async {
+    String url =
+        "${Env.GOHAN_URL}/articles?websites=${subscribedWebsites.join(',')}"
         "&pageSize=${pageSize ?? "0"}"
         "&pageNumber=${pageNumber ?? "0"}"
         "${afterIds != null ? "&after=${afterIds.join(",")}" : ""}"
@@ -57,4 +54,3 @@ class API {
     return await http.get(Uri.parse(url));
   }
 }
-

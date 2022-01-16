@@ -5,8 +5,9 @@ import 'package:unistudents_app/widgets/articles_list.dart';
 
 class NewsTab extends StatefulWidget {
   static const String id = 'news_tab';
+  bool gotoTop;
 
-  const NewsTab({Key? key}) : super(key: key);
+  NewsTab({Key? key, this.gotoTop = false}) : super(key: key);
 
   @override
   State<NewsTab> createState() => _NewsTabState();
@@ -25,6 +26,7 @@ class _NewsTabState extends State<NewsTab> {
         });
       });
     }
+
     _isInit = false;
     super.didChangeDependencies();
   }
@@ -33,10 +35,8 @@ class _NewsTabState extends State<NewsTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : ArticlesList(),
+          ? const Center(child: CircularProgressIndicator())
+          : ArticlesList(gotoTop: widget.gotoTop)
     );
   }
 }

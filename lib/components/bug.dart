@@ -4,7 +4,7 @@ enum BugType { LOGIN_BUG, NEWS_BUG }
 
 class Bug {
 
-  static Bug createLoginBug(String email, String university, String department, String semester, String device, String appVersion, String? logFile) {
+  static Bug loginBug(String email, String university, String department, String semester, String device, String appVersion, String? logFile) {
     Bug bug = Bug(BugType.LOGIN_BUG);
     bug.data = {
       'email': email,
@@ -18,7 +18,7 @@ class Bug {
     return bug;
   }
 
-  static Bug createNewsBug(String latestIDs, String oldestIDs, String page, String sort, String filter,
+  static Bug newsBug(String latestIDs, String oldestIDs, String page, String sort, String filter,
       String subscribedWebsites, String website, String articleID, String email, String type, String device, String appVersion) {
     Bug bug = Bug(BugType.NEWS_BUG);
     bug.data = {

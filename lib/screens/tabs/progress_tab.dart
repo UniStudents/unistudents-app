@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 class ProgressTab extends StatefulWidget {
   static const String id = 'progress_tab';
+  bool gotoTop;
 
-  const ProgressTab({Key? key}) : super(key: key);
+
+  ProgressTab({Key? key, this.gotoTop = false}) : super(key: key);
 
   @override
   State<ProgressTab> createState() => _ProgressTabState();

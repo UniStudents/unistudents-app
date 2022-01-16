@@ -1,33 +1,30 @@
 import 'dart:convert';
 
-class AvailableWebsite {
+class NewsWebsite {
   final String id;
   final String alias;
   final String icon;
-  final List<_AvailableWebsiteChild> departments;
+  final List<_NewsWebsiteChild> departments;
   
-  AvailableWebsite(this.id, this.alias, this.icon, this.departments);
+  NewsWebsite(this.id, this.alias, this.icon, this.departments);
 
   String toJSON() {
-    Map<String, dynamic> result = {
+    return json.encode({
       "parent": {
         "id": id,
         "alias": alias,
         "icon": icon
       },
       "children": departments.map((e) => e.toJSON()).toList()
-    };
-
-    return json.encode(result);
+    });
   }
-
-
-  static List<AvailableWebsite> parseMany(String res) {
+  
+  static List<NewsWebsite> parseFromRequest(String res) {
     List<dynamic> result = json.decode(res);
 
-    List<AvailableWebsite> parsed = [];
+    List<NewsWebsite> parsed = [];
     for(int i = 0; i < result.length; i++) {
-      AvailableWebsite? one = parseOne(result[i]);
+      NewsWebsite? one = _parseOne(result[i]);
       // Skip
       if(one == null) continue;
       parsed.add(one);
@@ -36,34 +33,32 @@ class AvailableWebsite {
     return parsed;
   }
 
-  static AvailableWebsite? parseOne(Map<String, dynamic> res) {
+  static NewsWebsite? _parseOne(Map<String, dynamic> res) {
     if(res["parent"] == null) return null;
     if(res["parent"]["id"] == null) return null;
     if(res["parent"]["alias"] == null) return null;
     if(res["parent"]["icon"] == null) return null;
 
-    List<_AvailableWebsiteChild> departments = [];
+    List<_NewsWebsiteChild> departments = [];
 
     List<dynamic> children = res['children'];
     for(int i = 0; i < children.length; i++) {
       Map<String, dynamic> child = children[i];
-      departments.add(_AvailableWebsiteChild(child["id"], child["alias"]));
+      departments.add(_NewsWebsiteChild(child["id"], child["alias"]));
     }
 
-    return AvailableWebsite(res["parent"]["id"], res["parent"]["alias"], res["parent"]["icon"], departments);
+    return NewsWebsite(res["parent"]["id"], res["parent"]["alias"], res["parent"]["icon"], departments);
   }
 }
 
-class _AvailableWebsiteChild {
+class _NewsWebsiteChild {
   String id, alias;
-  _AvailableWebsiteChild(this.id, this.alias);
+  _NewsWebsiteChild(this.id, this.alias);
 
   Map<String, dynamic> toJSON() {
-    Map<String, dynamic> result = {
+    return {
       "id": id,
       "alias": alias
     };
-
-    return result;
   }
 }

@@ -45,7 +45,7 @@ class Storage {
     try{
       final file = await _localFile(_FILE_PROGRESS);
       final contents = await file.readAsString();
-      return ProgressModel.parseWhole(contents);
+      return ProgressModel.fromFile(contents);
     }
     catch(e) {
       return null;
