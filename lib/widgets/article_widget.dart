@@ -35,8 +35,8 @@ class ArticleWidget extends StatelessWidget {
                     showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
                         ),
                         builder: (builder) => BottomSheetModal(
                             title: Locals.of(context)!.articleWidgetActionsTitle,
@@ -99,8 +99,8 @@ class ArticleWidget extends StatelessWidget {
                           showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0)
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
                               ),
                               builder: (builder) => BottomSheetModal(
                                   title: Locals.of(context)!.articleWidgetAttachments,
