@@ -24,6 +24,6 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset('assets/images/splash.png');
+    return Image.asset('assets/assets/splash.png');
   }
 }

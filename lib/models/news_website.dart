@@ -4,7 +4,7 @@ class NewsWebsite {
   final String id;
   final String alias;
   final String icon;
-  final List<_NewsWebsiteChild> departments;
+  final List<NewsWebsiteChild> departments;
   
   NewsWebsite(this.id, this.alias, this.icon, this.departments);
 
@@ -39,21 +39,21 @@ class NewsWebsite {
     if(res["parent"]["alias"] == null) return null;
     if(res["parent"]["icon"] == null) return null;
 
-    List<_NewsWebsiteChild> departments = [];
+    List<NewsWebsiteChild> departments = [];
 
     List<dynamic> children = res['children'];
     for(int i = 0; i < children.length; i++) {
       Map<String, dynamic> child = children[i];
-      departments.add(_NewsWebsiteChild(child["id"], child["alias"]));
+      departments.add(NewsWebsiteChild(child["id"], child["alias"]));
     }
 
     return NewsWebsite(res["parent"]["id"], res["parent"]["alias"], res["parent"]["icon"], departments);
   }
 }
 
-class _NewsWebsiteChild {
+class NewsWebsiteChild {
   String id, alias;
-  _NewsWebsiteChild(this.id, this.alias);
+  NewsWebsiteChild(this.id, this.alias);
 
   Map<String, dynamic> toJSON() {
     return {

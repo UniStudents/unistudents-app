@@ -19,7 +19,23 @@ class News with ChangeNotifier {
   List<String> _latestIds = [];
   List<String> _oldestIds = [];
 
-  List<NewsWebsite> _availableWebsites = [];
+  List<NewsWebsite> _availableWebsites = [
+    NewsWebsite("unipi.gr", "Πανεπιστήμιο Πειραιώς", "/assets/unipi-logo.png", [
+      NewsWebsiteChild("unipi.gr", "Πανεπιστήμιο Πειραιά"),
+      NewsWebsiteChild("ds.unipi.gr", "Ψηφιακά Συστήματα"),
+      NewsWebsiteChild("oik.unipi.gr", "Οικονομικό Τμήμα")
+    ]),
+    NewsWebsite("uoc.gr", "Πανεπιστήμιο Κρήτης", "/assets/uoc-logo.png", [
+      NewsWebsiteChild("unipi.gr", "Πανεπιστήμιο Πειραιά"),
+      NewsWebsiteChild("ds.unipi.gr", "Ψηφιακά Συστήματα"),
+      NewsWebsiteChild("oik.unipi.gr", "Οικονομικό Τμήμα")
+    ]),
+    NewsWebsite("tuc.gr", "Πολυτεχνίο Κρήτης", "/assets/tuc-logo.png", [
+      NewsWebsiteChild("unipi.gr", "Πανεπιστήμιο Πειραιά"),
+      NewsWebsiteChild("ds.unipi.gr", "Ψηφιακά Συστήματα"),
+      NewsWebsiteChild("oik.unipi.gr", "Οικονομικό Τμήμα")
+    ])
+  ];
   List<String> _followedWebsites = ["ds.unipi.gr"];
   List<String> _filteredWebsites = [];
 
