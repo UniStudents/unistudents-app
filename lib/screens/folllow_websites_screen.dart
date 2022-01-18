@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unistudents_app/providers/news.dart';
@@ -20,8 +18,9 @@ class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
 
   @override
   void didChangeDependencies() {
+    final news = Provider.of<News>(context);
     if (_isInit) {
-      Provider.of<News>(context).fetchWebsites("unipi.gr").then((_) {
+      news.fetchWebsites("unipi.gr").then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -55,6 +54,17 @@ class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
     );
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Websites'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.check),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
       body: _isLoading
         ? const Center(child: CircularProgressIndicator())
         : Container(

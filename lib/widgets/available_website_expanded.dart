@@ -1,14 +1,39 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:unistudents_app/models/news_website.dart';
+import 'package:unistudents_app/providers/news.dart';
 
-class AvailableWebsiteExpanded extends StatelessWidget {
+class AvailableWebsiteExpanded extends StatefulWidget {
   final NewsWebsite newsWebsite;
+  List<bool> isCheckedList = [];
 
-  const AvailableWebsiteExpanded({Key? key, required this.newsWebsite,}) : super(key: key);
+  AvailableWebsiteExpanded({Key? key, required this.newsWebsite,}) : super(key: key);
 
   @override
+  State<AvailableWebsiteExpanded> createState() => _AvailableWebsiteExpandedState();
+}
+
+class _AvailableWebsiteExpandedState extends State<AvailableWebsiteExpanded> {
+  @override
   Widget build(BuildContext context) {
+    final news = Provider.of<News>(context, listen: false);
+
+    for (var i = 0; i < widget.newsWebsite.departments.length; i++) {
+      widget.isCheckedList.add(news.followedWebsites.contains(widget.newsWebsite.departments[i].id));
+    }
+
+    void _onFollowChanged(bool newValue, int index) => setState(() {
+      widget.isCheckedList[index] = newValue;
+
+      if (newValue) {
+        news.followWebsite(widget.newsWebsite.departments[index].id);
+      } else {
+        news.unfollowWebsite(widget.newsWebsite.departments[index].id);
+      }
+      print(news.followedWebsites);
+    });
+
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -21,7 +46,7 @@ class AvailableWebsiteExpanded extends StatelessWidget {
             children: [
               ListTile(
                 title: Text(
-                  newsWebsite.alias,
+                  widget.newsWebsite.alias,
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
@@ -29,18 +54,21 @@ class AvailableWebsiteExpanded extends StatelessWidget {
                     fontSize: 18,
                   ),
                 ),
-                leading: Image.asset(newsWebsite.icon, height: 35,),
+                leading: Image.asset(widget.newsWebsite.icon.replaceFirst('/', ''), height: 35,),
               ),
               const SizedBox(height: 15,),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: newsWebsite.departments.length,
+                physics: const ClampingScrollPhysics(),
+                itemCount: widget.newsWebsite.departments.length,
                 itemBuilder: (ctx, j) => CheckboxListTile(
-                    title: Text(newsWebsite.departments[j].alias),
-                    subtitle: Text(newsWebsite.departments[j].id),
-                    value: true,
+                    title: Text(widget.newsWebsite.departments[j].alias),
+                    subtitle: Text(widget.newsWebsite.departments[j].id),
+                    value: widget.isCheckedList[j],
                     controlAffinity: ListTileControlAffinity.leading,
-                    onChanged: (_) {}
+                    onChanged: (bool? status) {
+                      _onFollowChanged(status!, j);
+                    }
                 ),
               ),
             ]

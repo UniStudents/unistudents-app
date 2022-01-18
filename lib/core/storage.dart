@@ -53,7 +53,7 @@ class Storage {
   }
 
   // Followed Websites
-  Future<bool> saveFollowedWebsites(List<String> followedWebsites) async {
+  static Future<bool> saveFollowedWebsites(List<String> followedWebsites) async {
     final file = await _localFile(_FILE_FOLLWED_WEBSITES);
     await file.writeAsString(followedWebsites.join('\n'));
     return true;
@@ -65,7 +65,7 @@ class Storage {
     return true;
   }
 
-  Future<List<String>?> readFollowedWebsites() async {
+  static Future<List<String>?> readFollowedWebsites() async {
     try{
       final file = await _localFile(_FILE_FOLLWED_WEBSITES);
       final contents = await file.readAsString();

@@ -17,7 +17,7 @@ class AvailableWebsiteMinimized extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             children: [
-              Image.asset(newsWebsite.icon, height: 50, width: 50,),
+              Image.asset(newsWebsite.icon.replaceFirst('/', ''), height: 50, width: 50,),
               const SizedBox(width: 20,),
               Flexible(
                 fit: FlexFit.tight,

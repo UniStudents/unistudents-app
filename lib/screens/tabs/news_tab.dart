@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:unistudents_app/core/storage.dart';
 import 'package:unistudents_app/providers/news.dart';
+import 'package:unistudents_app/screens/folllow_websites_screen.dart';
 
 import '../../widgets/article_widget.dart';
 
@@ -35,13 +37,20 @@ class _NewsTabState extends State<NewsTab> {
 
   @override
   void didChangeDependencies() {
+    final news = Provider.of<News>(context);
     if (_isInit) {
-      Provider.of<News>(context).fetchArticles().then((_) {
+      news.fetchArticles().then((_) {
         setState(() {
           _isLoading = false;
         });
       });
+
     }
+    Storage.readFollowedWebsites().then((followedWebsites) => {
+      setState(() {
+        news.followedWebsites = followedWebsites ?? [];
+      })
+    });
 
     _isInit = false;
     super.didChangeDependencies();
@@ -60,25 +69,79 @@ class _NewsTabState extends State<NewsTab> {
 
     final news = Provider.of<News>(context, listen: false);
 
-    Widget? w;
-    if(news.subscribedWebsites.isEmpty) {
+    Widget? body;
+    if(news.followedWebsites.isEmpty) {
       // TODO - Show subscribe button
+      print('isempty');
     }
     else if(_isLoading) {
-      w = const Center(child: CircularProgressIndicator());
+      body = const Center(child: CircularProgressIndicator());
     }
     else {
       // Show articles
       final articles = news.articles;
-      w = Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              controller: controller,
-              itemCount: articles.length,
-              itemBuilder: (ctx, i) => ArticleWidget(article: articles[i])));
+      body = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 50,
+            child: ListView.builder(
+              // shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+              scrollDirection: Axis.horizontal,
+              itemCount: news.followedWebsites.length,
+              itemBuilder: (ctx, i) => Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  child: Text(news.followedWebsites[i])
+                )
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                controller: controller,
+                itemCount: articles.length,
+                itemBuilder: (ctx, i) => ArticleWidget(article: articles[i])
+              )
+            ),
+          ),
+        ],
+      );
     }
 
-    return Scaffold(body: w);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Νέα'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (ctx) => const FollowWebsitesScreen())
+              ).then((value) => {
+                setState(() {
+                  _isLoading = true;
+                  news.fetchArticles().then((value) => {
+                    setState(() {
+                      _isLoading = false;
+                    })
+                  });
+                })
+              });
+            },
+          ),
+        ],
+      ),
+      body: body
+    );
   }
 }

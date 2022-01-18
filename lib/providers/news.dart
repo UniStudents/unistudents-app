@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'package:unistudents_app/core/api.dart';
+import 'package:unistudents_app/core/storage.dart';
 import 'package:unistudents_app/models/article.dart';
 import 'package:unistudents_app/models/news_website.dart';
 import 'package:flutter/foundation.dart';
@@ -26,17 +27,17 @@ class News with ChangeNotifier {
       NewsWebsiteChild("oik.unipi.gr", "Οικονομικό Τμήμα")
     ]),
     NewsWebsite("uoc.gr", "Πανεπιστήμιο Κρήτης", "/assets/uoc-logo.png", [
-      NewsWebsiteChild("unipi.gr", "Πανεπιστήμιο Πειραιά"),
-      NewsWebsiteChild("ds.unipi.gr", "Ψηφιακά Συστήματα"),
-      NewsWebsiteChild("oik.unipi.gr", "Οικονομικό Τμήμα")
+      NewsWebsiteChild("uoc.gr", "Πανεπιστήμιο Πειραιά"),
+      NewsWebsiteChild("ds.uoc.gr", "Ψηφιακά Συστήματα"),
+      NewsWebsiteChild("oik.uoc.gr", "Οικονομικό Τμήμα")
     ]),
     NewsWebsite("tuc.gr", "Πολυτεχνίο Κρήτης", "/assets/tuc-logo.png", [
-      NewsWebsiteChild("unipi.gr", "Πανεπιστήμιο Πειραιά"),
-      NewsWebsiteChild("ds.unipi.gr", "Ψηφιακά Συστήματα"),
-      NewsWebsiteChild("oik.unipi.gr", "Οικονομικό Τμήμα")
+      NewsWebsiteChild("tuc.gr", "Πανεπιστήμιο Πειραιά"),
+      NewsWebsiteChild("ds.tuc.gr", "Ψηφιακά Συστήματα"),
+      NewsWebsiteChild("oik.tuc.gr", "Οικονομικό Τμήμα")
     ])
   ];
-  List<String> _followedWebsites = ["ds.unipi.gr"];
+  List<String> _followedWebsites = [];
   List<String> _filteredWebsites = [];
 
   List<Article> get articles => [..._articles];
@@ -49,7 +50,26 @@ class News with ChangeNotifier {
 
   List<NewsWebsite> get availableWebsites => [..._availableWebsites];
 
-  List<String> get subscribedWebsites => [..._followedWebsites];
+  List<String> get followedWebsites => [..._followedWebsites];
+
+  set followedWebsites(List<String> value) {
+    _followedWebsites = value;
+    Storage.saveFollowedWebsites(_followedWebsites);
+  }
+
+  void followWebsite(String website) {
+    if (!_followedWebsites.contains(website)) {
+      _followedWebsites.add(website);
+      Storage.saveFollowedWebsites(_followedWebsites);
+    }
+  }
+
+  void unfollowWebsite(String website) {
+    if (_followedWebsites.contains(website)) {
+      _followedWebsites.remove(website);
+      Storage.saveFollowedWebsites(_followedWebsites);
+    }
+  }
 
   List<String> get filteredWebsites => [..._filteredWebsites];
 
@@ -83,17 +103,5 @@ class News with ChangeNotifier {
     _availableWebsites = NewsWebsite.parseFromRequest(response.body);
 
     notifyListeners();
-  }
-
-  void followWebsite(String website) {
-    if (!_followedWebsites.contains(website)) {
-      _followedWebsites.add(website);
-    }
-  }
-
-  void unfollowWebsite(String website) {
-    if (_followedWebsites.contains(website)) {
-      _followedWebsites.remove(website);
-    }
   }
 }

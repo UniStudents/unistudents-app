@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             supportedLocales: Locals.supportedLocals,
             localizationsDelegates: Locals.localizationsDelegates,
-            initialRoute: FollowWebsitesScreen.id,
+            initialRoute: TabsScreen.id,
             routes: {
               WelcomeScreen.id: (context) => WelcomeScreen(),
               LoginScreen.id: (context) => LoginScreen(),

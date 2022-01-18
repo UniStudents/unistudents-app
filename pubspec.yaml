@@ -67,6 +67,27 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/assets/
+    - assets/aegean-logo.png
+    - assets/aspete-logo.png
+    - assets/aua-logo.png
+    - assets/aueb-logo.png
+    - assets/auth-logo.png
+    - assets/duth-logo.png
+    - assets/hmu-logo.png
+    - assets/hua-logo.png
+    - assets/ihu-logo.png
+    - assets/ionio-logo.png
+    - assets/ntua-logo.png
+    - assets/panteion-logo.png
+    - assets/tuc-logo.png
+    - assets/unipi-logo.png
+    - assets/uniwa-logo.png
+    - assets/uoa-logo.png
+    - assets/uoc-logo.png
+    - assets/uoi-logo.png
+    - assets/uop-logo.png
+    - assets/uowm-logo.png
+    - assets/upatras-logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
