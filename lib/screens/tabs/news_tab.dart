@@ -39,18 +39,18 @@ class _NewsTabState extends State<NewsTab> {
   void didChangeDependencies() {
     final news = Provider.of<News>(context);
     if (_isInit) {
-      news.fetchArticles().then((_) {
+      Storage.readFollowedWebsites().then((followedWebsites) => {
         setState(() {
-          _isLoading = false;
-        });
+          news.followedWebsites = followedWebsites ?? [];
+        })
+      }).then((value) => {
+        news.fetchArticles().then((_) {
+          setState(() {
+            _isLoading = false;
+          });
+        })
       });
-
     }
-    Storage.readFollowedWebsites().then((followedWebsites) => {
-      setState(() {
-        news.followedWebsites = followedWebsites ?? [];
-      })
-    });
 
     _isInit = false;
     super.didChangeDependencies();
