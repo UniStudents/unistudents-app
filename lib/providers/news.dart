@@ -38,7 +38,6 @@ class News with ChangeNotifier {
     ])
   ];
   List<String> _followedWebsites = [];
-  List<String> _filteredWebsites = [];
 
   List<Article> get articles => [..._articles];
 
@@ -60,6 +59,7 @@ class News with ChangeNotifier {
   void followWebsite(String website) {
     if (!_followedWebsites.contains(website)) {
       _followedWebsites.add(website);
+      _followedWebsites.sort((a, b) => a.toString().compareTo(b.toString()));
       Storage.saveFollowedWebsites(_followedWebsites);
     }
   }
@@ -71,21 +71,23 @@ class News with ChangeNotifier {
     }
   }
 
-  List<String> get filteredWebsites => [..._filteredWebsites];
-
-  Future<void> fetchArticles({ArticlesState state = ArticlesState.fetch}) async {
+  Future<void> fetchArticles({ArticlesState state = ArticlesState.fetch, List<String> filteredWebsites = const <String>[]}) async {
     Response response;
+    var websites = (filteredWebsites.isEmpty)
+      ? _followedWebsites
+      : filteredWebsites;
+
     switch (state) {
       case ArticlesState.fetch:
-        response = await API.getArticles(_followedWebsites,
+        response = await API.getArticles(websites,
             pageSize: _pageLimit, pageNumber: _pageNumber);
         break;
       case ArticlesState.refresh:
         response =
-            await API.getArticles(_followedWebsites, afterIds: _latestIds);
+            await API.getArticles(websites, afterIds: _latestIds);
         break;
       case ArticlesState.old:
-        response = await API.getArticles(_followedWebsites,
+        response = await API.getArticles(websites,
             pageSize: _pageLimit, beforeIds: _oldestIds);
         break;
     }
