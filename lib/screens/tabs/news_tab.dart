@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -21,7 +23,7 @@ class NewsTab extends StatefulWidget {
 
 class _NewsTabState extends State<NewsTab> {
   late AutoScrollController controller;
-
+  final List<String> _filters = <String>[];
   var _isInit = true;
   var _isLoading = true;
 
@@ -37,7 +39,7 @@ class _NewsTabState extends State<NewsTab> {
 
   @override
   void didChangeDependencies() {
-    final news = Provider.of<News>(context);
+    final news = Provider.of<News>(context, listen: false);
     if (_isInit) {
       Storage.readFollowedWebsites().then((followedWebsites) => {
         setState(() {
@@ -56,8 +58,15 @@ class _NewsTabState extends State<NewsTab> {
     super.didChangeDependencies();
   }
 
+  Future<void> _refreshArticles() async {
+    final news = Provider.of<News>(context, listen: false);
+    await news.fetchArticles(filteredWebsites: _filters);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final news = Provider.of<News>(context, listen: false);
+
     // Scroll to the top & Refresh
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       if (widget.gotoTop) {
@@ -67,81 +76,106 @@ class _NewsTabState extends State<NewsTab> {
       }
     });
 
-    final news = Provider.of<News>(context, listen: false);
-
     Widget? body;
-    if(news.followedWebsites.isEmpty) {
-      // TODO - Show subscribe button
-      print('isempty');
-    }
-    else if(_isLoading) {
+    // if(news.followedWebsites.isEmpty) {
+    //   // TODO - Show subscribe button
+    //   print('isempty');
+    // }
+    if(_isLoading) {
       body = const Center(child: CircularProgressIndicator());
     }
     else {
       // Show articles
       final articles = news.articles;
-      body = Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: 50,
-            child: ListView.builder(
-              // shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-              scrollDirection: Axis.horizontal,
-              itemCount: news.followedWebsites.length,
-              itemBuilder: (ctx, i) => Card(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                  child: Text(news.followedWebsites[i])
-                )
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                controller: controller,
-                itemCount: articles.length,
-                itemBuilder: (ctx, i) => ArticleWidget(article: articles[i])
-              )
-            ),
-          ),
-        ],
+      body = RefreshIndicator(
+        onRefresh: _refreshArticles,
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          controller: controller,
+          itemCount: articles.length + 1,
+          itemBuilder: (ctx, i) => (i == 0)
+            ? buildWebsiteFilterSection(news)
+            : Container(
+              padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+              child: ArticleWidget(article: articles[i - 1])
+            )
+        ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Νέα'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (ctx) => const FollowWebsitesScreen())
+      appBar: buildAppBar(context, news),
+      body: body
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context, News news) {
+    return AppBar(
+      title: const Text('Νέα'),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            var currentFollowedWebsites = [...news.followedWebsites];
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (ctx) => const FollowWebsitesScreen())
               ).then((value) => {
                 setState(() {
-                  _isLoading = true;
-                  news.fetchArticles().then((value) => {
-                    setState(() {
-                      _isLoading = false;
-                    })
-                  });
+                  if (!listEquals(currentFollowedWebsites, news.followedWebsites)) {
+                    _filters.clear();
+                    _isLoading = true;
+                    news.fetchArticles().then((value) => {
+                      setState(() {
+                        _isLoading = false;
+                      })
+                    });
+                  }
                 })
               });
-            },
-          ),
-        ],
+          },
+        ),
+      ],
+    );
+  }
+
+  SingleChildScrollView buildWebsiteFilterSection(News news) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+      child: Row(
+        children: [
+          ...news.followedWebsites.map((followedWebsite) => Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: FilterChip(
+              label: Text(followedWebsite),
+              selected: _filters.contains(followedWebsite),
+              onSelected: (bool value) {
+                setState(() {
+                  if (value) {
+                    _filters.add(followedWebsite);
+                    _isLoading = true;
+                    news.fetchArticles(filteredWebsites: _filters).then((value) => {
+                      setState(() {
+                        _isLoading = false;
+                      })
+                    });
+                  } else {
+                    _filters.removeWhere((filter) => filter == followedWebsite);
+                    _isLoading = true;
+                    news.fetchArticles(filteredWebsites: _filters).then((value) => {
+                      setState(() {
+                        _isLoading = false;
+                      })
+                    });
+                  }
+                });
+              },
+            ),
+          )).toList()
+        ]
       ),
-      body: body
     );
   }
 }
