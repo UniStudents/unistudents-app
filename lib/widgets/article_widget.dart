@@ -123,7 +123,12 @@ class ArticleWidget extends StatelessWidget {
                                         BottomSheetItem(
                                             image: Icon(e.icon),
                                             title: e.text,
-                                            onTap: () => _navigateToWebView(context, article.source, e.value),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              Future.delayed(const Duration(milliseconds: 500), () {
+                                                _navigateToWebView(context, article.source, e.value);
+                                              });
+                                            }
                                         )
                                     ).toList()
                                 )
