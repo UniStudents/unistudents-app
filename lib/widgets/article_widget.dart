@@ -4,6 +4,7 @@ import 'package:unistudents_app/models/article.dart';
 import '../core/local/locals.dart';
 import 'bottomsheet_item.dart';
 import 'bottomsheet_modal.dart';
+import 'custom_web_view.dart';
 
 class ArticleWidget extends StatelessWidget {
   final Article article;
@@ -12,147 +13,160 @@ class ArticleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        child: Column(
-          children: [
-            // Source|time & More
-            Row(
-              children: [
-                Flexible(
-                    fit: FlexFit.tight,
-                    child: Text('${article.source} | ${article.getElapsedTime(context)}',
-                        style: const TextStyle(fontSize: 12)
-                    )),
-                IconButton(
-                  icon: const Icon(Icons.more_horiz),
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-                        ),
-                        builder: (builder) => BottomSheetModal(
-                            title: Locals.of(context)!.articleWidgetActionsTitle,
-                            children: [
-                              BottomSheetItem(
-                                  image: const Icon(Icons.favorite_border),
-                                  title: Locals.of(context)!.articleWidgetActionsSave,
-                                  onTap: () {}
-                              ),
-                              BottomSheetItem(
-                                  image: const Icon(Icons.share),
-                                  title: Locals.of(context)!.articleWidgetActionsShare,
-                                  onTap: () {}
-                              ),
-                              BottomSheetItem(
-                                  image: const Icon(Icons.info),
-                                  title: Locals.of(context)!.articleWidgetActionsReport,
-                                  onTap: () {}
-                              )
-                            ]
-                        )
-                    );
-                  },
-                )
-              ],
-            ),
+    void _navigateToWebView(BuildContext buildContext, String domain, String url) async {
+      final result = await Navigator.of(context).push(
+          MaterialPageRoute<String>(
+              builder: (ctx) => CustomWebView(
+                barTitle: domain,
+                url: url,
+              ),
+              fullscreenDialog: true
+          )
+      );
+    }
 
-            // Title & Attachments & Image
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Title
-                      Text(
-                        article.title,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Roboto',
-                          fontSize: 18,
-                        ),
-                      ),
-
-                      const Padding(padding: EdgeInsets.all(5.0)),
-
-                      // Attachments
-                      article.attachments.isNotEmpty
-                          ? TextButton.icon(
-                        icon: const Icon(Icons.attachment),
-                        label: Text('${Locals.of(context)!.articleWidgetAttachments} (${article.attachments.length})'),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.cyan),
-                          foregroundColor: MaterialStateProperty.all(Colors.white),
-                        ),
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-                              ),
-                              builder: (builder) => BottomSheetModal(
-                                  title: Locals.of(context)!.articleWidgetAttachments,
-                                  children: article.attachments.map((e) =>
-                                      BottomSheetItem(
-                                          image: Icon(e.icon),
-                                          title: e.text,
-                                          onTap: () {
-                                            // TODO - open attachment
-                                          }
-                                      )
-                                  ).toList()
-                              )
-                          );
-                        },
-                      )
-                          : Container()
-                    ],
-                  ),
-                ),
-
-                // Image
-                article.getFrontalImage() != null
-                    ? Column(children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image(
-                      image: NetworkImage(
-                          article.getFrontalImage() ??
-                              ""),
-                      height: 80,
-                      width: 80,
-                    ),
+    return GestureDetector(
+      onTap: () => _navigateToWebView(context, article.source, article.link),
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          child: Column(
+            children: [
+              // Source|time & More
+              Row(
+                children: [
+                  Flexible(
+                      fit: FlexFit.tight,
+                      child: Text('${article.source} | ${article.getElapsedTime(context)}',
+                          style: const TextStyle(fontSize: 12)
+                      )),
+                  IconButton(
+                    icon: const Icon(Icons.more_horiz),
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+                          ),
+                          builder: (builder) => BottomSheetModal(
+                              title: Locals.of(context)!.articleWidgetActionsTitle,
+                              children: [
+                                BottomSheetItem(
+                                    image: const Icon(Icons.favorite_border),
+                                    title: Locals.of(context)!.articleWidgetActionsSave,
+                                    onTap: () {}
+                                ),
+                                BottomSheetItem(
+                                    image: const Icon(Icons.share),
+                                    title: Locals.of(context)!.articleWidgetActionsShare,
+                                    onTap: () {}
+                                ),
+                                BottomSheetItem(
+                                    image: const Icon(Icons.info),
+                                    title: Locals.of(context)!.articleWidgetActionsReport,
+                                    onTap: () {}
+                                )
+                              ]
+                          )
+                      );
+                    },
                   )
-                ])
-                    : Column()
-              ],
-            ),
+                ],
+              ),
 
-            // Categories
-            SizedBox(
-              height: 30,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: article.categories.length,
-                  itemBuilder: (context, j) {
-                    return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text('#' + article.categories[j]));
-                  }),
-            )
-          ],
+              // Title & Attachments & Image
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title
+                        Text(
+                          article.title,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Roboto',
+                            fontSize: 18,
+                          ),
+                        ),
+
+                        const Padding(padding: EdgeInsets.all(5.0)),
+
+                        // Attachments
+                        article.attachments.isNotEmpty
+                            ? TextButton.icon(
+                          icon: const Icon(Icons.attachment),
+                          label: Text('${Locals.of(context)!.articleWidgetAttachments} (${article.attachments.length})'),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.cyan),
+                            foregroundColor: MaterialStateProperty.all(Colors.white),
+                          ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+                                ),
+                                builder: (builder) => BottomSheetModal(
+                                    title: Locals.of(context)!.articleWidgetAttachments,
+                                    children: article.attachments.map((e) =>
+                                        BottomSheetItem(
+                                            image: Icon(e.icon),
+                                            title: e.text,
+                                            onTap: () => _navigateToWebView(context, article.source, e.value),
+                                        )
+                                    ).toList()
+                                )
+                            );
+                          },
+                        )
+                            : Container()
+                      ],
+                    ),
+                  ),
+
+                  // Image
+                  article.getFrontalImage() != null
+                      ? Column(children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image(
+                        image: NetworkImage(
+                            article.getFrontalImage() ??
+                                ""),
+                        height: 80,
+                        width: 80,
+                      ),
+                    )
+                  ])
+                      : Column()
+                ],
+              ),
+
+              // Categories
+              SizedBox(
+                height: 30,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: article.categories.length,
+                    itemBuilder: (context, j) {
+                      return Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text('#' + article.categories[j]));
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );
