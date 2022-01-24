@@ -77,15 +77,11 @@ class _NewsTabState extends State<NewsTab> {
     });
 
     Widget? body;
-    // if(news.followedWebsites.isEmpty) {
-    //   // TODO - Show subscribe button
-    //   print('isempty');
-    // }
-    if(_isLoading) {
+    if (news.followedWebsites.isEmpty) {
+      body = buildEmptyBody(context, news);
+    } else if (_isLoading) {
       body = const Center(child: CircularProgressIndicator());
-    }
-    else {
-      // Show articles
+    } else {
       final articles = news.articles;
       body = RefreshIndicator(
         onRefresh: _refreshArticles,
@@ -109,35 +105,86 @@ class _NewsTabState extends State<NewsTab> {
     );
   }
 
+  Center buildEmptyBody(BuildContext context, News news) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(50),
+              child: Image.asset(
+                'assets/follow-websites.png',
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              'Ακολούθησε websites',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            const Text(
+              'Δημιούργησε το δικό σου personalized feed.',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            ElevatedButton.icon(
+              onPressed: () => navigateToWebsitesScreen(news, context),
+              icon: const Icon(
+                Icons.add,
+                // color: Colors.white,
+              ),
+              label: const Text(
+                'Ακολούθησε',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   AppBar buildAppBar(BuildContext context, News news) {
     return AppBar(
       title: const Text('Νέα'),
       actions: [
         IconButton(
           icon: const Icon(Icons.add),
-          onPressed: () {
-            var currentFollowedWebsites = [...news.followedWebsites];
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (ctx) => const FollowWebsitesScreen())
-              ).then((value) => {
-                setState(() {
-                  if (!listEquals(currentFollowedWebsites, news.followedWebsites)) {
-                    _filters.clear();
-                    _isLoading = true;
-                    news.fetchArticles().then((value) => {
-                      setState(() {
-                        _isLoading = false;
-                      })
-                    });
-                  }
-                })
-              });
-          },
+          onPressed: () => navigateToWebsitesScreen(news, context),
         ),
       ],
     );
+  }
+
+  void navigateToWebsitesScreen(News news, BuildContext context) {
+    var currentFollowedWebsites = [...news.followedWebsites];
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (ctx) => const FollowWebsitesScreen()
+      )).then((value) => {
+        setState(() {
+          if (!listEquals(currentFollowedWebsites, news.followedWebsites)) {
+            _filters.clear();
+            _isLoading = true;
+            news.fetchArticles().then((value) => {
+              setState(() {
+                _isLoading = false;
+              })
+            });
+          }
+        })
+      });
   }
 
   SingleChildScrollView buildWebsiteFilterSection(News news) {

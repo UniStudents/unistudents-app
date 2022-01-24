@@ -88,6 +88,7 @@ flutter:
     - assets/uop-logo.png
     - assets/uowm-logo.png
     - assets/upatras-logo.png
+    - assets/follow-websites.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
