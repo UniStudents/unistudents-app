@@ -24,7 +24,8 @@ class _CustomWebViewState extends State<CustomWebView> {
         leading: Container(),
         middle: Row(
           children: [
-            const Icon(Icons.lock_outline),
+            if (widget.url.toString().contains('https'))
+              const Icon(Icons.lock_outline, size: 20,),
             const SizedBox(width: 5,),
             Text(widget.barTitle),
           ],
