@@ -40,27 +40,30 @@ class _CustomWebViewState extends State<CustomWebView> {
       child: SafeArea(
         child: Stack(
           children: [
-            WebView(
-              initialUrl: widget.url,
-              onWebViewCreated: (webViewController) {
-                widget.controller.complete(webViewController);
-              },
-              onPageStarted: (url) {
-                setState(() {
-                  loadingPercentage = 0;
-                });
-              },
-              onProgress: (progress) {
-                setState(() {
-                  loadingPercentage = progress;
-                });
-              },
-              onPageFinished: (url) {
-                setState(() {
-                  loadingPercentage = 100;
-                });
-              },
-              javascriptMode: JavascriptMode.unrestricted,
+            FutureBuilder(
+              future: Future.delayed(const Duration(milliseconds: 500)),
+              builder: (context, snapshot) => WebView(
+                initialUrl: widget.url,
+                onWebViewCreated: (webViewController) {
+                  widget.controller.complete(webViewController);
+                },
+                onPageStarted: (url) {
+                  setState(() {
+                    loadingPercentage = 0;
+                  });
+                },
+                onProgress: (progress) {
+                  setState(() {
+                    loadingPercentage = progress;
+                  });
+                },
+                onPageFinished: (url) {
+                  setState(() {
+                    loadingPercentage = 100;
+                  });
+                },
+                javascriptMode: JavascriptMode.unrestricted,
+              ),
             ),
             if (loadingPercentage < 100)
               LinearProgressIndicator(
