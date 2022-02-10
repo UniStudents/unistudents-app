@@ -13,6 +13,11 @@ class News with ChangeNotifier {
   List<String> _followedWebsites = [];
 
   List<Article> get latestArticles => [..._latestArticles];
+
+  set latestArticles(List<Article> value) {
+    _latestArticles = value;
+  }
+
   List<NewsWebsite> get availableWebsites => [..._availableWebsites];
   List<String> get followedWebsites => [..._followedWebsites];
 

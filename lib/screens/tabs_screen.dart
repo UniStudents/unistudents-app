@@ -25,8 +25,8 @@ class _TabsScreenState extends State<TabsScreen> {
       body: IndexedStack(
         children: [
           const HomeTab(),
-          ProgressTab(gotoTop: navbarIndex == 1 ? isConsecutiveTap : false),
-          NewsTab(gotoTop: navbarIndex == 2 ? isConsecutiveTap : false),
+          ProgressTab(),
+          NewsTab(),
           const ProfileTab()
         ],
         index: navbarIndex,

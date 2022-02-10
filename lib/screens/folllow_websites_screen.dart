@@ -14,17 +14,20 @@ class FollowWebsitesScreen extends StatefulWidget {
 
 class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
   var _isInit = true;
-  var _isLoading = true;
+  var _isLoading = false;
 
   @override
   void didChangeDependencies() {
-    final news = Provider.of<News>(context);
+    final news = Provider.of<News>(context, listen: false);
     if (_isInit) {
-      news.fetchWebsites("unipi.gr").then((_) {
-        setState(() {
-          _isLoading = false;
+      if (news.availableWebsites.isEmpty) {
+        _isLoading = true;
+        news.fetchWebsites("UNIPI").then((_) {
+          setState(() {
+            _isLoading = false;
+          });
         });
-      });
+      }
     }
 
     _isInit = false;
@@ -35,9 +38,9 @@ class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
   Widget build(BuildContext context) {
     final news = Provider.of<News>(context, listen: false);
     final availableWebsites = news.availableWebsites;
-    print(availableWebsites.length);
 
     Widget expandedCards = ListView.separated(
+        padding: EdgeInsets.only(top: 20, bottom: 20),
         itemCount: availableWebsites.length,
         separatorBuilder: (ctx, i) => const SizedBox(height: 20,),
         itemBuilder: (ctx, i) => AvailableWebsiteExpanded(
@@ -68,7 +71,7 @@ class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
       body: _isLoading
         ? const Center(child: CircularProgressIndicator())
         : Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
           child: expandedCards
           // child: minimizedCards
         ),

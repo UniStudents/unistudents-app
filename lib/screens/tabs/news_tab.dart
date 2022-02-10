@@ -9,6 +9,9 @@ import 'package:unistudents_app/core/storage.dart';
 import 'package:unistudents_app/models/article.dart';
 import 'package:unistudents_app/providers/news.dart';
 import 'package:unistudents_app/screens/folllow_websites_screen.dart';
+import 'package:unistudents_app/widgets/get_started_news.dart';
+import 'package:unistudents_app/widgets/infinite_list_footer.dart';
+import 'package:unistudents_app/widgets/website_filter_bar.dart';
 
 import '../../widgets/article_widget.dart';
 
@@ -23,7 +26,7 @@ class NewsTab extends StatefulWidget {
 }
 
 class _NewsTabState extends State<NewsTab> {
-  late AutoScrollController controller;
+  // late AutoScrollController controller;
   final ScrollController _scrollController = ScrollController();
   int _pageNumber = 0;
   final int _pageLimit = 25;
@@ -90,6 +93,7 @@ class _NewsTabState extends State<NewsTab> {
 
       setState(() {
         if (articles.isNotEmpty) {
+          news.latestArticles = [...articles];
           _articles.addAll(articles);
           _setLatestArticlesIds();
           _setOldestArticleIds();
@@ -222,22 +226,31 @@ class _NewsTabState extends State<NewsTab> {
     _latestIds = [...latestIdsArray];
   }
 
+  _updateFilters(String website, bool added) {
+    if (added) {
+      _filters.add(website);
+    } else {
+      _filters.removeWhere((filter) => filter == website);
+    }
+    _fetchArticles();
+  }
+
   @override
   Widget build(BuildContext context) {
     final news = Provider.of<News>(context, listen: false);
 
     // Scroll to the top & Refresh
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      if (widget.gotoTop) {
-        controller.scrollToIndex(0,
-            preferPosition: AutoScrollPosition.begin,
-            duration: const Duration(milliseconds: 500));
-      }
-    });
+    // WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //   if (widget.gotoTop) {
+    //     controller.scrollToIndex(0,
+    //         preferPosition: AutoScrollPosition.begin,
+    //         duration: const Duration(milliseconds: 500));
+    //   }
+    // });
 
     Widget? body;
     if (news.followedWebsites.isEmpty) {
-      body = buildEmptyBody(context, news);
+      body = GetStartedNews(navigateToWebsitesScreen: navigateToWebsitesScreen);
     } else if (_isLoading && _articles.isEmpty) {
       body = const Center(child: CircularProgressIndicator());
     } else {
@@ -250,26 +263,18 @@ class _NewsTabState extends State<NewsTab> {
           itemCount: _articles.length + 2,
           itemBuilder: (ctx, i) {
             if (i == 0) {
-              return buildWebsiteFilterSection(news);
-            } else if (i == _articles.length + 1) {
-              if (_isLoading && !_foundLastPage) {
-                return const Padding(
-                  padding: EdgeInsets.only(
-                    top: 16,
-                    bottom: 16,
-                  ),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            } else {
-              return Container(
-                padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                child: ArticleWidget(article: _articles[i - 1])
+              return WebsiteFilterBar(
+                followedWebsites: news.followedWebsites,
+                filters: _filters,
+                updateFilters: _updateFilters,
               );
+            } else if (i == _articles.length + 1) {
+              return InfiniteListFooter(
+                isLoading: _isLoading,
+                foundLastPage: _foundLastPage
+              );
+            } else {
+              return ArticleWidget(article: _articles[i - 1]);
             }
           }
         ),
@@ -277,73 +282,25 @@ class _NewsTabState extends State<NewsTab> {
     }
 
     return Scaffold(
-      appBar: buildAppBar(context, news),
+      appBar: buildAppBar(context),
       body: body
     );
   }
 
-  Center buildEmptyBody(BuildContext context, News news) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(50),
-              child: Image.asset(
-                'assets/follow-websites.png',
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              'Ακολούθησε websites',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            const Text(
-              'Δημιούργησε το δικό σου personalized feed.',
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ElevatedButton.icon(
-              onPressed: () => navigateToWebsitesScreen(news, context),
-              icon: const Icon(
-                Icons.add,
-                // color: Colors.white,
-              ),
-              label: const Text(
-                'Ακολούθησε',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  AppBar buildAppBar(BuildContext context, News news) {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       title: const Text('Νέα'),
       actions: [
         IconButton(
           icon: const Icon(Icons.add),
-          onPressed: () => navigateToWebsitesScreen(news, context),
+          onPressed: () => navigateToWebsitesScreen(context),
         ),
       ],
     );
   }
 
-  void navigateToWebsitesScreen(News news, BuildContext context) {
+  void navigateToWebsitesScreen(BuildContext context) {
+    final news = Provider.of<News>(context, listen: false);
     var currentFollowedWebsites = [...news.followedWebsites];
     Navigator.push(
       context,
@@ -357,45 +314,5 @@ class _NewsTabState extends State<NewsTab> {
           }
         })
       });
-  }
-
-  SingleChildScrollView buildWebsiteFilterSection(News news) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-      child: Row(
-        children: [
-          // if (!_filters.isEmpty)
-          //   RawMaterialButton(
-          //     padding: EdgeInsets.zero,
-          //     onPressed: () {},
-          //     elevation: 0,
-          //     fillColor: Colors.white,
-          //     child: Icon(
-          //       Icons.cancel_outlined,
-          //     ),
-          //     // padding: EdgeInsets.all(15.0),
-          //     shape: CircleBorder(),
-          //   ),
-          ...news.followedWebsites.map((followedWebsite) => Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: FilterChip(
-              backgroundColor: Colors.transparent,
-              selectedColor: Colors.white,
-              label: Text(followedWebsite),
-              selected: _filters.contains(followedWebsite),
-              onSelected: (bool value) {
-                if (value) {
-                  _filters.add(followedWebsite);
-                } else {
-                  _filters.removeWhere((filter) => filter == followedWebsite);
-                }
-                _fetchArticles();
-              },
-            ),
-          )).toList()
-        ]
-      ),
-    );
   }
 }
