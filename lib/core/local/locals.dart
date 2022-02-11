@@ -26,6 +26,10 @@ abstract class Locals {
   String get bnvNews;
   String get bnvProfile;
 
+  String get newsNotFollowing;
+  String get newsNotFollowingText;
+  String get newsFollowWebsite;
+
   String get articleWidgetActionsTitle;
   String get articleWidgetActionsSave;
   String get articleWidgetActionsShare;
@@ -46,4 +50,23 @@ abstract class Locals {
   String get datetimeMonths;
   String get datetimeYear;
   String get datetimeYears;
+
+  String get profileTitle;
+  String get profileSettings;
+  String get profileTheme;
+  String get profileThemeSystem;
+  String get profileThemeLight;
+  String get profileThemeDark;
+  String get profileAds;
+  String get profileNotifications;
+  String get profileSecurity;
+  String get profilePrivacy;
+  String get profileAboutUs;
+  String get profileRateUs;
+  String get profilePrivacyPolicy;
+  String get profileHelp;
+  String get profileReportIssues;
+  String get profileContactUs;
+  String get profileFAQ;
+  String get profileLogOut;
 }

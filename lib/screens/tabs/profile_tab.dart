@@ -1,6 +1,7 @@
-import 'dart:async';
-import 'package:english_words/english_words.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:unistudents_app/core/local/locals.dart';
+import 'package:unistudents_app/widgets/settings_build.dart';
 
 class ProfileTab extends StatefulWidget {
   static const String id = 'profile_tab';
@@ -12,104 +13,159 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
-  final _suggestions = <WordPair>[];
-  final _saved = Set<WordPair>();
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Προφίλ'),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
-        ],
+    String image = 'https://i.imgur.com/x6TwpSQ.jpeg';
+    String name = 'Γεώργιος Ανδρεδάκης';
+    String department = 'Τμήμα Γραφιστικής και Οπτικής Επικοινωνίας';
+    int theme = 0; // 0 -> system, 1 -> light, 2 -> dark
+
+    Widget profile = Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
-      body: _buildSuggestions(),
-    );
-  }
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: [
+            // Image
+            Container(
+                width: 60.0,
+                height: 60.0,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        fit: BoxFit.fill, image: NetworkImage(image)))),
 
-  void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          final tiles = _saved.map(
-                (pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                ),
-              );
-            },
-          );
-          final divided = ListTile
-              .divideTiles(
-            context: context,
-            tiles: tiles,
-          )
-              .toList();
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved lists'),
+            // Text
+            const Padding(padding: EdgeInsets.only(left: 20)),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 5)),
+                  Text(
+                    department,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                  ),
+                ],
+              ),
             ),
-            body: ListView(children: divided),
-          );
-        },
+
+            // Arrow
+            const Icon(
+              Icons.keyboard_arrow_right,
+              size: 50,
+              color: Colors.grey,
+            )
+          ],
+        ),
       ),
     );
-  }
 
-  Widget _buildRow(WordPair pair) {
-    final alreadySaved = _saved.contains(pair);
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-      trailing: Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
-      },
+    Widget settings = SettingsModal(
+        title: Locals.of(context)!.profileSettings,
+        children: [
+          SettingsItem(
+            icon: Icons.dark_mode,
+            title: Locals.of(context)!.profileTheme,
+            value: theme == 0
+                ? Locals.of(context)!.profileThemeSystem
+                : theme == 1
+                ? Locals.of(context)!.profileThemeLight
+                : Locals.of(context)!.profileThemeDark,
+            onTap: (){},
+          ),
+          SettingsItem(
+            icon: Icons.campaign,
+            title: Locals.of(context)!.profileAds,
+            onTap: (){},
+          ),
+          SettingsItem(
+            icon: Icons.notifications,
+            title: Locals.of(context)!.profileNotifications,
+            onTap: (){},
+          ),
+        ]
     );
-  }
 
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        // The itemBuilder callback is called once per suggested word pairing,
-        // and places each suggestion into a ListTile row.
-        // For even rows, the function adds a ListTile row for the word pairing.
-        // For odd rows, the function adds a Divider widget to visually
-        // separate the entries. Note that the divider may be difficult
-        // to see on smaller devices.
-        itemBuilder: (context, i) {
-          // Add a one-pixel-high divider widget before each row in theListView.
-          if (i.isOdd) return Divider();
+    Widget security = SettingsModal(
+        title: Locals.of(context)!.profileSecurity,
+        children: [
+          SettingsItem(
+            icon: Icons.lock,
+            title: Locals.of(context)!.profilePrivacy,
+            onTap: (){},
+          ),
+        ]
+    );
 
-          // The syntax "i ~/ 2" divides i by 2 and returns an integer result.
-          // For example: 1, 2, 3, 4, 5 becomes 0, 1, 1, 2, 2.
-          // This calculates the actual number of word pairings in the ListView,
-          // minus the divider widgets.
-          final index = i ~/ 2;
-          // If you've reached the end of the available word pairings...
-          if (index >= _suggestions.length) {
-            // ...then generate 10 more and add them to the suggestions list.
-            _suggestions.addAll(generateWordPairs().take(10));
-          }
-          return _buildRow(_suggestions[index]);
-        });
+    Widget aboutUs = SettingsModal(
+        title: Locals.of(context)!.profileAboutUs,
+        children: [
+          SettingsItem(
+            icon: Icons.star,
+            title: Locals.of(context)!.profileRateUs,
+            onTap: (){},
+          ),
+          SettingsItem(
+            icon: Icons.security,
+            title: Locals.of(context)!.profilePrivacyPolicy,
+            onTap: (){},
+          ),
+        ]
+    );
+
+    Widget help = SettingsModal(
+        title: Locals.of(context)!.profileHelp,
+        children: [
+          SettingsItem(
+            icon: Icons.warning,
+            title: Locals.of(context)!.profileReportIssues,
+            onTap: (){},
+          ),
+          SettingsItem(
+            icon: Icons.question_answer,
+            title: Locals.of(context)!.profileContactUs,
+            onTap: (){},
+          ),
+          SettingsItem(
+            icon: Icons.help,
+            title: Locals.of(context)!.profileFAQ,
+            onTap: (){},
+          ),
+
+        ]
+    );
+
+    Widget logOut = SettingsModal(
+        children: [
+          SettingsItem(
+            icon: Icons.logout,
+            title: Locals.of(context)!.profileLogOut,
+            iconColor: Colors.red,
+            onTap: (){},
+          )
+        ]
+    );
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(Locals.of(context)!.profileTitle),
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(20.0),
+          children: buildSettingsList([profile, settings, security, aboutUs, help, logOut]),
+        ));
   }
 }
+

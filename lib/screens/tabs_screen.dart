@@ -15,7 +15,7 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  int navbarIndex = 2;
+  int navbarIndex = 3;
   bool isConsecutiveTap = false;
 
   @override

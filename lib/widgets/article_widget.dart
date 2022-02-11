@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unistudents_app/models/article.dart';
 
 import '../core/local/locals.dart';
-import 'bottomsheet_item.dart';
-import 'bottomsheet_modal.dart';
+import 'bottomsheet.dart';
 import 'custom_web_view.dart';
 
 class ArticleWidget extends StatelessWidget {
