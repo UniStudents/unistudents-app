@@ -63,12 +63,6 @@ class SettingsItem extends StatelessWidget {
 
     return TextButton(
       onPressed: onTap,
-      style: TextButton.styleFrom(
-          backgroundColor: Colors.blue.shade50,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))
-          )
-      ),
       child: Container(
         padding: const EdgeInsets.all(25),
         child: Row(
@@ -86,16 +80,25 @@ class SettingsItem extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18),
+                      fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.black
+                  ),
                 ),
                 const Padding(padding: EdgeInsets.only(top: 5)),
-                Text(value!),
+                Text(value!,
+                  style: const TextStyle(
+                      color: Colors.black
+                  ),),
               ],
             )
                 : Text(
               title,
               style: const TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 20),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black
+              ),
             ),
           ],
         ),

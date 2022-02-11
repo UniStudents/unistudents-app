@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:unistudents_app/core/local/locals.dart';
+import 'package:unistudents_app/widgets/custom_web_view.dart';
 import 'package:unistudents_app/widgets/settings_build.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -13,6 +15,20 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+
+  void _navigateToWebView(BuildContext buildContext, String title, String url) async {
+    await Navigator.of(context).push(
+        MaterialPageRoute<String>(
+            builder: (ctx) => CustomWebView(
+              barTitle: title,
+              url: url,
+            ),
+            fullscreenDialog: true
+        )
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     String image = 'https://i.imgur.com/x6TwpSQ.jpeg';
@@ -115,12 +131,12 @@ class _ProfileTabState extends State<ProfileTab> {
           SettingsItem(
             icon: Icons.star,
             title: Locals.of(context)!.profileRateUs,
-            onTap: (){},
+            onTap: () => LaunchReview.launch(),
           ),
           SettingsItem(
             icon: Icons.security,
             title: Locals.of(context)!.profilePrivacyPolicy,
-            onTap: (){},
+            onTap: () => _navigateToWebView(context, 'unistudents.gr', 'https://unistudents.gr/privacy-policy/'),
           ),
         ]
     );

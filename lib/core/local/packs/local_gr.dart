@@ -42,7 +42,7 @@ class LocalGr extends Locals {
   @override String get profileSecurity => 'Ασφάλεια';
   @override String get profilePrivacy => 'Απόρρητο';
   @override String get profileAboutUs => 'Σχετικά με εμάς';
-  @override String get profileRateUs => 'Αξιολόγησε μας στο Play Store';
+  @override String get profileRateUs => 'Αξιολόγησε μας';
   @override String get profilePrivacyPolicy => 'Πολιτική Απορρήτου';
   @override String get profileHelp => 'Βοήθεια';
   @override String get profileReportIssues => 'Αναφορά προβλήματος';

@@ -42,7 +42,7 @@ class LocalEn extends Locals {
   @override String get profileSecurity => 'Security';
   @override String get profilePrivacy => 'Privacy';
   @override String get profileAboutUs => 'Abouts us';
-  @override String get profileRateUs => 'Rate us on Play Store';
+  @override String get profileRateUs => 'Rate us';
   @override String get profilePrivacyPolicy => 'Privacy Policy';
   @override String get profileHelp => 'Help';
   @override String get profileReportIssues => 'Report issues';

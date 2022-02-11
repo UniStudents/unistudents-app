@@ -43,6 +43,7 @@ dependencies:
   scroll_to_index: ^2.1.1
   fl_chart: ^0.41.0
   english_words: ^3.1.0
+  launch_review: ^3.0.1
 
 dev_dependencies:
   flutter_test:
