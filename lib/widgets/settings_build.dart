@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unistudents_app/providers/theme.dart';
 
 List<Widget> buildSettingsList(List<Widget> children) {
   List<Widget> items = [];
@@ -59,10 +61,12 @@ class SettingsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
     iconColor ??= Colors.blue;
 
-    return TextButton(
-      onPressed: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.translucent,
       child: Container(
         padding: const EdgeInsets.all(25),
         child: Row(
@@ -80,24 +84,25 @@ class SettingsItem extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.black
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
                   ),
                 ),
                 const Padding(padding: EdgeInsets.only(top: 5)),
                 Text(value!,
-                  style: const TextStyle(
-                      color: Colors.black
-                  ),),
+                  style: TextStyle(
+                    color: _isDarkMode
+                        ? Colors.white60
+                        : Colors.black54
+                  ),
+                ),
               ],
             )
                 : Text(
               title,
               style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.black
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
               ),
             ),
           ],

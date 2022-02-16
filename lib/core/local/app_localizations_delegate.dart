@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unistudents_app/core/local/locals.dart';
 import 'package:unistudents_app/core/local/packs/local_en.dart';
-import 'package:unistudents_app/core/local/packs/local_gr.dart';
+import 'package:unistudents_app/core/local/packs/local_el.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<Locals> {
   @override

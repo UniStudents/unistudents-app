@@ -44,6 +44,7 @@ dependencies:
   fl_chart: ^0.41.0
   english_words: ^3.1.0
   launch_review: ^3.0.1
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:

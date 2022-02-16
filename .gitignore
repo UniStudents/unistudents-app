@@ -36,3 +36,7 @@ build/
 /.packages
 /.flutter-plugins
 /.flutter-plugins-dependencies
+
+/android/app/src/main/java/com/unipi/students/service/ApiService.java
+/android/app/src/main/java/com/unipi/students/service/CryptoService.java
+/android/app/src/main/res/values/secrets.xml

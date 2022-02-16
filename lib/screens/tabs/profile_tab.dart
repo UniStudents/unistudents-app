@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:launch_review/launch_review.dart';
+import 'package:provider/provider.dart';
 import 'package:unistudents_app/core/local/locals.dart';
+import 'package:unistudents_app/providers/theme.dart';
 import 'package:unistudents_app/widgets/custom_web_view.dart';
 import 'package:unistudents_app/widgets/settings_build.dart';
 
@@ -16,7 +18,7 @@ class ProfileTab extends StatefulWidget {
 
 class _ProfileTabState extends State<ProfileTab> {
 
-  void _navigateToWebView(BuildContext buildContext, String title, String url) async {
+  void navigateToWebView(BuildContext buildContext, String title, String url) async {
     await Navigator.of(context).push(
         MaterialPageRoute<String>(
             builder: (ctx) => CustomWebView(
@@ -28,13 +30,17 @@ class _ProfileTabState extends State<ProfileTab> {
     );
   }
 
+  void showThemeSelection(BuildContext context) {
+    var prov = Provider.of<ThemeProvider>(context, listen: false);
+    prov.setTheme(prov.themeNum == 1 ? 2 : 1);
+  }
 
   @override
   Widget build(BuildContext context) {
     String image = 'https://i.imgur.com/x6TwpSQ.jpeg';
     String name = 'Γεώργιος Ανδρεδάκης';
     String department = 'Τμήμα Γραφιστικής και Οπτικής Επικοινωνίας';
-    int theme = 0; // 0 -> system, 1 -> light, 2 -> dark
+    int theme = Provider.of<ThemeProvider>(context).themeNum;
 
     Widget profile = Card(
       elevation: 0,
@@ -99,7 +105,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 : theme == 1
                 ? Locals.of(context)!.profileThemeLight
                 : Locals.of(context)!.profileThemeDark,
-            onTap: (){},
+            onTap: () => showThemeSelection(context),
           ),
           SettingsItem(
             icon: Icons.campaign,
@@ -136,7 +142,7 @@ class _ProfileTabState extends State<ProfileTab> {
           SettingsItem(
             icon: Icons.security,
             title: Locals.of(context)!.profilePrivacyPolicy,
-            onTap: () => _navigateToWebView(context, 'unistudents.gr', 'https://unistudents.gr/privacy-policy/'),
+            onTap: () => navigateToWebView(context, 'unistudents.gr', 'https://unistudents.gr/privacy-policy/'),
           ),
         ]
     );
