@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unistudents_app/models/article.dart';
 
 import '../core/local/locals.dart';
-import 'bottomsheet.dart';
+import 'bottomsheets/article_bs.dart';
 import 'custom_web_view.dart';
 
 class ArticleWidget extends StatelessWidget {
@@ -48,26 +48,22 @@ class ArticleWidget extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.more_horiz),
                       onPressed: () {
-                        showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-                            ),
-                            builder: (builder) => BottomSheetModal(
+                        showArticleBSModal(
+                          context,
+                            ArticleBSModal(
                                 title: Locals.of(context)!.articleWidgetActionsTitle,
                                 children: [
-                                  BottomSheetItem(
+                                  ArticleBSItem(
                                       image: const Icon(Icons.favorite_border),
                                       title: Locals.of(context)!.articleWidgetActionsSave,
                                       onTap: () {}
                                   ),
-                                  BottomSheetItem(
+                                  ArticleBSItem(
                                       image: const Icon(Icons.share),
                                       title: Locals.of(context)!.articleWidgetActionsShare,
                                       onTap: () {}
                                   ),
-                                  BottomSheetItem(
+                                  ArticleBSItem(
                                       image: const Icon(Icons.info),
                                       title: Locals.of(context)!.articleWidgetActionsReport,
                                       onTap: () {}
@@ -112,16 +108,12 @@ class ArticleWidget extends StatelessWidget {
                               foregroundColor: MaterialStateProperty.all(Colors.white),
                             ),
                             onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-                                  ),
-                                  builder: (builder) => BottomSheetModal(
+                              showArticleBSModal(
+                                  context,
+                                  ArticleBSModal(
                                       title: Locals.of(context)!.articleWidgetAttachments,
                                       children: article.attachments.map((e) =>
-                                          BottomSheetItem(
+                                          ArticleBSItem(
                                               image: Icon(e.icon),
                                               title: e.text,
                                               onTap: () {

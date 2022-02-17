@@ -4,9 +4,20 @@ import 'package:unistudents_app/providers/news.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-class BottomSheetModal extends StatelessWidget {
+void showArticleBSModal(BuildContext context, ArticleBSModal modal) {
+  showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+      ),
+      builder: (builder) => modal
+  );
+}
 
-  const BottomSheetModal({Key? key, required this.children, required this.title}) : super(key: key);
+class ArticleBSModal extends StatelessWidget {
+
+  const ArticleBSModal({Key? key, required this.children, required this.title}) : super(key: key);
 
   final String title;
   final List<Widget> children;
@@ -50,9 +61,7 @@ class BottomSheetModal extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-
                   const Padding(padding: EdgeInsets.all(15.0)),
-
                   ...items
                 ],
               ),
@@ -64,9 +73,9 @@ class BottomSheetModal extends StatelessWidget {
   }
 }
 
-class BottomSheetItem extends StatelessWidget {
+class ArticleBSItem extends StatelessWidget {
 
-  const BottomSheetItem({
+  const ArticleBSItem({
     Key? key,
     required this.image,
     required this.title,

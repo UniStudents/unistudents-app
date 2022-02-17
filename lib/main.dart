@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:unistudents_app/core/local/locals.dart';
 import 'package:unistudents_app/providers/local_provider.dart';
 import 'package:unistudents_app/providers/news.dart';
+import 'package:unistudents_app/providers/notifications.dart';
 import 'package:unistudents_app/providers/theme.dart';
 import 'package:unistudents_app/screens/folllow_websites_screen.dart';
 import 'package:unistudents_app/screens/login_screen.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: News()),
         ChangeNotifierProvider(create: (_) => LocalProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: Consumer2<LocalProvider, ThemeProvider>(
         builder: (context, localePr, themePr, snapshot) => MaterialApp(

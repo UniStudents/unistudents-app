@@ -59,6 +59,8 @@ abstract class Locals {
   String get profileThemeDark;
   String get profileAds;
   String get profileNotifications;
+  String get profileNotificationsEnabled;
+  String get profileNotificationsDisabled;
   String get profileSecurity;
   String get profilePrivacy;
   String get profileAboutUs;

@@ -1,17 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:unistudents_app/providers/theme.dart';
 
-List<Widget> buildSettingsList(List<Widget> children) {
-  List<Widget> items = [];
-  for (var element in children) {
-    items.add(element);
-    items.add(const Padding(padding: EdgeInsets.only(top: 20)));
-  }
-
-  return items;
-}
 
 class SettingsModal extends StatelessWidget {
   const SettingsModal({Key? key, this.title, required this.children})
@@ -36,7 +25,9 @@ class SettingsModal extends StatelessWidget {
           elevation: 0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          child: Column(children: children),
+          child: Column(
+            children: children,
+          ),
         )
       ],
     );

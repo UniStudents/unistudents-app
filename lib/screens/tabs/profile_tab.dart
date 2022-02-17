@@ -4,7 +4,9 @@ import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:unistudents_app/core/local/locals.dart';
 import 'package:unistudents_app/providers/theme.dart';
+import 'package:unistudents_app/widgets/bottomsheets/notification_bs.dart';
 import 'package:unistudents_app/widgets/custom_web_view.dart';
+import 'package:unistudents_app/widgets/bottomsheets/theme_bs.dart';
 import 'package:unistudents_app/widgets/settings_build.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -17,22 +19,14 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
-
-  void navigateToWebView(BuildContext buildContext, String title, String url) async {
-    await Navigator.of(context).push(
-        MaterialPageRoute<String>(
-            builder: (ctx) => CustomWebView(
+  void navigateToWebView(
+      BuildContext buildContext, String title, String url) async {
+    await Navigator.of(context).push(MaterialPageRoute<String>(
+        builder: (ctx) => CustomWebView(
               barTitle: title,
               url: url,
             ),
-            fullscreenDialog: true
-        )
-    );
-  }
-
-  void showThemeSelection(BuildContext context) {
-    var prov = Provider.of<ThemeProvider>(context, listen: false);
-    prov.setTheme(prov.themeNum == 1 ? 2 : 1);
+        fullscreenDialog: true));
   }
 
   @override
@@ -94,100 +88,97 @@ class _ProfileTabState extends State<ProfileTab> {
       ),
     );
 
-    Widget settings = SettingsModal(
-        title: Locals.of(context)!.profileSettings,
-        children: [
-          SettingsItem(
-            icon: Icons.dark_mode,
-            title: Locals.of(context)!.profileTheme,
-            value: theme == 0
-                ? Locals.of(context)!.profileThemeSystem
-                : theme == 1
+    Widget settings = SettingsModal(title: Locals.of(context)!.profileSettings, children: [
+      SettingsItem(
+        icon: Icons.dark_mode,
+        title: Locals.of(context)!.profileTheme,
+        value: theme == 0
+            ? Locals.of(context)!.profileThemeSystem
+            : theme == 1
                 ? Locals.of(context)!.profileThemeLight
                 : Locals.of(context)!.profileThemeDark,
-            onTap: () => showThemeSelection(context),
-          ),
-          SettingsItem(
-            icon: Icons.campaign,
-            title: Locals.of(context)!.profileAds,
-            onTap: (){},
-          ),
-          SettingsItem(
-            icon: Icons.notifications,
-            title: Locals.of(context)!.profileNotifications,
-            onTap: (){},
-          ),
-        ]
-    );
+        onTap: () => showThemeBSModal(context),
+      ),
+      SettingsItem(
+        icon: Icons.campaign,
+        title: Locals.of(context)!.profileAds,
+        onTap: () {},
+      ),
+      SettingsItem(
+        icon: Icons.notifications,
+        title: Locals.of(context)!.profileNotifications,
+        onTap: () => showNotificationBSModal(context),
+      ),
+    ]);
 
-    Widget security = SettingsModal(
-        title: Locals.of(context)!.profileSecurity,
-        children: [
-          SettingsItem(
-            icon: Icons.lock,
-            title: Locals.of(context)!.profilePrivacy,
-            onTap: (){},
-          ),
-        ]
-    );
+    Widget security = SettingsModal(title: Locals.of(context)!.profileSecurity, children: [
+      SettingsItem(
+        icon: Icons.lock,
+        title: Locals.of(context)!.profilePrivacy,
+        onTap: () {},
+      ),
+    ]);
 
-    Widget aboutUs = SettingsModal(
-        title: Locals.of(context)!.profileAboutUs,
-        children: [
-          SettingsItem(
-            icon: Icons.star,
-            title: Locals.of(context)!.profileRateUs,
-            onTap: () => LaunchReview.launch(),
-          ),
-          SettingsItem(
-            icon: Icons.security,
-            title: Locals.of(context)!.profilePrivacyPolicy,
-            onTap: () => navigateToWebView(context, 'unistudents.gr', 'https://unistudents.gr/privacy-policy/'),
-          ),
-        ]
-    );
+    Widget aboutUs = SettingsModal(title: Locals.of(context)!.profileAboutUs, children: [
+      SettingsItem(
+        icon: Icons.star,
+        title: Locals.of(context)!.profileRateUs,
+        onTap: () => LaunchReview.launch(),
+      ),
+      SettingsItem(
+        icon: Icons.security,
+        title: Locals.of(context)!.profilePrivacyPolicy,
+        onTap: () => navigateToWebView(context, 'unistudents.gr',
+            'https://unistudents.gr/privacy-policy/'),
+      ),
+    ]);
 
-    Widget help = SettingsModal(
-        title: Locals.of(context)!.profileHelp,
-        children: [
-          SettingsItem(
-            icon: Icons.warning,
-            title: Locals.of(context)!.profileReportIssues,
-            onTap: (){},
-          ),
-          SettingsItem(
-            icon: Icons.question_answer,
-            title: Locals.of(context)!.profileContactUs,
-            onTap: (){},
-          ),
-          SettingsItem(
-            icon: Icons.help,
-            title: Locals.of(context)!.profileFAQ,
-            onTap: (){},
-          ),
+    Widget help = SettingsModal(title: Locals.of(context)!.profileHelp, children: [
+      SettingsItem(
+        icon: Icons.warning,
+        title: Locals.of(context)!.profileReportIssues,
+        onTap: () {},
+      ),
+      SettingsItem(
+        icon: Icons.question_answer,
+        title: Locals.of(context)!.profileContactUs,
+        onTap: () {},
+      ),
+      SettingsItem(
+        icon: Icons.help,
+        title: Locals.of(context)!.profileFAQ,
+        onTap: () {},
+      ),
+    ]);
 
-        ]
-    );
+    Widget logOut = SettingsModal(children: [
+      SettingsItem(
+        icon: Icons.logout,
+        title: Locals.of(context)!.profileLogOut,
+        iconColor: Colors.red,
+        onTap: () {},
+      )
+    ]);
 
-    Widget logOut = SettingsModal(
-        children: [
-          SettingsItem(
-            icon: Icons.logout,
-            title: Locals.of(context)!.profileLogOut,
-            iconColor: Colors.red,
-            onTap: (){},
-          )
-        ]
-    );
+    var linePadding = const Padding(padding: EdgeInsets.only(top: 20));
 
     return Scaffold(
         appBar: AppBar(
           title: Text(Locals.of(context)!.profileTitle),
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(20.0),
-          children: buildSettingsList([profile, settings, security, aboutUs, help, logOut]),
-        ));
+        body: ListView(padding: const EdgeInsets.all(20.0), children: [
+          profile,
+          linePadding,
+          settings,
+          linePadding,
+          security,
+          linePadding,
+          aboutUs,
+          linePadding,
+          help,
+          linePadding,
+          logOut,
+          linePadding,
+        ]));
   }
 }
-
