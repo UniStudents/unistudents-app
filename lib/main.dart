@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:unistudents_app/core/local/locals.dart';
 import 'package:unistudents_app/providers/local_provider.dart';
@@ -29,23 +30,26 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: Consumer2<LocalProvider, ThemeProvider>(
-        builder: (context, localePr, themePr, snapshot) => MaterialApp(
-            title: 'UniStudents',
-            theme: themePr.lightTheme,
-            darkTheme: themePr.darkTheme,
-            themeMode: themePr.theme,
-            locale: localePr.locale,
-            debugShowCheckedModeBanner: false,
-            supportedLocales: Locals.supportedLocals,
-            localizationsDelegates: Locals.localizationsDelegates,
-            initialRoute: TabsScreen.id,
-            routes: {
-              WelcomeScreen.id: (context) => WelcomeScreen(),
-              LoginScreen.id: (context) => LoginScreen(),
-              RegistrationScreen.id: (context) => RegistrationScreen(),
-              TabsScreen.id: (context) => TabsScreen(),
-              FollowWebsitesScreen.id: (context) => FollowWebsitesScreen(),
-            })
+        builder: (context, localePr, themePr, snapshot) => ScreenUtilInit(
+          designSize: const Size(428, 925),
+          builder: () => MaterialApp(
+              title: 'UniStudents',
+              theme: themePr.lightTheme,
+              darkTheme: themePr.darkTheme,
+              themeMode: themePr.theme,
+              locale: localePr.locale,
+              debugShowCheckedModeBanner: false,
+              supportedLocales: Locals.supportedLocals,
+              localizationsDelegates: Locals.localizationsDelegates,
+              initialRoute: TabsScreen.id,
+              routes: {
+                WelcomeScreen.id: (context) => WelcomeScreen(),
+                LoginScreen.id: (context) => LoginScreen(),
+                RegistrationScreen.id: (context) => RegistrationScreen(),
+                TabsScreen.id: (context) => TabsScreen(),
+                FollowWebsitesScreen.id: (context) => FollowWebsitesScreen(),
+              }),
+        )
       ),
     );
   }

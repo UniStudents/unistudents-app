@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:unistudents_app/models/article.dart';
 
 import '../core/local/locals.dart';
@@ -34,7 +35,7 @@ class ArticleWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
             child: Column(
               children: [
                 // Source|time & More
@@ -43,35 +44,39 @@ class ArticleWidget extends StatelessWidget {
                     Flexible(
                         fit: FlexFit.tight,
                         child: Text('${article.source} | ${article.getElapsedTime(context)}',
-                            style: const TextStyle(fontSize: 12)
+                            style: TextStyle(fontSize: 12.sp)
                         )),
-                    IconButton(
-                      icon: const Icon(Icons.more_horiz),
-                      onPressed: () {
-                        showArticleBSModal(
-                          context,
-                            ArticleBSModal(
-                                title: Locals.of(context)!.articleWidgetActionsTitle,
-                                children: [
-                                  ArticleBSItem(
-                                      image: const Icon(Icons.favorite_border),
-                                      title: Locals.of(context)!.articleWidgetActionsSave,
-                                      onTap: () {}
-                                  ),
-                                  ArticleBSItem(
-                                      image: const Icon(Icons.share),
-                                      title: Locals.of(context)!.articleWidgetActionsShare,
-                                      onTap: () {}
-                                  ),
-                                  ArticleBSItem(
-                                      image: const Icon(Icons.info),
-                                      title: Locals.of(context)!.articleWidgetActionsReport,
-                                      onTap: () {}
-                                  )
-                                ]
-                            )
-                        );
-                      },
+                    SizedBox(
+                      height: 40.h,
+                      width: 40.w,
+                      child: IconButton(
+                        icon: const Icon(Icons.more_horiz),
+                        onPressed: () {
+                          showArticleBSModal(
+                            context,
+                              ArticleBSModal(
+                                  title: Locals.of(context)!.articleWidgetActionsTitle,
+                                  children: [
+                                    ArticleBSItem(
+                                        image: const Icon(Icons.favorite_border),
+                                        title: Locals.of(context)!.articleWidgetActionsSave,
+                                        onTap: () {}
+                                    ),
+                                    ArticleBSItem(
+                                        image: const Icon(Icons.share),
+                                        title: Locals.of(context)!.articleWidgetActionsShare,
+                                        onTap: () {}
+                                    ),
+                                    ArticleBSItem(
+                                        image: const Icon(Icons.info),
+                                        title: Locals.of(context)!.articleWidgetActionsReport,
+                                        onTap: () {}
+                                    )
+                                  ]
+                              )
+                          );
+                        },
+                      ),
                     )
                   ],
                 ),
@@ -88,46 +93,19 @@ class ArticleWidget extends StatelessWidget {
                           // Title
                           Text(
                             article.title,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w700,
                               fontFamily: 'Roboto',
-                              fontSize: 18,
+                              fontSize: 14.sp,
                             ),
                           ),
 
-                          const Padding(padding: EdgeInsets.all(5.0)),
+                          Padding(padding: EdgeInsets.all(2.h)),
 
                           // Attachments
                           article.attachments.isNotEmpty
-                              ? TextButton.icon(
-                            icon: const Icon(Icons.attachment),
-                            label: Text('${Locals.of(context)!.articleWidgetAttachments} (${article.attachments.length})'),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(Colors.cyan),
-                              foregroundColor: MaterialStateProperty.all(Colors.white),
-                            ),
-                            onPressed: () {
-                              showArticleBSModal(
-                                  context,
-                                  ArticleBSModal(
-                                      title: Locals.of(context)!.articleWidgetAttachments,
-                                      children: article.attachments.map((e) =>
-                                          ArticleBSItem(
-                                              image: Icon(e.icon),
-                                              title: e.text,
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                Future.delayed(const Duration(milliseconds: 500), () {
-                                                  _navigateToWebView(context, article.source, e.value);
-                                                });
-                                              }
-                                          )
-                                      ).toList()
-                                  )
-                              );
-                            },
-                          )
+                              ? _buildAttachmentChip(context, _navigateToWebView)
                               : Container()
                         ],
                       ),
@@ -142,8 +120,8 @@ class ArticleWidget extends StatelessWidget {
                           image: NetworkImage(
                               article.getFrontalImage() ??
                                   ""),
-                          height: 80,
-                          width: 80,
+                          height: 80.h,
+                          width: 80.w,
                         ),
                       )
                     ])
@@ -159,8 +137,13 @@ class ArticleWidget extends StatelessWidget {
                     itemCount: article.categories.length,
                     itemBuilder: (context, j) {
                       return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text('#' + article.categories[j])
+                        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5.h),
+                        child: Text(
+                          '#' + article.categories[j],
+                          style: TextStyle(
+                            fontSize: 12.sp
+                          ),
+                        )
                       );
                     }
                   ),
@@ -170,6 +153,32 @@ class ArticleWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  ActionChip _buildAttachmentChip(BuildContext context, void _navigateToWebView(BuildContext buildContext, String domain, String url)) {
+    return ActionChip(
+      label: Text('${Locals.of(context)!.articleWidgetAttachments} (${article.attachments.length})', style: TextStyle(fontSize: 14.sp),),
+      onPressed: () {
+        showArticleBSModal(
+          context,
+          ArticleBSModal(
+            title: Locals.of(context)!.articleWidgetAttachments,
+            children: article.attachments.map((e) =>
+              ArticleBSItem(
+                image: Icon(e.icon),
+                title: e.text,
+                onTap: () {
+                  Navigator.pop(context);
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    _navigateToWebView(context, article.source, e.value);
+                  });
+                }
+              )
+            ).toList()
+          )
+        );
+      }
     );
   }
 }

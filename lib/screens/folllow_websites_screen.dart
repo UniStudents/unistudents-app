@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:unistudents_app/providers/news.dart';
-import 'package:unistudents_app/widgets/available_website_expanded.dart';
 import 'package:unistudents_app/widgets/available_website_minimized.dart';
 
 class FollowWebsitesScreen extends StatefulWidget {
@@ -13,48 +13,44 @@ class FollowWebsitesScreen extends StatefulWidget {
 }
 
 class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
-  var _isInit = true;
   var _isLoading = false;
 
   @override
-  void didChangeDependencies() {
+  void initState() {
+    _isLoading = true;
     final news = Provider.of<News>(context, listen: false);
-    if (_isInit) {
-      if (news.availableWebsites.isEmpty) {
-        _isLoading = true;
-        news.fetchWebsites("UNIPI").then((_) {
-          setState(() {
-            _isLoading = false;
-          });
+    if (news.availableWebsites.isEmpty) {
+      news.fetchWebsites("UNIPI").then((_) {
+        setState(() {
+          _isLoading = false;
         });
-      }
+      });
+    } else {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
 
-    _isInit = false;
     super.didChangeDependencies();
+  }
+
+  Widget _buildMinimizedCards(List availableWebsites) {
+    return ListView.separated(
+      primary: false,
+      shrinkWrap: true,
+      itemCount: availableWebsites.length,
+      separatorBuilder: (ctx, i) => SizedBox(height: 12.h,),
+      itemBuilder: (ctx, i) => AvailableWebsiteMinimized(
+        newsWebsite: availableWebsites[i],
+      )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final news = Provider.of<News>(context, listen: false);
-    final availableWebsites = news.availableWebsites;
-
-    Widget expandedCards = ListView.separated(
-        padding: EdgeInsets.only(top: 20, bottom: 20),
-        itemCount: availableWebsites.length,
-        separatorBuilder: (ctx, i) => const SizedBox(height: 20,),
-        itemBuilder: (ctx, i) => AvailableWebsiteExpanded(
-          newsWebsite: availableWebsites[i],
-        )
-    );
-
-    Widget minimizedCards = ListView.separated(
-        itemCount: availableWebsites.length,
-        separatorBuilder: (ctx, i) => const SizedBox(height: 20,),
-        itemBuilder: (ctx, i) => AvailableWebsiteMinimized(
-          newsWebsite: availableWebsites[i],
-        )
-    );
+    final availableWebsites = Provider.of<News>(context, listen: false).availableWebsites;
 
     return Scaffold(
       appBar: AppBar(
@@ -70,11 +66,22 @@ class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
       ),
       body: _isLoading
         ? const Center(child: CircularProgressIndicator())
-        : Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-          child: expandedCards
-          // child: minimizedCards
-        ),
+        : ListView(
+            padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 0),
+            children: [
+              SizedBox(height: 30.h,),
+              Text(
+                "Διαθέσιμα Websites",
+                style: TextStyle(
+                  color: Colors.black45,
+                  fontFamily: 'Roboto',
+                  fontSize: 16.sp,
+                ),
+              ),
+              SizedBox(height: 12.h,),
+              _buildMinimizedCards(availableWebsites)
+            ],
+          ),
     );
   }
 }

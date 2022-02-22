@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class SettingsModal extends StatelessWidget {
@@ -17,14 +18,14 @@ class SettingsModal extends StatelessWidget {
         title != null
           ? Text(
               title!,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
             )
-          : const Padding(padding: EdgeInsets.only(top: 10)),
-        const Padding(padding: EdgeInsets.only(top: 10)),
+          : Padding(padding: EdgeInsets.only(top: 10.h)),
+        Padding(padding: EdgeInsets.only(top: 10.h)),
         Card(
           elevation: 0,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
           child: Column(
             children: children,
           ),
@@ -64,24 +65,25 @@ class SettingsItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 30,
+              size: 25.w,
               color: iconColor,
             ),
-            const Padding(padding: EdgeInsets.only(left: 20)),
+            Padding(padding: EdgeInsets.only(left: 20.w)),
             value != null
                 ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 5)),
+                Padding(padding: EdgeInsets.only(top: 5.w)),
                 Text(value!,
                   style: TextStyle(
+                    fontSize: 14.sp,
                     color: _isDarkMode
                         ? Colors.white60
                         : Colors.black54
@@ -91,9 +93,9 @@ class SettingsItem extends StatelessWidget {
             )
                 : Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontSize: 18,
+                  fontSize: 16.sp,
               ),
             ),
           ],

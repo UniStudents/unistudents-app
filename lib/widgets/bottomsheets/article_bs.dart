@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:unistudents_app/providers/news.dart';
-import 'package:flutter/material.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void showArticleBSModal(BuildContext context, ArticleBSModal modal) {
   showModalBottomSheet(
@@ -48,20 +45,20 @@ class ArticleBSModal extends StatelessWidget {
 
             // Title & Items
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: EdgeInsets.all(30.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w800,
                       fontFamily: 'Roboto',
-                      fontSize: 20,
+                      fontSize: 19.sp,
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.all(15.0)),
+                  Padding(padding: EdgeInsets.all(15.w)),
                   ...items
                 ],
               ),
@@ -92,26 +89,26 @@ class ArticleBSItem extends StatelessWidget {
       onPressed: onTap,
       style: TextButton.styleFrom(
           backgroundColor: Colors.blue.shade50,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.r))
           )
       ),
       child: Container(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(12.h),
         child: Row(children: [
           ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),
               child: image
           ),
-          const Padding(padding: EdgeInsets.all(10)),
+          Padding(padding: EdgeInsets.all(10.w)),
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w700,
                 fontFamily: 'Roboto',
-                fontSize: 18,
+                fontSize: 16.sp,
               ),
             ),
           )

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:unistudents_app/core/local/locals.dart';
@@ -39,23 +40,23 @@ class _ProfileTabState extends State<ProfileTab> {
     Widget profile = Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.w),
         child: Row(
           children: [
             // Image
             Container(
-                width: 60.0,
-                height: 60.0,
+                width: 50.w,
+                height: 50.w,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
                         fit: BoxFit.fill, image: NetworkImage(image)))),
 
             // Text
-            const Padding(padding: EdgeInsets.only(left: 20)),
+            Padding(padding: EdgeInsets.only(left: 20.w)),
             Flexible(
               fit: FlexFit.tight,
               child: Column(
@@ -64,25 +65,21 @@ class _ProfileTabState extends State<ProfileTab> {
                   Text(
                     name,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 22),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20.sp),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 5)),
+                  Padding(padding: EdgeInsets.only(top: 5.h)),
                   Text(
                     department,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
+                    style: TextStyle(
+                      fontSize: 14.sp
+                    ),
                   ),
                 ],
               ),
             ),
-
-            // Arrow
-            const Icon(
-              Icons.keyboard_arrow_right,
-              size: 50,
-              color: Colors.grey,
-            )
           ],
         ),
       ),
@@ -160,13 +157,13 @@ class _ProfileTabState extends State<ProfileTab> {
       )
     ]);
 
-    var linePadding = const Padding(padding: EdgeInsets.only(top: 20));
+    var linePadding = Padding(padding: EdgeInsets.only(top: 20.h));
 
     return Scaffold(
         appBar: AppBar(
           title: Text(Locals.of(context)!.profileTitle),
         ),
-        body: ListView(padding: const EdgeInsets.all(20.0), children: [
+        body: ListView(padding: EdgeInsets.all(20.h), children: [
           profile,
           linePadding,
           settings,
