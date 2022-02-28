@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class SettingsModal extends StatelessWidget {
   const SettingsModal({Key? key, this.title, required this.children})
       : super(key: key);
@@ -12,16 +11,28 @@ class SettingsModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         title != null
-          ? Text(
-              title!,
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-            )
-          : Padding(padding: EdgeInsets.only(top: 10.h)),
-        Padding(padding: EdgeInsets.only(top: 10.h)),
+            ? Padding(
+                padding: EdgeInsets.only(left: 5.h),
+                child: Text(
+                  title!,
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color: _isDarkMode
+                        ? const Color(0x99FFFFFF)
+                        : const Color(0x99000000),
+                  ),
+                ),
+              )
+            : Padding(padding: EdgeInsets.only(top: 10.h)),
+
+        Padding(padding: EdgeInsets.only(top: 15.h)),
+
         Card(
           elevation: 0,
           shape:
@@ -42,8 +53,8 @@ class SettingsItem extends StatelessWidget {
       required this.title,
       this.value,
       this.iconColor,
-      required this.onTap
-    }) : super(key: key);
+      required this.onTap})
+      : super(key: key);
 
   final IconData icon;
   final String title;
@@ -54,53 +65,54 @@ class SettingsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    iconColor ??= Colors.blue;
+    iconColor ??= const Color(0xFF4388FF);
 
     return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.translucent,
-      child: Container(
-        padding: const EdgeInsets.all(25),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 25.w,
-              color: iconColor,
-            ),
-            Padding(padding: EdgeInsets.only(left: 20.w)),
-            value != null
-                ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.sp,
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 5.w)),
-                Text(value!,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: _isDarkMode
-                        ? Colors.white60
-                        : Colors.black54
-                  ),
-                ),
-              ],
-            )
-                : Text(
-              title,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.sp,
+        onTap: onTap,
+        behavior: HitTestBehavior.translucent,
+        child: Container(
+          padding: EdgeInsets.only(left: 29.w, right: 29.w, top: 33.h, bottom: 33.h),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                size: 23.w,
+                color: iconColor,
               ),
-            ),
-          ],
-        ),
-      )
-    );
+
+              Padding(padding: EdgeInsets.only(left: 25.w)),
+
+              value != null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 17.sp,
+                          ),
+                        ),
+
+                        Padding(padding: EdgeInsets.only(top: 5.w)),
+
+                        Text(
+                          value!,
+                          style: TextStyle(
+                              fontSize: 12.sp,
+                              color: _isDarkMode
+                                  ? Colors.white60
+                                  : Colors.black54),
+                        ),
+                      ],
+                    )
+                  : Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 17.sp,
+                      ),
+                    ),
+            ],
+          ),
+        ));
   }
 }

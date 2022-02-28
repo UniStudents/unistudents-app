@@ -5,13 +5,15 @@ class ThemeProvider with ChangeNotifier {
   final lightTheme = ThemeData(
     brightness: Brightness.light,
     primarySwatch: Colors.blue,
-    scaffoldBackgroundColor: const Color(0xffF4F4F4),
+    scaffoldBackgroundColor: const Color(0xFFF7F7F7),
+    cardColor: const Color(0xFFFFFFFF),
   );
 
   final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.blue,
-    scaffoldBackgroundColor: const Color(0xFF000000),
+    scaffoldBackgroundColor: const Color(0xFF151C26),
+    cardColor: const Color(0xFF2F3640),
   );
 
   ThemeMode _themeMode = ThemeMode.system;

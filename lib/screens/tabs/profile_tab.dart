@@ -57,20 +57,18 @@ class _ProfileTabState extends State<ProfileTab> {
 
             // Text
             Padding(padding: EdgeInsets.only(left: 20.w)),
+
             Flexible(
               fit: FlexFit.tight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
+                  Text(name,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20.sp),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                   Padding(padding: EdgeInsets.only(top: 5.h)),
-                  Text(
-                    department,
+                  Text(department,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     style: TextStyle(

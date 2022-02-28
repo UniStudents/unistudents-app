@@ -71,4 +71,6 @@ abstract class Locals {
   String get profileContactUs;
   String get profileFAQ;
   String get profileLogOut;
+
+  String get cancel;
 }

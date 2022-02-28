@@ -52,4 +52,6 @@ class LocalGr extends Locals {
   @override String get profileFAQ => 'Συχνές Ερωτήσεις';
   @override String get profileLogOut => 'Αποσύνδεση';
 
+  @override String get cancel => 'Άκυρο';
+
 }
