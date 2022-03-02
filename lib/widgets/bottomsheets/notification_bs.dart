@@ -37,147 +37,171 @@ class _NotificationsBSModal extends State<NotificationsBSModal> {
     var prov = Provider.of<NotificationProvider>(context, listen: false);
     var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    // return Wrap(
-    //   children: [
-    //     Column(
-    //       children: [
-    //         // Simple design
-    //         Padding(
-    //           padding: EdgeInsets.only(top: 12.h),
-    //           child: Container(
-    //             height: 2.h,
-    //             width: 56.w,
-    //             decoration: BoxDecoration(
-    //                 borderRadius: BorderRadius.circular(20.0),
-    //                 color: Colors.grey[500]),
-    //           ),
-    //         ),
-    //
-    //         Column(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             // Title
-    //             Padding(
-    //               padding: EdgeInsets.only(left: 28.w, top: 18.h),
-    //               child: Text(
-    //                 Locals.of(context)!.profileNotifications,
-    //                 style: TextStyle(
-    //                     fontSize: 17.sp,
-    //                     color: _isDarkMode
-    //                         ? const Color(0x99FFFFFF)
-    //                         : const Color(0x99000000)),
-    //               ),
-    //             ),
-    //
-    //             // Themes
-    //             Padding(
-    //               padding: EdgeInsets.only(left: 45.w, right: 45.w, top: 37.h),
-    //               child: Column(
-    //                 children: [
-    //                   // All
-    //                   Row(
-    //                     children: [
-    //                       Image(
-    //                         image: const AssetImage('assets/theme_light.png'),
-    //                         width: 88.w,
-    //                         height: 79.w,
-    //                       ),
-    //                       Padding(
-    //                         padding: EdgeInsets.only(top: 20.h, bottom: 17.h),
-    //                         child: Text(
-    //                           Locals.of(context)!.profileThemeLight,
-    //                           style: TextStyle(
-    //                               color: _isDarkMode
-    //                                   ? const Color(0xD9FFFFFF)
-    //                                   : const Color(0xD9000000)),
-    //                         ),
-    //                       ),
-    //                       Radio<int>(
-    //                         value: 1,
-    //                         activeColor: const Color(0xFF4388FF),
-    //                         groupValue: prov.themeNum,
-    //                         onChanged: (value) {
-    //                           widget.setState(() {
-    //                             prov.setTheme(1);
-    //                           });
-    //                         },
-    //                       )
-    //                     ],
-    //                   ),
-    //
-    //                   Padding(padding: EdgeInsets.only(right: 37.w)),
-    //
-    //
-    //                 ],
-    //               ),
-    //             ),
-    //
-    //             Padding(
-    //               padding: EdgeInsets.fromLTRB(24.w, 40.h, 24.w, 40.h),
-    //               // child: TextButton(
-    //               //   child: Text(Locals.of(context)!.cancel),
-    //               //   onPressed: () => Navigator.of(context).pop(),
-    //               // ),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     )
-    //   ],
-    // );
-
-
-
     return Wrap(
       children: [
         Column(
           children: [
             // Simple design
-            const Padding(padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0)),
-            Container(
-              height: 5,
-              width: 60,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.grey[500]
+            Padding(
+              padding: EdgeInsets.only(top: 12.h),
+              child: Container(
+                height: 2.h,
+                width: 56.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.grey[500]),
               ),
             ),
 
-            // Title & Items
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title
+                Padding(
+                  padding: EdgeInsets.only(left: 28.w, top: 18.h),
+                  child: Text(
+                    Locals.of(context)!.profileNotifications,
+                    style: TextStyle(
+                        fontSize: 17.sp,
+                        color: _isDarkMode
+                            ? const Color(0x99FFFFFF)
+                            : const Color(0x99000000)),
+                  ),
+                ),
+
+                // Options
+                Padding(
+                  padding: EdgeInsets.only(left: 40.w, right: 45.w, top: 37.h),
+                  child: Column(
                     children: [
-                      Checkbox(
-                          value: prov.enabled,
-                          onChanged: (bool? value) {
-                            widget.setState(() {
-                              prov.setEnabled(true);
-                            });
-                          }),
-                      Text(Locals.of(context)!.profileNotificationsEnabled)
+                      // All
+                      Row(
+                        children: [
+                          Flexible(
+                              fit: FlexFit.tight,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 20.w, top: 35.h),
+                                child: Text(
+                                  Locals.of(context)!.profileNotificationsAll,
+                                  style: TextStyle(
+                                      color: _isDarkMode
+                                          ? const Color(0xD9FFFFFF)
+                                          : const Color(0xD9000000),
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w700
+                                  ),
+                                ),
+                              ),
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.w),
+                            child: Checkbox(
+                              value: prov.isAllEnabled(),
+                              onChanged: (value) {
+                                widget.setState(() {
+                                  if(value != null) {
+                                    prov.changeAll(value);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      Padding(padding: EdgeInsets.only(top: 30.h)),
+
+                      // Grades
+                      Row(
+                        children: [
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20.w, top: 35.h),
+                              child: Text(
+                                Locals.of(context)!.profileNotificationsGrades,
+                                style: TextStyle(
+                                    color: _isDarkMode
+                                        ? const Color(0xD9FFFFFF)
+                                        : const Color(0xD9000000),
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w700
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.w),
+                            child: Checkbox(
+                              value: prov.mode[0] == "1",
+                              onChanged: (value) {
+                                widget.setState(() {
+                                  if(value != null) {
+                                    prov.change(value, 0);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
+
+                      Padding(padding: EdgeInsets.only(top: 30.h)),
+
+                      // News
+                      Row(
+                        children: [
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20.w, top: 35.h),
+                              child: Text(
+                                Locals.of(context)!.profileNotificationsNews,
+                                style: TextStyle(
+                                    color: _isDarkMode
+                                        ? const Color(0xD9FFFFFF)
+                                        : const Color(0xD9000000),
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w700
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.w),
+                            child: Checkbox(
+                              value: prov.mode[1] == "1",
+                              onChanged: (value) {
+                                widget.setState(() {
+                                  if(value != null) {
+                                    prov.change(value, 1);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      Padding(padding: EdgeInsets.only(top: 30.h)),
+
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.all(10.0)),
-                  Row(
-                    children: [
-                      Checkbox(
-                          value: !prov.enabled,
-                          onChanged: (bool? value) {
-                            widget.setState(() {
-                              prov.setEnabled(false);
-                            });
-                          }),
-                      Text(Locals.of(context)!.profileNotificationsDisabled)
-                    ],
-                  ),
-                  const Padding(padding: EdgeInsets.all(10.0)),
-                ],
-              ),
-            )
+                ),
+
+                Padding(
+                  padding: EdgeInsets.fromLTRB(24.w, 40.h, 24.w, 40.h),
+                  // child: TextButton(
+                  //   child: Text(Locals.of(context)!.cancel),
+                  //   onPressed: () => Navigator.of(context).pop(),
+                  // ),
+                ),
+              ],
+            ),
           ],
         )
       ],

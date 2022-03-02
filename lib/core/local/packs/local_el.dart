@@ -38,9 +38,10 @@ class LocalGr extends Locals {
   @override String get profileThemeLight => 'Φωτεινό';
   @override String get profileThemeDark => 'Σκοτεινό';
   @override String get profileAds => 'Διαφημίσεις';
-  @override String get profileNotifications => 'Ειδποιήσεις';
-  @override String get profileNotificationsEnabled => 'Ενεργοποιημένες';
-  @override String get profileNotificationsDisabled => 'Απενεργοποιημένες';
+  @override String get profileNotifications => 'Ειδοποιήσεις';
+  @override String get profileNotificationsAll => 'Όλα';
+  @override String get profileNotificationsGrades => 'Βαθμοί';
+  @override String get profileNotificationsNews => 'Νέα';
   @override String get profileSecurity => 'Ασφάλεια';
   @override String get profilePrivacy => 'Απόρρητο';
   @override String get profileAboutUs => 'Σχετικά με εμάς';

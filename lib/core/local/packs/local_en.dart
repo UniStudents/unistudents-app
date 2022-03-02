@@ -39,8 +39,9 @@ class LocalEn extends Locals {
   @override String get profileThemeDark => 'Dark';
   @override String get profileAds => 'Ads';
   @override String get profileNotifications => 'Notifications';
-  @override String get profileNotificationsEnabled => 'Enabled';
-  @override String get profileNotificationsDisabled => 'Disabled';
+  @override String get profileNotificationsAll => 'All';
+  @override String get profileNotificationsGrades => 'Grades';
+  @override String get profileNotificationsNews => 'News';
   @override String get profileSecurity => 'Security';
   @override String get profilePrivacy => 'Privacy';
   @override String get profileAboutUs => 'Abouts us';
