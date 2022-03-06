@@ -53,5 +53,8 @@ class LocalEn extends Locals {
   @override String get profileFAQ => 'FAQ';
   @override String get profileLogOut => 'Log out';
 
+  @override String get progressSemester => "Semester";
+  @override String get progressSemesterAvg => "Semester Avg";
+
   @override String get cancel => 'Cancel';
 }

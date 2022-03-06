@@ -73,5 +73,8 @@ abstract class Locals {
   String get profileFAQ;
   String get profileLogOut;
 
+  String get progressSemester;
+  String get progressSemesterAvg;
+
   String get cancel;
 }

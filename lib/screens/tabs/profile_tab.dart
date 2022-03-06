@@ -8,7 +8,7 @@ import 'package:unistudents_app/providers/theme.dart';
 import 'package:unistudents_app/widgets/bottomsheets/notification_bs.dart';
 import 'package:unistudents_app/widgets/custom_web_view.dart';
 import 'package:unistudents_app/widgets/bottomsheets/theme_bs.dart';
-import 'package:unistudents_app/widgets/settings_build.dart';
+import 'package:unistudents_app/widgets/builders/settings_build.dart';
 
 class ProfileTab extends StatefulWidget {
   static const String id = 'profile_tab';
