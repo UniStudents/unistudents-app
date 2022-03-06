@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:unistudents_app/core/local/locals.dart';
+import 'package:unistudents_app/core/utils.dart';
 
 class SemesterModal extends StatelessWidget {
   const SemesterModal({Key? key, required this.semesterCount, required this.semesterAvg, required this.children})
@@ -22,7 +23,7 @@ class SemesterModal extends StatelessWidget {
           children: [
             Flexible(
                 fit: FlexFit.tight,
-                child: Text('$semesterCount ${Locals.of(context)!.progressSemester}',
+                child: Text('${Utils.ordinalSuffix(context, semesterCount)} ${Locals.of(context)!.progressSemester}',
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w700,
@@ -98,7 +99,20 @@ class SemesterItem extends StatelessWidget {
                                 : Colors.black54
                         ),
                       ),
-                      Text(name),
+
+                      Padding(padding: EdgeInsets.only(top: 7.5.h)),
+
+                      Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w700,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+
+                      Padding(padding: EdgeInsets.only(top: 8.5.h)),
+
                       Text(
                         sub,
                         style: TextStyle(
@@ -112,8 +126,17 @@ class SemesterItem extends StatelessWidget {
                   ),
               ),
 
+              Padding(padding: EdgeInsets.only(left: 25.w)),
+
               // Grade
-              Text('${grade}'),
+              Text(
+                grade.toStringAsFixed(1),
+                style: TextStyle(
+                    fontSize: 30.sp,
+                    fontWeight: FontWeight.w700,
+                    color: gradeColor
+                ),
+              ),
 
             ],
           ),

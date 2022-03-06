@@ -58,4 +58,8 @@ class LocalGr extends Locals {
 
   @override String get cancel => 'Άκυρο';
 
+  @override String get ordinalSuffixSt => "ο";
+  @override String get ordinalSuffixNd => "ο";
+  @override String get ordinalSuffixRd => "ο";
+  @override String get ordinalSuffixTh => "ο";
 }

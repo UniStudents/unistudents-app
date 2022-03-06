@@ -77,4 +77,9 @@ abstract class Locals {
   String get progressSemesterAvg;
 
   String get cancel;
+
+  String get ordinalSuffixSt;
+  String get ordinalSuffixNd;
+  String get ordinalSuffixRd;
+  String get ordinalSuffixTh;
 }

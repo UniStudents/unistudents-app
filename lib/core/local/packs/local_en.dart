@@ -57,4 +57,9 @@ class LocalEn extends Locals {
   @override String get progressSemesterAvg => "Semester Avg";
 
   @override String get cancel => 'Cancel';
+
+  @override String get ordinalSuffixSt => "st";
+  @override String get ordinalSuffixNd => "nd";
+  @override String get ordinalSuffixRd => "rd";
+  @override String get ordinalSuffixTh => "th";
 }

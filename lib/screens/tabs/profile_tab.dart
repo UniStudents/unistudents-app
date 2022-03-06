@@ -161,19 +161,21 @@ class _ProfileTabState extends State<ProfileTab> {
         appBar: AppBar(
           title: Text(Locals.of(context)!.profileTitle),
         ),
-        body: ListView(padding: EdgeInsets.all(20.h), children: [
-          profile,
-          linePadding,
-          settings,
-          linePadding,
-          security,
-          linePadding,
-          aboutUs,
-          linePadding,
-          help,
-          linePadding,
-          logOut,
-          linePadding,
+        body: ListView(padding: EdgeInsets.all(20.h),
+          controller: ScrollController(),
+          children: [
+            profile,
+            linePadding,
+            settings,
+            linePadding,
+            security,
+            linePadding,
+            aboutUs,
+            linePadding,
+            help,
+            linePadding,
+            logOut,
+            linePadding,
         ]));
   }
 }

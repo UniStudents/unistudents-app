@@ -20,7 +20,6 @@ class _ProgressTabState extends State<ProgressTab> {
   Widget build(BuildContext context) {
     int semesters = 7;
 
-
     Widget semesterView = SemesterModal(
       semesterCount: 1,
       semesterAvg: 7.2,
@@ -56,14 +55,15 @@ class _ProgressTabState extends State<ProgressTab> {
        appBar: AppBar(
         title: const Text('Πρόοδος'),
       ),
-      body: ListView(padding: EdgeInsets.all(20.h), children: [
-        semesterView,
-        linePadding,
-        semesterView,
-        linePadding,
-        semesterView,
-        linePadding,
-
+      body: ListView(padding: EdgeInsets.all(20.h),
+          controller: ScrollController(),
+          children: [
+          semesterView,
+          linePadding,
+          semesterView,
+          linePadding,
+          semesterView,
+          linePadding,
       ]));
   }
 }
