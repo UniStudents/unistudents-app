@@ -68,7 +68,7 @@ class SemesterItem extends StatelessWidget {
   }) : super(key: key);
 
   final String code, name, sub;
-  final double grade;
+  final String grade;
   Color? gradeColor;
   final VoidCallback onTap;
 
@@ -130,7 +130,7 @@ class SemesterItem extends StatelessWidget {
 
               // Grade
               Text(
-                grade.toStringAsFixed(1),
+                grade,
                 style: TextStyle(
                     fontSize: 30.sp,
                     fontWeight: FontWeight.w700,

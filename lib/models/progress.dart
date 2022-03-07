@@ -1,10 +1,10 @@
-import 'course.dart';
+import 'package:unistudents_app/models/semester.dart';
 
-class Semester {
-  late String id;
-  late String name;
+class Progress {
   late int passedCourses;
+  late String displayPassedCourses;
   late int failedCourses;
+  late String displayFailedCourses;
   late double averageGrade;
   late String displayAverageGrade;
   late double weightedAverageGrade;
@@ -13,5 +13,5 @@ class Semester {
   late String displayEcts;
   late int credits;
   late String displayCredits;
-  late List<Course> courses;
+  late List<Semester> semesters;
 }
