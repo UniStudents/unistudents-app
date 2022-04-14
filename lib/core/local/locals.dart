@@ -76,10 +76,34 @@ abstract class Locals {
   String get progressSemester;
   String get progressSemesterAvg;
 
+  String get apply;
+  String get reset;
   String get cancel;
 
   String get ordinalSuffixSt;
   String get ordinalSuffixNd;
   String get ordinalSuffixRd;
   String get ordinalSuffixTh;
+
+  String get progressFilterSort;
+  String get progressFilterSortHighestGrade;
+  String get progressFilterSortLowerGrade;
+  String get progressFilterSortRecent;
+  String get progressFilterSortOlder;
+  String get progressFilterFilter;
+  String get progressFilterFilterRecent;
+  String get progressFilterFilterOlder;
+
+  String get gradeECTs;
+  String get gradeWeight;
+  String get gradeDifficulty;
+  String get gradeDepartmentAverage;
+  String get gradePeriod;
+  String get gradeYear;
+  String get gradeGrade;
+  String get gradeHideCourse;
+  String get gradeDoNotCalculate;
+  String get gradeChains;
+  String get gradeReviews;
+  String get gradeReport;
 }

@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:unistudents_app/core/storage.dart';
 import 'package:unistudents_app/models/article.dart';
 import 'package:unistudents_app/providers/news.dart';
@@ -13,7 +12,6 @@ import 'package:unistudents_app/widgets/get_started_news.dart';
 import 'package:unistudents_app/widgets/infinite_list_footer.dart';
 import 'package:unistudents_app/widgets/website_filter_bar.dart';
 
-import '../../core/local/locals.dart';
 import '../../widgets/article_widget.dart';
 
 class NewsTab extends StatefulWidget {

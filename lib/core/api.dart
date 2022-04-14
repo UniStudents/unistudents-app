@@ -3,13 +3,12 @@ import 'package:http/http.dart' as http;
 
 import '../components/bug.dart';
 import '../models/progress_model.dart';
-import '../models/news_website.dart';
 import 'env.dart';
 
 class API {
   static Future<String> getProgressAPIUrl() async {
-    final response = await http.get(Uri.parse(Env.GATEWAY_URL + "/server"));
-    if (response.statusCode != 200) return Env.PROGRESS_FALLBACK_URL;
+    final response = await http.get(Uri.parse(Env.gatewayUrl + "/server"));
+    if (response.statusCode != 200) return Env.progressFallbackUrl;
     return response.body;
   }
 
@@ -24,7 +23,7 @@ class API {
   }
 
   static Future<bool> reportBug(Bug bug) async {
-    String url = bug.getUrl(Env.PROGRESS_FALLBACK_URL);
+    String url = bug.getUrl(Env.progressFallbackUrl);
     final response =
         await http.post(Uri.parse(url), body: bug.getJson(), headers: {
       'Content-type': 'application/json',
@@ -35,7 +34,7 @@ class API {
   }
 
   static Future<http.Response> getAvailableWebsites(String university) async {
-    String url = "${Env.GOHAN_URL}/websites?university=$university";
+    String url = "${Env.gohanUrl}/websites?university=$university";
     return await http.get(Uri.parse(url));
   }
 
@@ -45,7 +44,7 @@ class API {
       List<String>? afterIds,
       List<String>? beforeIds}) async {
     String url =
-        "${Env.GOHAN_URL}/articles?websites=${subscribedWebsites.join(',')}"
+        "${Env.gohanUrl}/articles?websites=${subscribedWebsites.join(',')}"
         "&pageSize=${pageSize ?? "0"}"
         "&pageNumber=${pageNumber ?? "0"}"
         "${afterIds != null ? "&after=${afterIds.join(",")}" : ""}"

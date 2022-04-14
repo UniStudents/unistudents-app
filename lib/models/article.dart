@@ -113,8 +113,11 @@ class Attachment {
   Attachment(this.text, this.value, this.attribute);
 
   IconData get icon {
-    if(attribute == 'img') return Icons.image_outlined;
-    else if(text.endsWith('.pdf')) return Icons.picture_as_pdf_outlined;
+    if(attribute == 'img') {
+      return Icons.image_outlined;
+    } else if(text.endsWith('.pdf')) {
+      return Icons.picture_as_pdf_outlined;
+    }
 
     return Icons.description_outlined;
   }

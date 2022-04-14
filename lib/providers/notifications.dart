@@ -34,7 +34,6 @@ class NotificationProvider with ChangeNotifier {
   }
 
   set(String mode) {
-    print(mode);
     _mode = mode;
     notifyListeners();
 

@@ -156,7 +156,7 @@ class ArticleWidget extends StatelessWidget {
     );
   }
 
-  ActionChip _buildAttachmentChip(BuildContext context, void _navigateToWebView(BuildContext buildContext, String domain, String url)) {
+  ActionChip _buildAttachmentChip(BuildContext context, void Function(BuildContext buildContext, String domain, String url) _navigateToWebView) {
     return ActionChip(
       label: Text('${Locals.of(context)!.articleWidgetAttachments} (${article.attachments.length})', style: TextStyle(fontSize: 14.sp),),
       onPressed: () {

@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:unistudents_app/core/local/locals.dart';
-import 'package:unistudents_app/providers/news.dart';
-import 'package:flutter/material.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:unistudents_app/providers/notifications.dart';
-import 'package:unistudents_app/providers/theme.dart';
 
 void showNotificationBSModal(BuildContext context) {
   showModalBottomSheet(

@@ -6,6 +6,8 @@ class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
   var textStr = 'Empty';
 
+  LoginScreen({Key? key}) : super(key: key);
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }

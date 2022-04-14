@@ -5,4 +5,6 @@ class ExamGrade {
   late String examPeriod;
   late String academicYear;
   late String displayPeriod;
+
+  ExamGrade(this.grade, this.isPassed, this.displayGrade, this.examPeriod, this.academicYear, this.displayPeriod);
 }

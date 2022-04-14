@@ -56,10 +56,34 @@ class LocalGr extends Locals {
   @override String get progressSemester => "Εξάμηνο";
   @override String get progressSemesterAvg => "Μ.Ο Εξαμήνου";
 
+  @override String get apply => 'Εφαρμογη';
+  @override String get reset => 'Επαναφορά';
   @override String get cancel => 'Άκυρο';
 
   @override String get ordinalSuffixSt => "ο";
   @override String get ordinalSuffixNd => "ο";
   @override String get ordinalSuffixRd => "ο";
   @override String get ordinalSuffixTh => "ο";
+
+  @override String get progressFilterSort => "Ταξινόμηση";
+  @override String get progressFilterSortHighestGrade => "Υψηλότεροσ βαθμός";
+  @override String get progressFilterSortLowerGrade => "Χαμηλότερος βαθμός";
+  @override String get progressFilterSortRecent => "Πρόσφατα";
+  @override String get progressFilterSortOlder => "Παλιότερα";
+  @override String get progressFilterFilter => "Φίλτρα";
+  @override String get progressFilterFilterRecent => "Πρόσφατα";
+  @override String get progressFilterFilterOlder => "παλιότερα";
+
+  @override String get gradeECTs => "ECTs";
+  @override String get gradeWeight => "Συντελεστής";
+  @override String get gradeDifficulty => "Δυσκολία\nΜαθήματος";
+  @override String get gradeDepartmentAverage => "Μ.Ο.\nΤμήματος";
+  @override String get gradePeriod => "Περίοδος";
+  @override String get gradeYear => "Έτος";
+  @override String get gradeGrade => "Βαθμός";
+  @override String get gradeHideCourse => "Απόκρυψη μαθήματος";
+  @override String get gradeDoNotCalculate => "Μην υπολογίζεται στο Μ.Ο.";
+  @override String get gradeChains => "Αλυσίδες";
+  @override String get gradeReviews => "Αξιολογήσεις";
+  @override String get gradeReport => "Αναφορά προβλήματος";
 }

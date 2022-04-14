@@ -17,4 +17,22 @@ class Course {
   late ExamGrade latestExamGrade;
   late List<ExamGrade> examGradeHistory;
   late List<Course> subCourses;
+
+  Course(
+      this.id,
+      this.displayCode,
+      this.name,
+      this.type,
+      this.stream,
+      this.instructor,
+      this.ects,
+      this.displayEcts,
+      this.credits,
+      this.displayCredits,
+      this.weight,
+      this.isExempted,
+      this.isCalculated,
+      this.latestExamGrade,
+      this.examGradeHistory,
+      this.subCourses);
 }

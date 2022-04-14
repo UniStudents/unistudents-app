@@ -20,7 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: Center(
         child: TextButton(
-          child: Text('click me'),
+          child: const Text('click me'),
           onPressed: () {},
         ),
       ),

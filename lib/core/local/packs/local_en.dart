@@ -56,10 +56,34 @@ class LocalEn extends Locals {
   @override String get progressSemester => "Semester";
   @override String get progressSemesterAvg => "Semester Avg";
 
+  @override String get apply => 'Apply';
+  @override String get reset => 'Reset';
   @override String get cancel => 'Cancel';
 
   @override String get ordinalSuffixSt => "st";
   @override String get ordinalSuffixNd => "nd";
   @override String get ordinalSuffixRd => "rd";
   @override String get ordinalSuffixTh => "th";
+
+  @override String get progressFilterSort => "Sort";
+  @override String get progressFilterSortHighestGrade => "Highest grade";
+  @override String get progressFilterSortLowerGrade => "Lower grade";
+  @override String get progressFilterSortRecent => "Recent";
+  @override String get progressFilterSortOlder => "Older";
+  @override String get progressFilterFilter => "Filters";
+  @override String get progressFilterFilterRecent => "Recent";
+  @override String get progressFilterFilterOlder => "Older";
+
+  @override String get gradeECTs => "ECTs";
+  @override String get gradeWeight => "Weight";
+  @override String get gradeDifficulty => "Course\nDifficulty";
+  @override String get gradeDepartmentAverage => "Department\nAverage";
+  @override String get gradePeriod => "Period";
+  @override String get gradeYear => "Year";
+  @override String get gradeGrade => "Grade";
+  @override String get gradeHideCourse => "Hide course";
+  @override String get gradeDoNotCalculate => "Do not calculate in Average";
+  @override String get gradeChains => "Chains";
+  @override String get gradeReviews => "Reviews";
+  @override String get gradeReport => "Report a problem";
 }

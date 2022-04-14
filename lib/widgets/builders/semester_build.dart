@@ -9,7 +9,7 @@ class SemesterModal extends StatelessWidget {
       : super(key: key);
 
   final int semesterCount;
-  final double semesterAvg;
+  final String semesterAvg;
   final List<SemesterItem> children;
 
   @override
@@ -58,12 +58,13 @@ class SemesterModal extends StatelessWidget {
 }
 
 class SemesterItem extends StatelessWidget {
-  SemesterItem( {Key? key,
+  SemesterItem({Key? key,
     required this.code,
     required this.name,
     required this.sub,
     required this.grade,
     required this.onTap,
+    this.onPressed,
     this.gradeColor
   }) : super(key: key);
 
@@ -71,6 +72,7 @@ class SemesterItem extends StatelessWidget {
   final String grade;
   Color? gradeColor;
   final VoidCallback onTap;
+  VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +81,7 @@ class SemesterItem extends StatelessWidget {
 
     return GestureDetector(
         onTap: onTap,
+        onLongPress: onPressed,
         behavior: HitTestBehavior.translucent,
         child: Container(
           padding: EdgeInsets.only(left: 15.5.w, right: 39.w),

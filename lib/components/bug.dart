@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-enum BugType { LOGIN_BUG, NEWS_BUG }
+enum BugType { loginBug, newsBug }
 
 class Bug {
 
   static Bug loginBug(String email, String university, String department, String semester, String device, String appVersion, String? logFile) {
-    Bug bug = Bug(BugType.LOGIN_BUG);
+    Bug bug = Bug(BugType.loginBug);
     bug.data = {
       'email': email,
       'university': university,
@@ -20,7 +20,7 @@ class Bug {
 
   static Bug newsBug(String latestIDs, String oldestIDs, String page, String sort, String filter,
       String subscribedWebsites, String website, String articleID, String email, String type, String device, String appVersion) {
-    Bug bug = Bug(BugType.NEWS_BUG);
+    Bug bug = Bug(BugType.newsBug);
     bug.data = {
       'email': email,
       'latestIDs': latestIDs,
@@ -49,8 +49,8 @@ class Bug {
     String url = "$base/report/bug";
 
     switch(type) {
-      case BugType.LOGIN_BUG: break;
-      case BugType.NEWS_BUG: url += '/news';
+      case BugType.loginBug: break;
+      case BugType.newsBug: url += '/news';
     }
 
     return url;

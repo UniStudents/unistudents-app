@@ -7,6 +7,7 @@ import 'package:unistudents_app/providers/news.dart';
 import 'package:unistudents_app/providers/notifications.dart';
 import 'package:unistudents_app/providers/theme.dart';
 import 'package:unistudents_app/screens/folllow_websites_screen.dart';
+import 'package:unistudents_app/screens/grade_screen.dart';
 import 'package:unistudents_app/screens/login_screen.dart';
 import 'package:unistudents_app/screens/registration_screen.dart';
 import 'package:unistudents_app/screens/tabs_screen.dart';
@@ -43,11 +44,12 @@ class MyApp extends StatelessWidget {
               localizationsDelegates: Locals.localizationsDelegates,
               initialRoute: TabsScreen.id,
               routes: {
-                WelcomeScreen.id: (context) => WelcomeScreen(),
+                WelcomeScreen.id: (context) => const WelcomeScreen(),
                 LoginScreen.id: (context) => LoginScreen(),
-                RegistrationScreen.id: (context) => RegistrationScreen(),
-                TabsScreen.id: (context) => TabsScreen(),
-                FollowWebsitesScreen.id: (context) => FollowWebsitesScreen(),
+                RegistrationScreen.id: (context) => const RegistrationScreen(),
+                TabsScreen.id: (context) => const TabsScreen(),
+                FollowWebsitesScreen.id: (context) => const FollowWebsitesScreen(),
+                GradeScreen.id: (context) => const GradeScreen()
               }),
         )
       ),
