@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:unistudents_app/core/crypto.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -16,8 +17,11 @@ class _SplashState extends State<Splash> {
 
     // TODO - Check user files validity and decide if login page or how page
 
-    Timer(const Duration(milliseconds: 2000),
-            () => Navigator.of(context).pushReplacementNamed('login_screen'));
+
+    Timer(const Duration(milliseconds: 100), () async {
+      await Crypto.init();
+      Navigator.of(context).pushReplacementNamed('login_screen');
+    });
   }
 
   @override

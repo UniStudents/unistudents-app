@@ -1,33 +1,37 @@
 import 'package:encrypt/encrypt.dart';
-
-class CryptoData {
-  String? base64IV;
-  String base64Key;
-  String data;
-  
-  CryptoData({this.base64IV, required this.data, required this.base64Key});
-}
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Crypto {
-  static CryptoData encrypt(CryptoData data) {
-    final _key = Key.fromBase64(data.base64Key);
+
+  static const _ss = FlutterSecureStorage();
+  static late String _encKey;
+
+  static Future<void> init() async {
+    String? key = await _ss.read(key: "storage_encryption_key");
+    if(key != null) {
+      _encKey = key;
+      return;
+    }
+
+    // Generate key
+    _encKey = Key.fromLength(16).base64;
+    await _ss.write(key: "storage_encryption_key", value: _encKey);
+  }
+
+  static String encrypt(String data) {
+    final _key = Key.fromBase64(_encKey.split('-')[0]);
     final _iv = IV.fromLength(16);
 
     final _cipher = Encrypter(AES(_key));
-    
-    return CryptoData(
-        base64IV: _iv.base64,
-        data: _cipher.encrypt(data.data, iv: _iv).base64,
-        base64Key: data.base64Key
-    );
+    return _cipher.encrypt(data, iv: _iv).base64 + '-' + _iv.base64;
   }
 
-  static String decrypt(CryptoData data) {
-    final _key = Key.fromBase64(data.base64Key);
-    final _iv = IV.fromBase64(data.base64IV!);
+  static String decrypt(String cipher) {
+    final _key = Key.fromBase64(_encKey);
+    final _iv = IV.fromBase64(cipher.split('-')[1]);
 
     final _cipher = Encrypter(AES(_key));
-    return _cipher.decrypt(Encrypted.fromBase64(data.data), iv: _iv).toString();
+    return _cipher.decrypt(Encrypted.fromBase64(cipher.split('-')[0]), iv: _iv).toString();
   }
 
   static String generateKey(int keySize) {

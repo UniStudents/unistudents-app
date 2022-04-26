@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.4
   path_provider: ^2.0.8
   encrypt: 5.0.1
+  flutter_secure_storage: ^5.0.2
   provider: 6.0.2
   scroll_to_index: ^2.1.1
   fl_chart: ^0.41.0
