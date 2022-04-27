@@ -1,20 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
 class UniColors {
-  static int UniBlue = 0xFF6C63FF;
-  static int Green = 0xFF82BF40;
-  static int Red = 0xFFFE6D7A;
-  static int Yellow = 0xFFFBCA3D;
-  static int Text1 = 0xDE000000;
-  static int Text = 0xFF000000;
-  static int TextHalf = 0x99000000;
-  static int UniBlueDark = 0xFF766FF1;
 
-  static int BGLight = 0xFFF7F7F7;
-  static int FGLight = 0xFFFFFFFF;
+  static Color getBackground(bool isDarkMode) => Color(isDarkMode ? 0xFF151C26 : 0xFFF7F7F7);
+  static Color getForeground(bool isDarkMode) => Color(isDarkMode ? 0xFF2F3640 : 0xFFFFFFFF);
 
-  static int BGDark = 0xFF151C26;
-  static int FGDark = 0xFF2F3640;
+  static Color getText(bool isDarkMode) => Color(isDarkMode ? 0xFFFFFFFF : 0xFF000000);
+  static Color getText1(bool isDarkMode) => Color(isDarkMode ? 0xDEFFFFFF : 0xDE000000);
+  static Color getTextHalf(bool isDarkMode) => Color(isDarkMode ? 0x99FFFFFF : 0x99000000);
+  static Color getUniBlue(bool isDarkMode) => Color(isDarkMode ? 0xFF766FF1 : 0xFF6C63FF);
 
-  Color getColor(int color) => Color(color);
+  static Color getGreen() => const Color(0xFF82BF40);
+  static Color getRed() => const Color(0xFFFE6D7A);
+  static Color getYellow() => const Color(0xFFFBCA3D);
 }

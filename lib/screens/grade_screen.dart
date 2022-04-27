@@ -37,21 +37,21 @@ class _GradeScreenState extends State<GradeScreen> {
                 course.displayCode,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Color(UniColors.TextHalf),
+                  color: UniColors.getTextHalf(_isDarkMode),
                 ),
               ),
               Text(
                 course.name,
                 style: TextStyle(
                   fontSize: 29,
-                  color: Color(UniColors.Text1),
+                  color: UniColors.getText1(_isDarkMode),
                 ),
               ),
               Text(
                 course.type,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Color(UniColors.TextHalf),
+                  color: UniColors.getTextHalf(_isDarkMode),
                 ),
               ),
             ],
@@ -89,7 +89,7 @@ class _GradeScreenState extends State<GradeScreen> {
                               course.displayEcts,
                               style: TextStyle(
                                   fontSize: 29.sp,
-                                  color: Color(UniColors.UniBlue),
+                                  color: UniColors.getUniBlue(_isDarkMode),
                                   fontWeight: FontWeight.w700
                               ),
                             ),
@@ -98,7 +98,7 @@ class _GradeScreenState extends State<GradeScreen> {
                               Locals.of(context)!.gradeECTs,
                               style: TextStyle(
                                   fontSize: 14.sp,
-                                  color: Color(UniColors.TextHalf)
+                                  color: UniColors.getTextHalf(_isDarkMode)
                               ),
                             )
                           ],
@@ -113,7 +113,7 @@ class _GradeScreenState extends State<GradeScreen> {
                               '${course.weight}',
                               style: TextStyle(
                                   fontSize: 29.sp,
-                                  color: Color(UniColors.UniBlue),
+                                  color: UniColors.getUniBlue(_isDarkMode),
                                   fontWeight: FontWeight.w700
                               ),
                             ),
@@ -122,7 +122,7 @@ class _GradeScreenState extends State<GradeScreen> {
                               Locals.of(context)!.gradeWeight,
                               style: TextStyle(
                                   fontSize: 14.sp,
-                                  color: Color(UniColors.TextHalf)
+                                  color: UniColors.getTextHalf(_isDarkMode)
                               ),
                             )
                           ],
@@ -149,7 +149,7 @@ class _GradeScreenState extends State<GradeScreen> {
                               "2/5",
                               style: TextStyle(
                                   fontSize: 29.sp,
-                                  color: Color(UniColors.UniBlue),
+                                  color: UniColors.getUniBlue(_isDarkMode),
                                   fontWeight: FontWeight.w700
                               ),
                             ),
@@ -160,7 +160,7 @@ class _GradeScreenState extends State<GradeScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14.sp,
-                                color: Color(UniColors.TextHalf),
+                                color: UniColors.getTextHalf(_isDarkMode),
                               ),
                             )
                           ],
@@ -175,7 +175,7 @@ class _GradeScreenState extends State<GradeScreen> {
                               '8.0',
                               style: TextStyle(
                                   fontSize: 29.sp,
-                                  color: Color(UniColors.UniBlue),
+                                  color: UniColors.getUniBlue(_isDarkMode),
                                   fontWeight: FontWeight.w700
                               ),
                             ),
@@ -185,7 +185,7 @@ class _GradeScreenState extends State<GradeScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 14.sp,
-                                  color: Color(UniColors.TextHalf)
+                                  color: UniColors.getTextHalf(_isDarkMode)
                               ),
                             )
                           ],
@@ -204,7 +204,7 @@ class _GradeScreenState extends State<GradeScreen> {
             Locals.of(context)!.gradeGradeHistory,
             style: TextStyle(
               fontSize: 15,
-              color: Color(UniColors.TextHalf),
+              color: UniColors.getTextHalf(_isDarkMode),
               fontWeight: FontWeight.w700
             ),
           ),
@@ -227,7 +227,7 @@ class _GradeScreenState extends State<GradeScreen> {
                             style: TextStyle(
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w700,
-                                color: Color(UniColors.TextHalf)
+                                color: UniColors.getTextHalf(_isDarkMode)
                             ),
                           ),
                         ),
@@ -238,7 +238,7 @@ class _GradeScreenState extends State<GradeScreen> {
                             style: TextStyle(
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w700,
-                                color: Color(UniColors.TextHalf)
+                                color: UniColors.getTextHalf(_isDarkMode)
                             ),
                           ),
                         ),
@@ -247,7 +247,7 @@ class _GradeScreenState extends State<GradeScreen> {
                           style: TextStyle(
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w700,
-                              color: Color(UniColors.TextHalf)
+                              color: UniColors.getTextHalf(_isDarkMode)
                           ),
                         ),
                       ],
@@ -274,7 +274,7 @@ class _GradeScreenState extends State<GradeScreen> {
                                     style: TextStyle(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w500,
-                                        color: Color(UniColors.Text1)
+                                        color: UniColors.getText1(_isDarkMode)
                                     ),
                                   ),
                                 ),
@@ -285,7 +285,7 @@ class _GradeScreenState extends State<GradeScreen> {
                                     style: TextStyle(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w500,
-                                        color: Color(UniColors.Text1)
+                                        color: UniColors.getText1(_isDarkMode)
                                     ),
                                   ),
                                 ),
@@ -297,11 +297,9 @@ class _GradeScreenState extends State<GradeScreen> {
                                     style: TextStyle(
                                         fontSize: 25.sp,
                                         fontWeight: FontWeight.w700,
-                                        color: Color(
-                                            course.examGradeHistory[i].isPassed
-                                                ? UniColors.UniBlue
-                                                : UniColors.Red
-                                        )
+                                        color: course.examGradeHistory[i].isPassed
+                                            ? UniColors.getUniBlue(_isDarkMode)
+                                            : UniColors.getRed()
                                     ),
                                   ),
                                 ),
@@ -335,7 +333,7 @@ class _GradeScreenState extends State<GradeScreen> {
                           Locals.of(context)!.gradeHideCourse,
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: Color(UniColors.Text1),
+                            color: UniColors.getText1(_isDarkMode),
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -358,7 +356,7 @@ class _GradeScreenState extends State<GradeScreen> {
                           Locals.of(context)!.gradeDoNotCalculate,
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: Color(UniColors.Text1),
+                            color: UniColors.getText1(_isDarkMode),
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -391,7 +389,7 @@ class _GradeScreenState extends State<GradeScreen> {
                       Locals.of(context)!.gradeChains,
                       style: TextStyle(
                         fontSize: 14.sp,
-                        color: Color(UniColors.Text1),
+                        color: UniColors.getText1(_isDarkMode),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -420,7 +418,7 @@ class _GradeScreenState extends State<GradeScreen> {
                         Locals.of(context)!.gradeReviews,
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: Color(UniColors.Text1),
+                          color: UniColors.getText1(_isDarkMode),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -428,7 +426,7 @@ class _GradeScreenState extends State<GradeScreen> {
 
                     Icon(
                       Icons.star,
-                      color: Color(UniColors.UniBlue),
+                      color: UniColors.getUniBlue(_isDarkMode),
                     )
                   ],
                 ),
@@ -452,7 +450,7 @@ class _GradeScreenState extends State<GradeScreen> {
                         Locals.of(context)!.gradeReport,
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: Color(UniColors.Red),
+                          color: UniColors.getRed(),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -460,7 +458,7 @@ class _GradeScreenState extends State<GradeScreen> {
 
                     Icon(
                       Icons.arrow_forward_ios,
-                      color: Color(UniColors.Red),
+                      color: UniColors.getRed(),
                     ),
                   ],
                 ),
