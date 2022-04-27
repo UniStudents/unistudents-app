@@ -200,6 +200,15 @@ class _GradeScreenState extends State<GradeScreen> {
           Padding(padding: EdgeInsets.only(top: 33.h)),
 
           // History
+          Text(
+            Locals.of(context)!.gradeGradeHistory,
+            style: TextStyle(
+              fontSize: 15,
+              color: Color(UniColors.TextHalf),
+              fontWeight: FontWeight.w700
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 10.h)),
           Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.r),
@@ -211,24 +220,28 @@ class _GradeScreenState extends State<GradeScreen> {
                     // Title
                     Row(
                       children: [
-                        Text(
-                          Locals.of(context)!.gradePeriod,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w700,
-                            color: Color(UniColors.TextHalf)
+                        SizedBox(
+                          width: 135.w,
+                          child: Text(
+                            Locals.of(context)!.gradePeriod,
+                            style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Color(UniColors.TextHalf)
+                            ),
                           ),
                         ),
-                        Spacer(),
-                        Text(
-                          Locals.of(context)!.gradeYear,
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w700,
-                              color: Color(UniColors.TextHalf)
+                        SizedBox(
+                          width: 140.w,
+                          child: Text(
+                            Locals.of(context)!.gradeYear,
+                            style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Color(UniColors.TextHalf)
+                            ),
                           ),
                         ),
-                        Spacer(),
                         Text(
                           Locals.of(context)!.gradeGrade,
                           style: TextStyle(
@@ -254,34 +267,42 @@ class _GradeScreenState extends State<GradeScreen> {
                             padding: EdgeInsets.only(bottom: paddBottom),
                             child: Row(
                               children: [
-                                Text(
-                                  course.examGradeHistory[i].displayPeriod,
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(UniColors.Text1)
+                                SizedBox(
+                                  width: 135.w,
+                                  child: Text(
+                                    course.examGradeHistory[i].displayPeriod,
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(UniColors.Text1)
+                                    ),
                                   ),
                                 ),
-                                Spacer(),
-                                Text(
-                                  course.examGradeHistory[i].academicYear,
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(UniColors.Text1)
+                                SizedBox(
+                                  width: 140.w,
+                                  child: Text(
+                                    course.examGradeHistory[i].academicYear,
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(UniColors.Text1)
+                                    ),
                                   ),
                                 ),
-                                Spacer(),
-                                Text(
-                                  course.examGradeHistory[i].displayGrade,
-                                  style: TextStyle(
-                                      fontSize: 25.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(
-                                          course.examGradeHistory[i].isPassed
-                                              ? UniColors.UniBlue
-                                              : UniColors.Red
-                                      )
+                                SizedBox(
+                                  width: 53.w,
+                                  child: Text(
+                                    course.examGradeHistory[i].displayGrade,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 25.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(
+                                            course.examGradeHistory[i].isPassed
+                                                ? UniColors.UniBlue
+                                                : UniColors.Red
+                                        )
+                                    ),
                                   ),
                                 ),
                               ],

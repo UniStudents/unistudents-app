@@ -74,6 +74,7 @@ class LocalGr extends Locals {
   @override String get progressFilterFilterRecent => "Πρόσφατα";
   @override String get progressFilterFilterOlder => "παλιότερα";
 
+  @override String get gradeGradeHistory => "Ιστορικό βαθμολογίας";
   @override String get gradeECTs => "ECTs";
   @override String get gradeWeight => "Συντελεστής";
   @override String get gradeDifficulty => "Δυσκολία\nΜαθήματος";

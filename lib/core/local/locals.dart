@@ -94,6 +94,7 @@ abstract class Locals {
   String get progressFilterFilterRecent;
   String get progressFilterFilterOlder;
 
+  String get gradeGradeHistory;
   String get gradeECTs;
   String get gradeWeight;
   String get gradeDifficulty;

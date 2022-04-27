@@ -74,6 +74,7 @@ class LocalEn extends Locals {
   @override String get progressFilterFilterRecent => "Recent";
   @override String get progressFilterFilterOlder => "Older";
 
+  @override String get gradeGradeHistory => "Grade history";
   @override String get gradeECTs => "ECTs";
   @override String get gradeWeight => "Weight";
   @override String get gradeDifficulty => "Course\nDifficulty";
