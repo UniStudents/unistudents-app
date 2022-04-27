@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:unistudents_app/core/colors.dart';
 import 'package:unistudents_app/screens/grade_screen.dart';
 import 'package:unistudents_app/widgets/bottomsheets/progress_filter_bs.dart';
 
@@ -64,7 +65,9 @@ class _ProgressTabState extends State<ProgressTab> {
           name: "ΕΛΕΎΘΕΡΟ ΣΧΈΔΙΟ",
           sub: "Αντιστοίχιση με νέιο πρόγραμμα",
           grade: "7.0",
-          onTap: () {},
+          onTap: () {
+            showProgressFilterBSModal(context);
+          },
           onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("ΕΛΕΎΘΕΡΟ ΣΧΈΔΙΟ"),
           )),
@@ -74,7 +77,7 @@ class _ProgressTabState extends State<ProgressTab> {
           name: "ΑΛΓΌΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΌΤΗΤΑ",
           sub: "Αντιστοίχιση με νέιο πρόγραμμα",
           grade: "2.5",
-          gradeColor: const Color(0xFFFE6D7A),
+          gradeColor: UniColors.getRed(),
           onTap: () {},
           onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("ΑΛΓΌΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΌΤΗΤΑ"),

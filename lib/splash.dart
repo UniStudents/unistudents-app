@@ -15,9 +15,6 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    // TODO - Check user files validity and decide if login page or how page
-
-
     Timer(const Duration(milliseconds: 100), () async {
       await Crypto.init();
       Navigator.of(context).pushReplacementNamed('login_screen');

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:unistudents_app/core/colors.dart';
 import 'package:unistudents_app/core/local/locals.dart';
 
 void showProgressFilterBSModal(BuildContext context) {
@@ -33,9 +34,7 @@ class _ProgressFilter extends State<ProgressFilterBSModal> {
         style: TextStyle(
             fontSize: 17.sp,
             fontWeight: FontWeight.w700,
-            color: _isDarkMode
-                ? const Color(0x99FFFFFF)
-                : const Color(0x99000000)),
+            color: UniColors.getTextHalf(_isDarkMode)),
       ),
     );
   }

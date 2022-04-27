@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 class UniColors {
 
+  static int uniBlue(bool isDarkMode) => isDarkMode ? 0xFF766FF1 : 0xFF6C63FF;
+
   static Color getBackground(bool isDarkMode) => Color(isDarkMode ? 0xFF151C26 : 0xFFF7F7F7);
   static Color getForeground(bool isDarkMode) => Color(isDarkMode ? 0xFF2F3640 : 0xFFFFFFFF);
 

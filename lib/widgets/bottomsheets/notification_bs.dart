@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:unistudents_app/core/colors.dart';
 import 'package:unistudents_app/core/local/locals.dart';
 import 'package:unistudents_app/providers/notifications.dart';
 
@@ -59,9 +60,7 @@ class _NotificationsBSModal extends State<NotificationsBSModal> {
                     Locals.of(context)!.profileNotifications,
                     style: TextStyle(
                         fontSize: 17.sp,
-                        color: _isDarkMode
-                            ? const Color(0x99FFFFFF)
-                            : const Color(0x99000000)),
+                        color: UniColors.getTextHalf(_isDarkMode)),
                   ),
                 ),
 
@@ -80,9 +79,7 @@ class _NotificationsBSModal extends State<NotificationsBSModal> {
                                 child: Text(
                                   Locals.of(context)!.profileNotificationsAll,
                                   style: TextStyle(
-                                      color: _isDarkMode
-                                          ? const Color(0xD9FFFFFF)
-                                          : const Color(0xD9000000),
+                                      color: UniColors.getText1(_isDarkMode),
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.w700
                                   ),
@@ -118,9 +115,7 @@ class _NotificationsBSModal extends State<NotificationsBSModal> {
                               child: Text(
                                 Locals.of(context)!.profileNotificationsGrades,
                                 style: TextStyle(
-                                    color: _isDarkMode
-                                        ? const Color(0xD9FFFFFF)
-                                        : const Color(0xD9000000),
+                                    color: UniColors.getText1(_isDarkMode),
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.w700
                                 ),
@@ -157,9 +152,7 @@ class _NotificationsBSModal extends State<NotificationsBSModal> {
                               child: Text(
                                 Locals.of(context)!.profileNotificationsNews,
                                 style: TextStyle(
-                                    color: _isDarkMode
-                                        ? const Color(0xD9FFFFFF)
-                                        : const Color(0xD9000000),
+                                    color: UniColors.getText1(_isDarkMode),
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.w700
                                 ),

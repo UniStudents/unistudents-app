@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:unistudents_app/core/colors.dart';
 import 'package:unistudents_app/models/article.dart';
 
 import '../core/local/locals.dart';
@@ -13,6 +14,8 @@ class ArticleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     void _navigateToWebView(BuildContext buildContext, String domain, String url) async {
       final result = await Navigator.of(context).push(
           MaterialPageRoute<String>(
@@ -44,7 +47,10 @@ class ArticleWidget extends StatelessWidget {
                     Flexible(
                         fit: FlexFit.tight,
                         child: Text('${article.source} | ${article.getElapsedTime(context)}',
-                            style: TextStyle(fontSize: 12.sp)
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: UniColors.getTextHalf(_isDarkMode)
+                            ),
                         )),
                     SizedBox(
                       height: 40.h,
@@ -94,7 +100,7 @@ class ArticleWidget extends StatelessWidget {
                           Text(
                             article.title,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: UniColors.getText1(_isDarkMode),
                               fontWeight: FontWeight.w700,
                               fontFamily: 'Roboto',
                               fontSize: 14.sp,
@@ -139,9 +145,10 @@ class ArticleWidget extends StatelessWidget {
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5.h),
                         child: Text(
-                          '#' + article.categories[j],
+                          '#' + article.categories[j] + " ",
                           style: TextStyle(
-                            fontSize: 12.sp
+                            fontSize: 12.sp,
+                            color: UniColors.getTextHalf(_isDarkMode)
                           ),
                         )
                       );

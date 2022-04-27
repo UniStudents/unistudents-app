@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:unistudents_app/core/colors.dart';
 import 'package:unistudents_app/core/local/locals.dart';
 import 'package:unistudents_app/providers/theme.dart';
 
@@ -57,9 +58,7 @@ class _ThemeBSModal extends State<ThemeBSModal> {
                     Locals.of(context)!.profileTheme,
                     style: TextStyle(
                         fontSize: 17.sp,
-                        color: _isDarkMode
-                            ? const Color(0x99FFFFFF)
-                            : const Color(0x99000000)),
+                        color: UniColors.getTextHalf(_isDarkMode)),
                   ),
                 ),
 
@@ -81,14 +80,13 @@ class _ThemeBSModal extends State<ThemeBSModal> {
                             child: Text(
                               Locals.of(context)!.profileThemeLight,
                               style: TextStyle(
-                                  color: _isDarkMode
-                                      ? const Color(0xD9FFFFFF)
-                                      : const Color(0xD9000000)),
+                                  color: UniColors.getText1(_isDarkMode)
+                              ),
                             ),
                           ),
                           Radio<int>(
                             value: 1,
-                            activeColor: const Color(0xFF4388FF),
+                            activeColor: UniColors.getUniBlue(_isDarkMode),
                             groupValue: prov.themeNum,
                             onChanged: (value) {
                               widget.setState(() {
@@ -114,14 +112,13 @@ class _ThemeBSModal extends State<ThemeBSModal> {
                             child: Text(
                               Locals.of(context)!.profileThemeDark,
                               style: TextStyle(
-                                  color: _isDarkMode
-                                      ? const Color(0xD9FFFFFF)
-                                      : const Color(0xD9000000)),
+                                  color: UniColors.getText1(_isDarkMode)
+                              ),
                             ),
                           ),
                           Radio<int>(
                             value: 2,
-                            activeColor: const Color(0xFF4388FF),
+                            activeColor: UniColors.getUniBlue(_isDarkMode),
                             groupValue: prov.themeNum,
                             onChanged: (value) {
                               widget.setState(() {
@@ -147,14 +144,12 @@ class _ThemeBSModal extends State<ThemeBSModal> {
                             child: Text(
                               Locals.of(context)!.profileThemeSystem,
                               style: TextStyle(
-                                  color: _isDarkMode
-                                      ? const Color(0xD9FFFFFF)
-                                      : const Color(0xD9000000)),
+                                  color: UniColors.getText1(_isDarkMode)),
                             ),
                           ),
                           Radio<int>(
                             value: 0,
-                            activeColor: const Color(0xFF4388FF),
+                            activeColor: UniColors.getUniBlue(_isDarkMode),
                             groupValue: prov.themeNum,
                             onChanged: (value) {
                               widget.setState(() {

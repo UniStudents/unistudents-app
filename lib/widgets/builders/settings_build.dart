@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:unistudents_app/core/colors.dart';
 
 class SettingsModal extends StatelessWidget {
   const SettingsModal({Key? key, this.title, required this.children})
@@ -23,9 +24,7 @@ class SettingsModal extends StatelessWidget {
                   title!,
                   style: TextStyle(
                     fontSize: 15.sp,
-                    color: _isDarkMode
-                        ? const Color(0x99FFFFFF)
-                        : const Color(0x99000000),
+                    color: UniColors.getTextHalf(_isDarkMode),
                   ),
                 ),
               )
@@ -65,7 +64,7 @@ class SettingsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    iconColor ??= const Color(0xFF4388FF);
+    iconColor ??= UniColors.getUniBlue(_isDarkMode);
 
     return GestureDetector(
         onTap: onTap,
@@ -99,9 +98,8 @@ class SettingsItem extends StatelessWidget {
                           value!,
                           style: TextStyle(
                               fontSize: 12.sp,
-                              color: _isDarkMode
-                                  ? Colors.white60
-                                  : Colors.black54),
+                              color: UniColors.getTextHalf(_isDarkMode)
+                          ),
                         ),
                       ],
                     )

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:unistudents_app/core/colors.dart';
 
 class ThemeProvider with ChangeNotifier {
   final lightTheme = ThemeData(
     brightness: Brightness.light,
-    primarySwatch: Colors.blue,
-    scaffoldBackgroundColor: const Color(0xFFF7F7F7),
-    cardColor: const Color(0xFFFFFFFF),
+    scaffoldBackgroundColor: UniColors.getBackground(false),
+    cardColor: UniColors.getForeground(false),
   );
 
   final darkTheme = ThemeData(
     brightness: Brightness.dark,
-    primarySwatch: Colors.blue,
-    scaffoldBackgroundColor: const Color(0xFF151C26),
-    cardColor: const Color(0xFF2F3640),
+    scaffoldBackgroundColor: UniColors.getBackground(true),
+    cardColor: UniColors.getForeground(true),
   );
 
   ThemeMode _themeMode = ThemeMode.system;

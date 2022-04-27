@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:unistudents_app/core/colors.dart';
 import 'package:unistudents_app/models/news_website.dart';
 import 'package:unistudents_app/widgets/available_website_expanded.dart';
 
@@ -11,6 +12,8 @@ class AvailableWebsiteMinimized extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Card(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -32,7 +35,7 @@ class AvailableWebsiteMinimized extends StatelessWidget {
                       Text(
                         newsWebsite.alias,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: UniColors.getText1(_isDarkMode),
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Roboto',
                           fontSize: 16.sp,
@@ -41,7 +44,7 @@ class AvailableWebsiteMinimized extends StatelessWidget {
                       Text(
                         newsWebsite.departments.length.toString() + " websites",
                         style: TextStyle(
-                          color: Colors.black45,
+                          color: UniColors.getText1(_isDarkMode),
                           fontFamily: 'Roboto',
                           fontSize: 16.sp,
                         ),

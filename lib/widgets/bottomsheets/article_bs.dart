@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:unistudents_app/core/colors.dart';
 
 void showArticleBSModal(BuildContext context, ArticleBSModal modal) {
   showModalBottomSheet(
@@ -21,11 +22,13 @@ class ArticleBSModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     List<Widget> items = [];
 
     for (var element in children) {
       items.add(element);
-      items.add(const Padding(padding: EdgeInsets.all(10.0)));
+      items.add(Padding(padding: EdgeInsets.only(top: 15.h)));
     }
 
     return Wrap(
@@ -33,13 +36,14 @@ class ArticleBSModal extends StatelessWidget {
         Column(
           children: [
             // Simple design
-            const Padding(padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0)),
-            Container(
-              height: 5,
-              width: 60,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.grey[500]
+            Padding(
+              padding: EdgeInsets.only(top: 12.h),
+              child: Container(
+                height: 2.h,
+                width: 56.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.grey[500]),
               ),
             ),
 
@@ -52,7 +56,7 @@ class ArticleBSModal extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: UniColors.getTextHalf(_isDarkMode),
                       fontWeight: FontWeight.w800,
                       fontFamily: 'Roboto',
                       fontSize: 19.sp,
@@ -85,16 +89,18 @@ class ArticleBSItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return TextButton(
       onPressed: onTap,
       style: TextButton.styleFrom(
-          backgroundColor: Colors.blue.shade50,
+          backgroundColor: UniColors.getBackground(_isDarkMode),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15.r))
           )
       ),
       child: Container(
-        padding: EdgeInsets.all(12.h),
+        padding: EdgeInsets.all(16.h),
         child: Row(children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(20.r),
@@ -105,7 +111,7 @@ class ArticleBSItem extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                color: Colors.black,
+                color: UniColors.getText1(_isDarkMode),
                 fontWeight: FontWeight.w700,
                 fontFamily: 'Roboto',
                 fontSize: 16.sp,

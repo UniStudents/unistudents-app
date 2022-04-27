@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:unistudents_app/core/colors.dart';
 import 'package:unistudents_app/providers/news.dart';
 import 'package:unistudents_app/widgets/available_website_minimized.dart';
 
@@ -41,7 +42,7 @@ class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
       primary: false,
       shrinkWrap: true,
       itemCount: availableWebsites.length,
-      separatorBuilder: (ctx, i) => SizedBox(height: 12.h,),
+      separatorBuilder: (ctx, i) => SizedBox(height: 12.h),
       itemBuilder: (ctx, i) => AvailableWebsiteMinimized(
         newsWebsite: availableWebsites[i],
       )
@@ -50,6 +51,7 @@ class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final availableWebsites = Provider.of<News>(context, listen: false).availableWebsites;
 
     return Scaffold(
@@ -73,7 +75,7 @@ class _FollowWebsitesScreenState extends State<FollowWebsitesScreen> {
               Text(
                 "Διαθέσιμα Websites",
                 style: TextStyle(
-                  color: Colors.black45,
+                  color: UniColors.getTextHalf(_isDarkMode),
                   fontFamily: 'Roboto',
                   fontSize: 16.sp,
                 ),

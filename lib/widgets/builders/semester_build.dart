@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:unistudents_app/core/colors.dart';
 import 'package:unistudents_app/core/local/locals.dart';
 import 'package:unistudents_app/core/utils.dart';
 
@@ -77,7 +78,7 @@ class SemesterItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    gradeColor ??= const Color(0xFF4388FF);
+    gradeColor ??= UniColors.getUniBlue(_isDarkMode);
 
     return GestureDetector(
         onTap: onTap,
@@ -97,9 +98,7 @@ class SemesterItem extends StatelessWidget {
                         code,
                         style: TextStyle(
                             fontSize: 12.sp,
-                            color: _isDarkMode
-                                ? Colors.white60
-                                : Colors.black54
+                            color: UniColors.getTextHalf(_isDarkMode)
                         ),
                       ),
 
@@ -120,9 +119,7 @@ class SemesterItem extends StatelessWidget {
                         sub,
                         style: TextStyle(
                             fontSize: 12.sp,
-                            color: _isDarkMode
-                                ? Colors.white60
-                                : Colors.black54
+                            color: UniColors.getTextHalf(_isDarkMode)
                         ),
                       )
                     ],

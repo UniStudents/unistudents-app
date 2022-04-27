@@ -199,6 +199,7 @@ class _GradeScreenState extends State<GradeScreen> {
 
           Padding(padding: EdgeInsets.only(top: 33.h)),
 
+          // TODO - Hide history on empty
           // History
           Text(
             Locals.of(context)!.gradeGradeHistory,
