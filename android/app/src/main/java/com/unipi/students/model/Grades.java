@@ -2,6 +2,16 @@ package com.unipi.students.model;
 
 import java.util.ArrayList;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.AllArgsConstructor;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Grades {
 
     private String totalPassedCourses;
@@ -13,43 +23,42 @@ public class Grades {
         this.semesters = new ArrayList<>();
     }
 
-    public Grades(String totalPassedCourses, String totalAverageGrade, String totalEcts) {
-        this.totalPassedCourses = totalPassedCourses;
-        this.totalAverageGrade = totalAverageGrade;
-        this.totalEcts = totalEcts;
-        this.semesters = new ArrayList<>();
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof Grades))
+            return false;
+        if (obj == this)
+            return true;
+        return this.getTotalPassedCourses().equals(((Grades) obj).getTotalPassedCourses());
     }
 
-    public String getTotalPassedCourses() {
-        return totalPassedCourses;
-    }
-
-    public void setTotalPassedCourses(String totalPassedCourses) {
-        this.totalPassedCourses = totalPassedCourses;
-    }
-
-    public String getTotalAverageGrade() {
-        return totalAverageGrade;
-    }
-
-    public void setTotalAverageGrade(String totalAverageGrade) {
-        this.totalAverageGrade = totalAverageGrade;
-    }
-
-    public String getTotalEcts() {
-        return totalEcts;
-    }
-
-    public void setTotalEcts(String totalEcts) {
-        this.totalEcts = totalEcts;
-    }
-
-    public ArrayList<Semester> getSemesters() {
-        return semesters;
-    }
-
-    public void setSemesters(ArrayList<Semester> semesters) {
-        this.semesters = semesters;
+    @Override
+    public int hashCode() {
+        return
+                (
+                    this.getTotalPassedCourses() != null ?
+                    this.getTotalPassedCourses().hashCode() :
+                    0
+                        )
+                +
+                (
+                    this.getTotalAverageGrade() != null ?
+                    this.getTotalAverageGrade().hashCode() :
+                    0
+                        )
+                +
+                (
+                    this.getTotalEcts() != null ?
+                    this.getTotalEcts().hashCode() :
+                    0
+                        )
+                +
+                (
+                    this.getSemesters() != null ?
+                    this.getSemesters().hashCode() :
+                    0
+                        );
     }
 
     @Override
@@ -61,4 +70,5 @@ public class Grades {
                 ", semesters=" + semesters +
                 '}';
     }
+
 }
