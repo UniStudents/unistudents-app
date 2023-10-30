@@ -1,5 +1,16 @@
 package com.unipi.students.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
 
     private String id;
@@ -8,65 +19,31 @@ public class Course {
     private String grade;
     private String examPeriod;
 
-    public Course() {
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof Course))
+            return false;
+        if (obj == this)
+            return true;
+        return this.getId().equals(((Course) obj).getId());
     }
 
-    public Course(String id, String name, String type, String grade, String examPeriod) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.grade = grade;
-        this.examPeriod = examPeriod;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    public String getExamPeriod() {
-        return examPeriod;
-    }
-
-    public void setExamPeriod(String examPeriod) {
-        this.examPeriod = examPeriod;
+    @Override
+    public int hashCode() {
+        return this.getId().hashCode();
     }
 
     @Override
     public String toString() {
-        return "Course{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", grade=" + grade +
-                ", examPeriod='" + examPeriod + '\'' +
-                '}';
+        return
+            "Course{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", type='" + type + '\'' +
+            ", grade='" + grade + '\'' +
+            ", examPeriod='" + examPeriod + '\'' +
+            '}';
     }
+
 }

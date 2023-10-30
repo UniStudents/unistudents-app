@@ -4,8 +4,8 @@ import com.unipi.students.common.HttpStatus;
 
 public class ResponseEntity {
 
-    private Object object;
-    private HttpStatus httpStatus;
+    private final Object object; // It doesnt have setters, so I can use it as a final variable??
+    private final HttpStatus httpStatus; // It doesnt have setters, so I can use it as a final variable??
 
     public ResponseEntity(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;

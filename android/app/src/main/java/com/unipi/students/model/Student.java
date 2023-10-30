@@ -1,32 +1,34 @@
 package com.unipi.students.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Student {
 
     private Info info;
     private Grades grades;
 
-    public Student() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student )) return false;
+        return info != null && info.equals(((Student) o).info);
     }
 
-    public Student(Info info, Grades grades) {
-        this.info = info;
-        this.grades = grades;
-    }
-
-    public Info getInfo() {
-        return info;
-    }
-
-    public void setInfo(Info info) {
-        this.info = info;
-    }
-
-    public Grades getGrades() {
-        return grades;
-    }
-
-    public void setGrades(Grades grades) {
-        this.grades = grades;
+    @Override
+    public int hashCode() {
+        return (
+                (info != null ? info.hashCode() : 0) +
+                (grades != null ? grades.hashCode() : 0)
+        );
     }
 
     @Override
@@ -36,4 +38,5 @@ public class Student {
                 ", grades=" + grades +
                 '}';
     }
+
 }

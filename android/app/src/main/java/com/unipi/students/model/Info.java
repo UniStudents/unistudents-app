@@ -1,5 +1,15 @@
 package com.unipi.students.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.AllArgsConstructor;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Info {
 
     private String aem;
@@ -10,63 +20,62 @@ public class Info {
     private String registrationYear;
 
     public Info() {
+        this.aem = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.department = "";
+        this.semester = "";
+        this.registrationYear = "";
     }
 
-    public Info(String aem, String firstName, String lastName, String department, String semester, String registrationYear) {
-        this.aem = aem;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.department = department;
-        this.semester = semester;
-        this.registrationYear = registrationYear;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof Info))
+            return false;
+        if (obj == this)
+            return true;
+        return this.getAem().equals(((Info) obj).getAem());
     }
 
-    public String getAem() {
-        return aem;
-    }
-
-    public void setAem(String aem) {
-        this.aem = aem;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getSemester() {
-        return semester;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
-    }
-
-    public String getRegistrationYear() {
-        return registrationYear;
-    }
-
-    public void setRegistrationYear(String registrationYear) {
-        this.registrationYear = registrationYear;
+    @Override
+    public int hashCode() {
+        return
+                (
+                    this.getAem() != null ?
+                    this.getAem().hashCode() :
+                    0
+                        )
+                +
+                (
+                    this.getFirstName() != null ?
+                    this.getFirstName().hashCode() :
+                    0
+                        )
+                +
+                (
+                    this.getLastName() != null ?
+                    this.getLastName().hashCode() :
+                    0
+                        )
+                +
+                (
+                    this.getDepartment() != null ?
+                    this.getDepartment().hashCode() :
+                    0
+                        )
+                +
+                (
+                    this.getSemester() != null ?
+                    this.getSemester().hashCode() :
+                    0
+                        )
+                +
+                (
+                    this.getRegistrationYear() != null ?
+                    this.getRegistrationYear().hashCode() :
+                    0
+                        );
     }
 
     @Override
@@ -80,4 +89,5 @@ public class Info {
                 ", registrationYear='" + registrationYear + '\'' +
                 '}';
     }
+
 }
